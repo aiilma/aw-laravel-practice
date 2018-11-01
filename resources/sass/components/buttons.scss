@@ -1,0 +1,44 @@
+// This CSS won't print because %equal-heights is never extended.
+
+// reset button styles
+%clean-button {
+
+}
+
+
+// reset link styles
+%clean-link {
+    color: $fonto;
+
+    &:hover {
+        color: $fonto-mx;
+        text-decoration: none;
+    }
+
+    &:active {
+        color: $fonto;
+    }
+}
+
+/*------------------------------*/
+
+// Account Buttons
+.ahead_monofiska,
+.aiteen_monofiska {
+    @extend %clean-link;
+
+    &:hover {
+        transition: all .1s ease;
+    }
+}
+
+.ahead_monofiska,
+.aiteen_monofiska {
+    display: block;
+}
+
+.aiteen_monofiska {
+    padding: 0.35rem;
+    padding-left: 1rem;
+    color: $fontto-mn;
+}

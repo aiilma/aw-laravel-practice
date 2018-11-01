@@ -1,0 +1,24 @@
+.aw_acc_sidebar,
+.aw_acc_section {
+    padding: 5px;
+
+    > div {
+        border: 1px solid $light_orange;
+        padding: 15px;
+        border-radius: 5px;
+        min-height: 380px;
+        background-color: $cpanel;
+    }
+}
+
+.aw_acc_sidebar > div {
+    padding: 30px;
+}
+
+.aw_acc_sidebar .table th,
+.aw_acc_sidebar .table td {
+    padding: 0;
+    border-top: 1px solid $light_orange;
+}
+
+.panel-body .table {margin-bottom: 0px; }
