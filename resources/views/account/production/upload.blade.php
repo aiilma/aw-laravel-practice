@@ -24,7 +24,7 @@
                         </div>
                         {{-- uploader --}}
                         <div class="col-md-8 offset-md-2">
-                            <form action="{{ route('account.production.upload_send') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('acc-prod-sendrequest') }}" method="POST" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="FCUploaderProject">Your project: </label>

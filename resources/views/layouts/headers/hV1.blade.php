@@ -1,6 +1,6 @@
         <nav class="navbar navbar-expand-md navbar-dark navbar-artworch">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ route('homepage') }}">
                     <img src="{{asset('img/logo_white.svg')}}" alt="Artworch" width="48">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -18,11 +18,11 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('account.login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('acc-login') }}">{{ __('Login') }}</a>
                             </li>
                             <li class="nav-item">
-                                @if (Route::has('account.register'))
-                                    <a class="nav-link" href="{{ route('account.register') }}">{{ __('Register') }}</a>
+                                @if (Route::has('acc-register'))
+                                    <a class="nav-link" href="{{ route('acc-register') }}">{{ __('Register') }}</a>
                                 @endif
                             </li>
                         @else
@@ -32,16 +32,16 @@
                                 </a>
 
                                 <div id="awAccountDropdown" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('account.home') }}">
+                                    <a class="dropdown-item" href="{{ route('acc-home') }}">
                                         {{ __('My Account') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('account.logout') }}"
+                                    <a class="dropdown-item" href="{{ route('acc-logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('account.logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('acc-logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Artworch\Http\Controllers\Auth;
+namespace Artworch\Http\Controllers\Account\Auth;
 
 use Illuminate\Http\Request;
 use Artworch\Http\Controllers\Controller;
@@ -27,7 +27,7 @@ class AdminLoginController extends Controller
             ]);
             
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-            return redirect()->intended(route('admin.dashboard'));
+            return redirect()->intended(route('admin-dashboard'));
         }
 
         return redirect()->back()->withInput($request->only('email', 'remember'));

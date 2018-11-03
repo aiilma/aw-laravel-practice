@@ -1,6 +1,6 @@
 <?php
 
-namespace Artworch\Http\Controllers\Auth;
+namespace Artworch\Http\Controllers\Account\Auth;
 
 use Artworch\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -41,6 +41,6 @@ class LoginController extends Controller
     public function userLogout()
     {
         Auth::guard('web')->logout();
-        return redirect('/');
+        return redirect(route('homepage'));
     }
 }

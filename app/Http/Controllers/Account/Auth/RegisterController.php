@@ -1,6 +1,6 @@
 <?php
 
-namespace Artworch\Http\Controllers\Auth;
+namespace Artworch\Http\Controllers\Account\Auth;
 
 use Artworch\User;
 use Artworch\Http\Controllers\Controller;

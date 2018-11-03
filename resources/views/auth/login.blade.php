@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('account.login') }}">
+                    <form method="POST" action="{{ route('acc-login') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -29,9 +29,9 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('account.password') ? ' is-invalid' : '' }}" name="password" required>
+                                <input id="password" type="password" class="form-control{{ $errors->has('acc-password') ? ' is-invalid' : '' }}" name="password" required>
 
-                                @if ($errors->has('account.password'))
+                                @if ($errors->has('acc-password'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
@@ -57,7 +57,7 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('account.password.request') }}">
+                                <a class="btn btn-link" href="{{ route('acc-passwordrequest') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
                             </div>

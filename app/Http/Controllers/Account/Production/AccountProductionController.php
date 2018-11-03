@@ -1,12 +1,12 @@
 <?php
 
-namespace Artworch\Http\Controllers\Production;
+namespace Artworch\Http\Controllers\Account\Production;
 
 use Artworch\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Storage, Zipper, File;
 
-class ProductionController extends Controller
+class AccountProductionController extends Controller
 {
 
     /**
@@ -14,7 +14,7 @@ class ProductionController extends Controller
      *
      * @return Response
      */
-    public function uploadShow()
+    public function showUploader()
     {
         // show form
         return view('account.production.upload');
@@ -27,7 +27,7 @@ class ProductionController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function uploadSend(Request $request)
+    public function sendRequest(Request $request)
     {
         // * validate
         // условия:
@@ -71,9 +71,14 @@ class ProductionController extends Controller
      *
      * @return Response
      */
-    public function requestsShow()
+    public function showRequests()
     {
         return view('account.production.requests');
     }
     
+
+    public function showList()
+    {
+        // 
+    }
 }

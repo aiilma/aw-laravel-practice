@@ -1,8 +1,9 @@
 <?php
 
-namespace Artworch\Http\Controllers;
+namespace Artworch\Http\Controllers\Account;
 
 use Illuminate\Http\Request;
+use Artworch\Http\Controllers\Controller;
 
 class AccountHomeController extends Controller
 {

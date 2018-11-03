@@ -12,7 +12,7 @@
                                 <table class="table">
                                     <tr>
                                         <td>
-                                            <a class="aiteen_monofiska" href="{{route('account.home')}}">My account</a>
+                                            <a class="aiteen_monofiska" href="{{route('acc-home')}}">My account</a>
                                         </td>
                                     </tr>
                                 </table>
@@ -31,12 +31,12 @@
                                 <table class="table">
                                     <tr>
                                         <td>
-                                            <a class="aiteen_monofiska" href="{{route('account.production.upload_show')}}">Uploader</a>
+                                            <a class="aiteen_monofiska" href="{{route('acc-prod-showuploader')}}">Uploader</a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <a class="aiteen_monofiska" href="{{route('account.production.requests_show')}}">Requests</a>
+                                            <a class="aiteen_monofiska" href="{{route('acc-prod-showrequests')}}">Requests</a>
                                         </td>
                                     </tr>
                                 </table>

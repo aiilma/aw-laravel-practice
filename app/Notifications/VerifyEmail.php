@@ -45,7 +45,7 @@ class VerifyEmail extends Notification
     {
         return (new MailMessage)
                     ->line('Please, verify your account by clicking at the link, if you are an owner!')
-                    ->action('Verify account', route('verify', $this->user->token))
+                    ->action('Verify account', route('acc-verify', $this->user->token))
                     ->line('Thank you for using our application!');
     }
 

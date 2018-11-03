@@ -1,10 +1,11 @@
 <?php
 
-namespace Artworch\Http\Controllers;
+namespace Artworch\Http\Controllers\Account\Auth;
 
 use Artworch\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Artworch\Http\Controllers\Controller;
 
 class VerifyController extends Controller
 {
@@ -25,7 +26,7 @@ class VerifyController extends Controller
         auth()->guard()->login($user);
 
         return redirect()
-                        ->route('account.home')
+                        ->route('acc-home')
                         ->with('verify_state', 'Account verified!');
     }
 }

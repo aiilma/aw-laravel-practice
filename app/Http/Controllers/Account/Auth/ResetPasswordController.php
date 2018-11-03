@@ -1,6 +1,6 @@
 <?php
 
-namespace Artworch\Http\Controllers\Auth;
+namespace Artworch\Http\Controllers\Account\Auth;
 
 use Artworch\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -25,7 +25,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/account';
 
     /**
      * Create a new controller instance.
