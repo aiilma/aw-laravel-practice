@@ -1,8 +1,8 @@
 <?php
 
-namespace Artworch\Http\Controllers\Account\Auth;
+namespace Artworch\Http\Controllers\User\Auth;
 
-use Artworch\User;
+use Artworch\Modules\User\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Artworch\Http\Controllers\Controller;

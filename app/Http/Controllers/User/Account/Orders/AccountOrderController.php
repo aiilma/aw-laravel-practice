@@ -1,6 +1,6 @@
 <?php
 
-namespace Artworch\Http\Controllers\Account\Orders;
+namespace Artworch\Http\Controllers\User\Account\Orders;
 
 use Illuminate\Http\Request;
 use Artworch\Http\Controllers\Controller;

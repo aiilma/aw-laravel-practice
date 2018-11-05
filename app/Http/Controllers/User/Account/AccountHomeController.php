@@ -1,6 +1,6 @@
 <?php
 
-namespace Artworch\Http\Controllers\Account;
+namespace Artworch\Http\Controllers\User\Account;
 
 use Illuminate\Http\Request;
 use Artworch\Http\Controllers\Controller;
@@ -24,6 +24,6 @@ class AccountHomeController extends Controller
      */
     public function index()
     {
-        return view('account.home');
+        return view('user.account.home');
     }
 }

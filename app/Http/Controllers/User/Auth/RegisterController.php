@@ -1,8 +1,8 @@
 <?php
 
-namespace Artworch\Http\Controllers\Account\Auth;
+namespace Artworch\Http\Controllers\User\Auth;
 
-use Artworch\User;
+use Artworch\Modules\User\User;
 use Artworch\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -73,5 +73,15 @@ class RegisterController extends Controller
         $user->sendVerificationEmail();
 
         return $user;
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('user.auth.register');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Artworch\Http\Controllers\Account\Auth;
+namespace Artworch\Http\Controllers\User\Auth;
 
 use Artworch\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -42,5 +42,15 @@ class LoginController extends Controller
     {
         Auth::guard('web')->logout();
         return redirect(route('homepage'));
+    }
+
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        return view('user.auth.login');
     }
 }

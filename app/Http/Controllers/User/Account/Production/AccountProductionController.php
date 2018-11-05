@@ -1,6 +1,6 @@
 <?php
 
-namespace Artworch\Http\Controllers\Account\Production;
+namespace Artworch\Http\Controllers\User\Account\Production;
 
 use Artworch\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class AccountProductionController extends Controller
     public function showUploader()
     {
         // show form
-        return view('account.production.upload');
+        return view('user.account.production.upload');
     }
 
 
@@ -63,7 +63,7 @@ class AccountProductionController extends Controller
         // id автора, наименование папки архива, себестоимость, дата отправки заявки
 
 
-        return redirect()->route('account.production.requests_show');
+        return redirect()->route('user.account.production.requests_show');
     }
 
     /**
@@ -73,7 +73,7 @@ class AccountProductionController extends Controller
      */
     public function showRequests()
     {
-        return view('account.production.requests');
+        return view('user.account.production.requests');
     }
     
 
