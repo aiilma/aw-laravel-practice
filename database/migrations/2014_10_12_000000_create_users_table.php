@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
                 $table->string('token')->nullable()->comment('Токен для верификации нового аккаунта');
                 $table->rememberToken()->comment('Хэш-код пользователя');
                 $table->timestamps();
-                $table->string('steamid')->unique()->nullable()->comment('Первичный уникальный ИД пользователя steam');
+                $table->string('steamid', 128)->unique()->nullable()->comment('Первичный уникальный ИД пользователя steam');
                 $table->string('avatar')->nullable()->comment('Аватарка пользователя');
                 $table->decimal('balance', 8, 2)->default('0.00')->unsigned()->comment('Лицевой счет/баланс пользователя');
                 $table->char('status', 2)->default('1')->comment('Статус пользователя на сайте');

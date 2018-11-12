@@ -1,6 +1,6 @@
 <?php
 
-namespace Artworch;
+namespace Artworch\Modules\Compositions;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,4 +12,7 @@ class Composition extends Model
         'custom_price', 'title'
     ];
 
+    protected $casts = [
+        'published_date' => 'date:Y-m-d'
+    ];
 }

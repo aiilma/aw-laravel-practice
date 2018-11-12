@@ -1,6 +1,6 @@
 <?php
 
-namespace Artworch;
+namespace Artworch\Modules\User;
 
 use Artworch\Notifications\VerifyEmail;
 use Illuminate\Notifications\Notifiable;

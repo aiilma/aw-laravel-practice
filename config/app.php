@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Artworch'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://artworch.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -150,6 +150,9 @@ return [
         /*
          * Package Service Providers...
          */
+        Chumper\Zipper\ZipperServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -158,10 +161,7 @@ return [
         Artworch\Providers\AuthServiceProvider::class,
         // Artworch\Providers\BroadcastServiceProvider::class,
         Artworch\Providers\EventServiceProvider::class,
-        Artworch\Providers\RouteServiceProvider::class,
-
-
-        Chumper\Zipper\ZipperServiceProvider::class,
+        Artworch\Providers\RouteServiceProvider::class
     ],
 
     /*
@@ -213,6 +213,9 @@ return [
 
 
         'Zipper' => Chumper\Zipper\Zipper::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];

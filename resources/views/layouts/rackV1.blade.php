@@ -14,7 +14,9 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-
+    <link href="{{asset('css/open-iconic-bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet">
+    
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -26,6 +28,8 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        @include('layouts.footers.fV1')
     </div>
 </body>
 </html>

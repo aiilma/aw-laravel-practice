@@ -19,12 +19,20 @@
  */
 
 // compositions list...
-Route::get('/compositions', 'Compositions\CompositionController@getListCompositions')->name('homepage');
-Route::get('/compositions/p_{number_page}', 'Compositions\CompositionController@getListCompositions')->where(['number_page' => '[0-9]+']);
+Route::get('/compositions', 'Compositions\CompositionController@getListCompositions')->name('compositions');
+
+// composition form...
+Route::get('/compositions/c_{composition_id}', 'Compositions\CompositionController@getCompositionInfo')
+        ->where(['composition_id' => '[0-9]+'])
+        ->name('compositions-fbuy');
+// buying from comp listing page...
+Route::post('/composition/buy', 'Compositions\CompositionController@buyComposition');
 
 // buying from comp listing page
-Route::get('/compositions/p_{number_page}/c_{composition_id}', 'Compositions\CompositionController@getCompositionInfo')->where(['number_page' => '[0-9]+', 'composition_id' => '[0-9]+']);
-Route::post('/compositions/p_{number_page}/c_{composition_id}', 'Compositions\CompositionController@buyComposition')->where(['number_page' => '[0-9]+', 'composition_id' => '[0-9]+']);
+// Route::get('/compositions/p_{number_page}/c_{composition_id}', 'Compositions\CompositionController@getCompositionInfo')->where(['number_page' => '[0-9]+', 'composition_id' => '[0-9]+']);
+// Route::post('/compositions/p_{number_page}/c_{composition_id}', 'Compositions\CompositionController@buyComposition')->where(['number_page' => '[0-9]+', 'composition_id' => '[0-9]+']);
+// Route::get('/compositions', 'Compositions\CompositionController@getCompositionInfo');
+// Route::post('/compositions', 'Compositions\CompositionController@buyComposition');
 
 // composition showcase
 Route::get('/showcase/c_{composition_id}', 'Compositions\CompositionController@getCompositionInfo')->where(['composition_id' => '[0-9]+']);
@@ -73,4 +81,21 @@ Route::prefix('/payments')->group(function() {
     // yandex money...
     Route::get('/yamoney', 'Payments\PaymentController@showPaymentForm');
     Route::post('/yamoney', 'Payments\PaymentController@sendPaymentRequest');
+});
+
+
+
+
+
+
+
+/**
+ * Development
+ */
+Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+	Artisan::call('route:clear');
+    return "Кэш очищен.";
 });

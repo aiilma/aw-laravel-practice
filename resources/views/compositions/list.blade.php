@@ -3,11 +3,50 @@
 @section('content')
 <div class="container">
             <div class="content">
-                <div class="title m-b-md">
-                    <pre>
-                        {{ print_r($compositionsList) }}
-                    </pre>
+
+
+                {{-- {{ dd($compositions) }} --}}
+
+                {{-- Composition Card --}}
+
+                {{-- Compositions Main List Container --}}
+                <div class="row align-items-start compcard__list__cont">
+                    @foreach($compositions as $composition)
+                        {{-- Composition  Area --}}
+                        <div class="col-6 col-xl-4 comparea">
+                            <div class="card">
+                                {{-- Composition Card Place Freeze Picture --}}
+                                <img class="card-img-top compcard-extlook-freeze" src="{{asset('img/compositions') . '/f_' . $composition->freeze_picture}}" alt="Composition" height="524">
+                                {{-- Composition Card Place Preview Picture --}}
+                                <img class="card-img-top compcard-extlook-preview" src="{{asset('img/compositions') . '/p_' . $composition->preview_picture}}" alt="Composition" height="524">
+                                {{-- Composition Card Place Info Box Area --}}
+                                <div class="card-block compcard-placer-infobox">
+                                    <p class="compcard-ib-title">
+                                        <a class="comp-link-home" href="#">{{$composition->title}}</a>
+                                    </p>
+                                    <p class="compcard-ib-price">
+                                        <span>
+                                            $ {{$composition->custom_price}}
+                                        </span>
+                                    </p>
+                                    <p class="compcard-ib-date-published">
+                                        <span title="{{$composition->published_date->format('H:i:s')}}">{{$composition->published_date->format('d.m.Y')}}</span>
+                                    </p>
+                                </div>
+                                {{-- Composition Card Links --}}
+                                <div class="card-block compcard-placer-links">
+                                    <a class="comp-link-req" href="{{ route('compositions-fbuy', $composition->id) }}"><span class="oi oi-cart" aria-hidden="true"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
+
+
+
+                {{-- Pagination --}}
+                {{ $compositions->links('compositions.pagination') }}
+                    
 
             </div>
 </div>

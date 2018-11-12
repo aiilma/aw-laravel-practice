@@ -77,11 +77,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Artworch\User::class,
+            'model' => Artworch\Modules\User\User::class,
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => Artworch\Admin::class,
+            'model' => Artworch\Modules\Admin\Admin::class,
         ],
 
         // 'users' => [

@@ -5,8 +5,13 @@ body {
     background-color: $cbody;
 }
 
+.navbar-brand {
+    margin-left: 1rem;
+}
+
 .navbar-artworch {
     background-color: $grayd;
+    border-bottom: 2px solid rgb(128, 128, 128);
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -15,4 +20,40 @@ body {
 
 .card {
     background-color: $cpanel;
+}
+
+
+/* FOOTER */
+footer {
+    border-top: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+footer > .container > ul:first-child a {
+    font-size: 24px;
+}
+
+footer > .container > ul:first-child a,
+footer > .container > ul:last-child a,
+footer > .footer-copyright a {
+    color: white;
+    opacity: 0.77;
+}
+
+footer > .container > ul:first-child a:hover,
+footer > .container > ul:last-child a:hover,
+footer > .footer-copyright a:hover {
+    opacity: 1;
+}
+
+
+/* TRUNCATE TEXT */
+.card-block.compcard-placer-infobox > p {
+
+    > span, a {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        max-width: 100%;
+    }
 }

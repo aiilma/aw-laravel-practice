@@ -2,7 +2,7 @@
 
 namespace Artworch\Notifications;
 
-use Artworch\User;
+use Artworch\Modules\User\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
