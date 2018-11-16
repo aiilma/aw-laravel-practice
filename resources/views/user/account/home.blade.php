@@ -7,13 +7,13 @@
 
 
         {{-- ACCOUNT SIDEBAR --}}
-        @include('account.production.sidebar')
+        @include('user.account.production.sidebar')
 
 
         {{-- ACCOUNT SECTION --}}
         <div class="col-sm-8 col-md-9 aw_acc_section">
             <div>
-                <h2 class="text-center">Uploader</h2>
+                <h2 class="text-center">Home</h2>
 
                 <div class="profile-content">
 
@@ -31,6 +31,18 @@
                                 <p>as admin</p>
                             @endif --}}
                         </div>
+                    </div>
+
+                    {{-- Account Infobox --}}
+                    <div class="acc-home-infobox">
+                        <p class="steam-binder">
+                            Steam status:
+                            @if (Auth::user()->steamid == null)
+                                <span class="text-warning">undefined. </span><a href="{{ route('acc-steam-bind') }}" class="aw-link">Bind Steam</a>
+                            @else
+                                <span class="text-success">{{Auth::user()->steamid}}</span>
+                            @endif
+                        </p>
                     </div>
 
                 </div>

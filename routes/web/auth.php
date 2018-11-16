@@ -26,5 +26,5 @@ Route::post('/password/reset', 'User\Auth\ResetPasswordController@reset')->name(
 Route::get('/verify/{token}', 'User\Auth\VerifyController@verify')->name('acc-verify');
 
 // Steam Auth...
-Route::match(['get', 'post'], '/steam_login', 'User\Auth\SteamAuthController@steamLogin')->name('acc-steamlogin');
-Route::match(['get', 'post'], '/steam_logout', 'User\Auth\SteamAuthController@steamLogout')->name('acc-steamlogout');
+Route::get('/steam_bind', 'User\Auth\SteamAuthController@handle')->name('acc-steam-bind');
+// Route::post('/steam_logout', 'User\Auth\SteamAuthController@steamLogout')->name('acc-steamlogout');

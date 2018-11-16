@@ -13,14 +13,24 @@
     &:hover {
         color: $fonto-mx;
         text-decoration: none;
+        transition: all .1s ease;
     }
 
     &:active {
-        color: $fonto;
+        opacity: 0.8;
     }
 }
 
 /*------------------------------*/
+// Common Buttons...
+.aw-link {
+    @extend %clean-link;
+    color: rgba(128, 128, 128, 1);
+
+    &:hover {
+        transition: all .1s ease;
+    }
+}
 
 .aw-nav-link {
     @extend %clean-link;
@@ -30,23 +40,13 @@
     color: rgba(128, 128, 128, 1);
     font-weight: 600;
     background-color: transparent;
-}
-
-.aw-nav-link:hover {
-    background-color: rgba(50, 50, 50, 1);
-}
-
-
-// Account Buttons
-.ahead_monofiska,
-.aiteen_monofiska {
-    @extend %clean-link;
 
     &:hover {
-        transition: all .1s ease;
+        background-color: rgba(50, 50, 50, 1);
     }
 }
 
+// Account Buttons
 .ahead_monofiska,
 .aiteen_monofiska {
     display: block;
@@ -58,13 +58,16 @@
     color: $fontto-mn;
 }
 
+
+
 // Compositions Buttons
 .comp-link-req {
     @extend %clean-link;
     
     > span {
         font-size: 24px;
-        background-color: rgba(192, 192, 192, 0.1);
+        // background-color: rgba(192, 192, 192, 0.1);
+        background-color: $thin_light;
         box-shadow: rgba(0, 123, 255, 0) 0px 0px 0px 0.2rem;
         border-color: transparent;
         border-radius: 50%;
@@ -89,6 +92,8 @@
     }
 }
 
-.comp-link-home {
-    @extend %clean-link;
+
+/* FOOTER */
+footer > .container > ul:first-child a {
+    font-size: 24px;
 }

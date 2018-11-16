@@ -16,21 +16,24 @@
                         <div class="col-6 col-xl-4 comparea">
                             <div class="card">
                                 {{-- Composition Card Place Freeze Picture --}}
-                                <img class="card-img-top compcard-extlook-freeze" src="{{asset('img/compositions') . '/f_' . $composition->freeze_picture}}" alt="Composition" height="524">
+                                <img class="card-img-top compcard-extlook-freeze" src="{{asset('storage/img/compositions') . '/' . $composition->compRequest->project_token . '.png'}}" alt="Composition" height="524">
                                 {{-- Composition Card Place Preview Picture --}}
-                                <img class="card-img-top compcard-extlook-preview" src="{{asset('img/compositions') . '/p_' . $composition->preview_picture}}" alt="Composition" height="524">
+                                <img class="card-img-top compcard-extlook-preview" src="{{asset('storage/img/compositions') . '/' . $composition->compRequest->project_token . '.gif'}}" alt="Composition" height="524">
                                 {{-- Composition Card Place Info Box Area --}}
                                 <div class="card-block compcard-placer-infobox">
                                     <p class="compcard-ib-title">
-                                        <a class="comp-link-home" href="#">{{$composition->title}}</a>
+                                        <a class="aw-link" href="#">{{$composition->compRequest->title}}</a>
                                     </p>
                                     <p class="compcard-ib-price">
                                         <span>
-                                            $ {{$composition->custom_price}}
+                                            $ {{$composition->compRequest->custom_price}}
                                         </span>
                                     </p>
+                                    <p class="compcard-ib-author-nickname">
+                                        <span>{{ $composition->compRequest->user->username }}</span>
+                                    </p>
                                     <p class="compcard-ib-date-published">
-                                        <span title="{{$composition->published_date->format('H:i:s')}}">{{$composition->published_date->format('d.m.Y')}}</span>
+                                        <span title="{{$composition->published_at->format('H:i:s')}}">{{$composition->published_at->format('d.m.Y')}}</span>
                                     </p>
                                 </div>
                                 {{-- Composition Card Links --}}

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Artworch\Http\Controllers\Controller;
 use Artworch\Modules\Compositions\Composition;
+use Artworch\Modules\User\Account\CompRequest;
+use Artworch\Modules\User\User;
 use Input;
 use Form;
 
@@ -22,7 +24,7 @@ class CompositionController extends Controller
         // пустой массив с информацией о карточках композиций
         $compList = [];
         // записать в массив карточек следующие R * K (где K - количество карточек на странице) композиций отфильтрованных по полю published_date по убыванию
-        $compList = Composition::orderBy('published_date', 'desc')->paginate(config('compositions.max_cards_per_page'), ['*'], 'list')->onEachSide(1);
+        $compList = Composition::orderBy('published_at', 'desc')->where('view_status', '=', '1')->paginate(config('compositions.max_cards_per_page'), ['*'], 'list')->onEachSide(1);
         // отправить на страницу массив информации о карточках
         return view('compositions.list', ['compositions' => $compList]);
     }
@@ -38,12 +40,14 @@ class CompositionController extends Controller
         $dataForSelect = [ // необходимая для извлечения и отправки пользователю информация о композиции
             'id', 'title',
             'freeze_picture', 'preview_picture',
-            'custom_price', 'published_date'
+            'custom_price', 'published_at'
         ];
 
         // по id композиции вытащить следующую информацию из базы данных: title, freeze_picture, preview_picture, custom_price, published_date
-        $compDataForm = Composition::select($dataForSelect)->where('id', $compId)->get()[0];
-        return view('compositions.form', ['compositionDataForm' => $compDataForm]);
+        // $compDataForm = Composition::select($dataForSelect)->where('id', $compId)->get()[0];
+        // return view('compositions.form', ['compositionDataForm' => $compDataForm]);
+        return view('compositions.form');
+
 
         // отправить на страницу с формой композиции по ID массив информации о композиции
     }

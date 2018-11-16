@@ -1,9 +1,17 @@
+/* HEADER UI */
+.ui.aw-nav-link {
+    @extend %truncation;
+    max-width: 160px;
+}
+
+
+/* INSIDE */
 .aw_acc_sidebar,
 .aw_acc_section {
     padding: 5px;
 
     > div {
-        border: 1px solid $light_orange;
+        border: 1px solid $thin_light;
         padding: 15px;
         border-radius: 5px;
         min-height: 380px;
@@ -18,7 +26,7 @@
 .aw_acc_sidebar .table th,
 .aw_acc_sidebar .table td {
     padding: 0;
-    border-top: 1px solid $light_orange;
+    border-top: 1px solid $thin_light;
 }
 
 .panel-body .table {margin-bottom: 0px; }

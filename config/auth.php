@@ -46,15 +46,15 @@ return [
             'provider' => 'users',
         ],
 
-        'admin' => [
-            'driver' => 'session',
-            'provider' => 'admins',
-        ],
+        // 'admin' => [
+        //     'driver' => 'session',
+        //     'provider' => 'admins',
+        // ],
 
-        'admin-api' => [
-            'driver' => 'token',
-            'provider' => 'admins',
-        ],
+        // 'admin-api' => [
+        //     'driver' => 'token',
+        //     'provider' => 'admins',
+        // ],
     ],
 
     /*
@@ -79,10 +79,10 @@ return [
             'driver' => 'eloquent',
             'model' => Artworch\Modules\User\User::class,
         ],
-        'admins' => [
-            'driver' => 'eloquent',
-            'model' => Artworch\Modules\Admin\Admin::class,
-        ],
+        // 'admins' => [
+        //     'driver' => 'eloquent',
+        //     'model' => Artworch\Modules\Admin\Admin::class,
+        // ],
 
         // 'users' => [
         //     'driver' => 'database',

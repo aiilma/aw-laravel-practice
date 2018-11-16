@@ -16,3 +16,6 @@
             </div>
 </div>
 @endsection
+
+
+@push('scripts') <script src="{{asset('js/backgrounds_load.js')}}"></script>@endpush

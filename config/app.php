@@ -152,6 +152,7 @@ return [
          */
         Chumper\Zipper\ZipperServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Invisnik\LaravelSteamAuth\SteamServiceProvider::class,
 
 
         /*

@@ -4,7 +4,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h5 class="panel-title">
-                                <a data-toggle="collapse" class="ahead_monofiska" data-parent="#accordion" href="#collapseAccount">Account</a>
+                                <a data-toggle="collapse" class="aw-link ahead_monofiska" data-parent="#accordion" href="#collapseAccount">Account</a>
                             </h5>
                         </div>
                         <div id="collapseAccount" class="panel-collapse collapse">
@@ -12,7 +12,7 @@
                                 <table class="table">
                                     <tr>
                                         <td>
-                                            <a class="aiteen_monofiska" href="{{route('acc-home')}}">My account</a>
+                                            <a class="aw-link aiteen_monofiska" href="{{route('acc-home')}}">My account</a>
                                         </td>
                                     </tr>
                                 </table>
@@ -23,7 +23,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h5 class="panel-title">
-                                <a data-toggle="collapse" class="ahead_monofiska" data-parent="#accordion" href="#collapseProduction">Production</a>
+                                <a data-toggle="collapse" class="aw-link ahead_monofiska" data-parent="#accordion" href="#collapseProduction">Production</a>
                             </h5>
                         </div>
                         <div id="collapseProduction" class="panel-collapse collapse">
@@ -31,12 +31,12 @@
                                 <table class="table">
                                     <tr>
                                         <td>
-                                            <a class="aiteen_monofiska" href="{{route('acc-prod-showuploader')}}">Uploader</a>
+                                            <a class="aw-link aiteen_monofiska" href="{{route('acc-prod-showuploader')}}">Uploader</a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <a class="aiteen_monofiska" href="{{route('acc-prod-showrequests')}}">Requests</a>
+                                            <a class="aw-link aiteen_monofiska" href="{{route('acc-prod-showrequests')}}">Requests</a>
                                         </td>
                                     </tr>
                                 </table>
@@ -47,7 +47,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h5 class="panel-title">
-                                <a class="ahead_monofiska" href="/specification">Specification</a>
+                                <a class="aw-link ahead_monofiska" href="/specification">Specification</a>
                             </h5>
                         </div>
                     </div>

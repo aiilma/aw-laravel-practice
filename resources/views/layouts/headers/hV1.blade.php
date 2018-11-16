@@ -1,7 +1,7 @@
         <nav class="navbar navbar-expand-md navbar-dark navbar-artworch py-0">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('compositions') }}">
-                    <img src="{{asset('img/logo_white.svg')}}" alt="Artworch" width="48">
+                    <img src="{{asset('storage/img/logo_white.svg')}}" alt="Artworch" width="48">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -27,7 +27,7 @@
                             </li>
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="aw-nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="ui aw-nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->username }} <span class="caret"></span>
                                 </a>
 

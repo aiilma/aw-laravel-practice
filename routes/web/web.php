@@ -53,12 +53,12 @@ Route::prefix('/account')->group(function() {
 
     // .com/account/prod...
     Route::prefix('/prod')->group(function() {
+        Route::get('/', 'User\Account\Production\AccountProductionController@showList')->name('acc-prod-showlist');
         // .com/account/prod/upload
         Route::get('/upload', 'User\Account\Production\AccountProductionController@showUploader')->name('acc-prod-showuploader');
-        Route::post('/upload', 'User\Account\Production\AccountProductionController@sendRequest')->name('acc-prod-sendrequest');
+        Route::post('/upload', 'User\Account\Production\AccountProductionController@sendCompRequest')->name('acc-prod-sendcomprequest');
         // .com/account/prod/requests
         Route::get('/requests', 'User\Account\Production\AccountProductionController@showRequests')->name('acc-prod-showrequests');
-        Route::get('/list', 'User\Account\Production\AccountProductionController@showList')->name('acc-prod-showlist');
     });
 
     // .com/account/orders...
@@ -92,6 +92,51 @@ Route::prefix('/payments')->group(function() {
 /**
  * Development
  */
+
+// Fictive accepting/declining of user products
+Route::get('/p/{compid}-{status}', function(Request $request, $compid, $status) {
+
+    $project = [
+        'hash' => $projectToken = \Artworch\Modules\User\Account\CompRequest::find($compid)->project_token,
+    ];
+    $project['dir']['relative'] = 'compositions/production/requests/';
+    $project['pictures']['preview'] = $project['dir']['relative'] . $projectToken . '/' . $projectToken . '.gif';
+    $project['pictures']['freeze'] = $project['dir']['relative'] . $projectToken . '/' . $projectToken . '.png';
+
+
+    if ($status == 'decline') {
+        // если картинки существуют в публичной директории по хешу, то удалить их
+        if (Storage::exists('/public/img/compositions/' . $project['hash'] . '.gif') &&
+            Storage::exists('/public/img/compositions/' . $project['hash'] . '.png'))
+        {
+            Storage::move('/public/img/compositions/' . $project['hash'] . '.gif', $project['pictures']['preview']);
+            Storage::move('/public/img/compositions/' . $project['hash'] . '.png', $project['pictures']['freeze']);
+        }
+
+        // обновление статуса заявки на неутвердительный
+        \Artworch\Modules\User\Account\CompRequest::find($compid)->update(['accept_status' => '0',]);
+        \Artworch\Modules\User\Account\CompRequest::find($compid)->composition()->delete();
+    } else if ($status == 'accept') {
+        // если картинки существуют в директории проекта локального хранилища по хешу, то разместить в публичной директории (storePublicly)
+        if (Storage::exists($project['pictures']['preview']) &&
+            Storage::exists($project['pictures']['freeze']))
+        {
+            Storage::move($project['pictures']['preview'], '/public/img/compositions/' . $project['hash'] . '.gif');
+            Storage::move($project['pictures']['freeze'], '/public/img/compositions/' . $project['hash'] . '.png');
+        }
+
+        // обновление статуса заявки на утвердительный
+        \Artworch\Modules\User\Account\CompRequest::find($compid)->update(['accept_status' => '1',]);
+        \Artworch\Modules\User\Account\CompRequest::find($compid)->composition()->create(['expire_at' => Carbon\Carbon::now()->addMonth()]);
+
+        // изменение статус отображения на утвердительный
+        \Artworch\Modules\User\Account\CompRequest::find($compid)->composition()->update(['view_status' => '1',]);
+    }
+
+    dd(\Artworch\Modules\User\Account\CompRequest::find($compid)->composition);
+});
+
+// Clearing...
 Route::get('/clear', function() {
     Artisan::call('cache:clear');
     Artisan::call('config:cache');

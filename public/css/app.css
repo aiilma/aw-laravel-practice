@@ -10474,12 +10474,25 @@ a.text-dark:focus {
   }
 }
 
+/* COMMON */
+
 body {
   font-family: "Didact Gothic";
   font-weight: 350;
-  color: #ececec;
+  color: #d8d8d8;
   background-color: #1c2029;
 }
+
+.ui.aw-nav-link,
+.card-block.compcard-placer-infobox > p > span,
+.card-block.compcard-placer-infobox > p a {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* HEADER */
 
 .navbar-brand {
   margin-left: 1rem;
@@ -10491,7 +10504,7 @@ body {
 }
 
 .navbar-light .navbar-nav .nav-link {
-  color: #ececec;
+  color: #d8d8d8;
 }
 
 .card {
@@ -10504,33 +10517,13 @@ footer {
   border-top: 1px solid rgba(128, 128, 128, 0.25);
 }
 
-footer > .container > ul:first-child a {
-  font-size: 24px;
+/* HEADER UI */
+
+.ui.aw-nav-link {
+  max-width: 160px;
 }
 
-footer > .container > ul:first-child a,
-footer > .container > ul:last-child a,
-footer > .footer-copyright a {
-  color: white;
-  opacity: 0.77;
-}
-
-footer > .container > ul:first-child a:hover,
-footer > .container > ul:last-child a:hover,
-footer > .footer-copyright a:hover {
-  opacity: 1;
-}
-
-/* TRUNCATE TEXT */
-
-.card-block.compcard-placer-infobox > p > span,
-.card-block.compcard-placer-infobox > p a {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  max-width: 100%;
-}
+/* INSIDE */
 
 .aw_acc_sidebar,
 .aw_acc_section {
@@ -10539,7 +10532,7 @@ footer > .footer-copyright a:hover {
 
 .aw_acc_sidebar > div,
 .aw_acc_section > div {
-  border: 1px solid rgba(255, 221, 188, 0.35);
+  border: 1px solid rgba(128, 128, 128, 0.25);
   padding: 15px;
   border-radius: 5px;
   min-height: 380px;
@@ -10553,39 +10546,44 @@ footer > .footer-copyright a:hover {
 .aw_acc_sidebar .table th,
 .aw_acc_sidebar .table td {
   padding: 0;
-  border-top: 1px solid rgba(255, 221, 188, 0.35);
+  border-top: 1px solid rgba(128, 128, 128, 0.25);
 }
 
 .panel-body .table {
   margin-bottom: 0px;
 }
 
+.aw-link,
 .aw-nav-link,
-.ahead_monofiska,
-.aiteen_monofiska,
-.comp-link-req,
-.comp-link-home {
-  color: #ececec;
+.comp-link-req {
+  color: #d8d8d8;
 }
 
+.aw-link:hover,
 .aw-nav-link:hover,
-.ahead_monofiska:hover,
-.aiteen_monofiska:hover,
-.comp-link-req:hover,
-.comp-link-home:hover {
+.comp-link-req:hover {
   color: white;
   text-decoration: none;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
 }
 
+.aw-link:active,
 .aw-nav-link:active,
-.ahead_monofiska:active,
-.aiteen_monofiska:active,
-.comp-link-req:active,
-.comp-link-home:active {
-  color: #ececec;
+.comp-link-req:active {
+  opacity: 0.8;
 }
 
 /*------------------------------*/
+
+.aw-link {
+  color: gray;
+}
+
+.aw-link:hover {
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+}
 
 .aw-nav-link {
   display: block;
@@ -10597,12 +10595,6 @@ footer > .footer-copyright a:hover {
 
 .aw-nav-link:hover {
   background-color: #323232;
-}
-
-.ahead_monofiska:hover,
-.aiteen_monofiska:hover {
-  -webkit-transition: all .1s ease;
-  transition: all .1s ease;
 }
 
 .ahead_monofiska,
@@ -10618,7 +10610,7 @@ footer > .footer-copyright a:hover {
 
 .comp-link-req > span {
   font-size: 24px;
-  background-color: rgba(192, 192, 192, 0.1);
+  background-color: rgba(128, 128, 128, 0.25);
   -webkit-box-shadow: rgba(0, 123, 255, 0) 0px 0px 0px 0.2rem;
           box-shadow: rgba(0, 123, 255, 0) 0px 0px 0px 0.2rem;
   border-color: transparent;
@@ -10646,6 +10638,17 @@ footer > .footer-copyright a:hover {
   transition: all 0.15s ease 0s;
 }
 
+/* FOOTER */
+
+footer > .container > ul:first-child a {
+  font-size: 24px;
+}
+
+.card-block.compcard-placer-infobox > p > span,
+.card-block.compcard-placer-infobox > p a {
+  display: inline-block;
+}
+
 /* COMPOSITION CARD */
 
 .comparea {
@@ -10653,7 +10656,12 @@ footer > .footer-copyright a:hover {
 }
 
 .comparea > .card {
-  border: 2px solid gray;
+  border: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+.comparea > .card > img {
+  padding: 5px;
+  padding-bottom: 0;
 }
 
 .compcard-extlook-freeze {
@@ -10683,7 +10691,8 @@ footer > .footer-copyright a:hover {
   margin-bottom: 0;
 }
 
-.compcard-ib-date-published {
+.compcard-ib-date-published,
+.compcard-ib-author-nickname {
   text-align: left;
 }
 

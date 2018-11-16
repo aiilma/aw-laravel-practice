@@ -5,6 +5,7 @@ namespace Artworch\Http\Controllers\User\Auth;
 use Artworch\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use Session;
 
 class LoginController extends Controller
 {
@@ -41,7 +42,8 @@ class LoginController extends Controller
     public function userLogout()
     {
         Auth::guard('web')->logout();
-        return redirect(route('homepage'));
+
+        return redirect(route('compositions'));
     }
 
     /**

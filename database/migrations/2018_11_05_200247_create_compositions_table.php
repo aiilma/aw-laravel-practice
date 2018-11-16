@@ -17,12 +17,10 @@ class CreateCompositionsTable extends Migration
             Schema::create('compositions', function (Blueprint $table) {
                 $table->increments('id')->comment('Первичный уникальный ИД композиции');
 
-                $table->string('title', 32)->comment('Название композиции. Определяет пользователь');
-                $table->string('freeze_picture', 128)->unique()->comment('Динамическая превью-картинка композиции. Отображается при наведении');
-                $table->string('preview_picture', 128)->unique()->comment('Статическая превью-картинка композиции');
-                $table->decimal('custom_price', 8, 2)->unsigned()->comment('Цена композиции. Определяет пользователь');
+                $table->char('view_status', 1)->default('0')->comment('Статус активности композиции в листинге (0 - hide; 1 - show)');
 
-                $table->timestamp('published_date')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Дата публикации композиции');
+                $table->timestamp('published_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+                $table->datetime('expire_at')->comment('Дата блокировки продажи композиции');
             });
         }
     }

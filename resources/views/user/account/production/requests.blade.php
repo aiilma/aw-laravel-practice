@@ -6,7 +6,7 @@
         <div class="row">
 
             {{-- ACCOUNT SIDEBAR --}}
-            @include('account.production.sidebar')
+            @include('user.account.production.sidebar')
             
             <div class="col-sm-8 col-md-9 aw_acc_section">
                 <div>
