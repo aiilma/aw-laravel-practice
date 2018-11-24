@@ -8,11 +8,21 @@ use Artworch\Http\Controllers\Controller;
 use Artworch\Modules\Compositions\Composition;
 use Artworch\Modules\User\Account\CompRequest;
 use Artworch\Modules\User\User;
-use Input;
-use Form;
+use Illuminate\Validation\Rule;
+use Input, Form, Validator, Session;
 
 class CompositionController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['getListCompositions']);
+    }
+
     /**
      * Метод выводит список композиций для отображения на страницах главного листинга
      *
@@ -21,12 +31,14 @@ class CompositionController extends Controller
      */
     public function getListCompositions(Request $request)
     {
-        // пустой массив с информацией о карточках композиций
         $compList = [];
-        // записать в массив карточек следующие R * K (где K - количество карточек на странице) композиций отфильтрованных по полю published_date по убыванию
-        $compList = Composition::orderBy('published_at', 'desc')->where('view_status', '=', '1')->paginate(config('compositions.max_cards_per_page'), ['*'], 'list')->onEachSide(1);
-        // отправить на страницу массив информации о карточках
-        return view('compositions.list', ['compositions' => $compList]);
+        // записать в массив следующие R * K (где K - количество карточек на странице) композиций отфильтрованных по полю published_at по убыванию
+        $compList = Composition::orderBy('published_at', 'desc')
+                    ->where('view_status', '=', '1')
+                    ->paginate(config('compositions.max_cards_per_page'), ['*'], 'list')
+                    ->onEachSide(1);
+        
+        return view('systems.compositions.list', ['compositions' => $compList]);
     }
 
     /**
@@ -34,22 +46,13 @@ class CompositionController extends Controller
      *
      * @return string
      */
-    public function getCompositionInfo(Request $request)
+    public function getCompositionInfo(Request $request, $compId)
     {
-        $compId = $request->composition_id;
-        $dataForSelect = [ // необходимая для извлечения и отправки пользователю информация о композиции
-            'id', 'title',
-            'freeze_picture', 'preview_picture',
-            'custom_price', 'published_at'
-        ];
-
-        // по id композиции вытащить следующую информацию из базы данных: title, freeze_picture, preview_picture, custom_price, published_date
-        // $compDataForm = Composition::select($dataForSelect)->where('id', $compId)->get()[0];
-        // return view('compositions.form', ['compositionDataForm' => $compDataForm]);
-        return view('compositions.form');
-
+        // Проверка доступа к данным пользователя
+        $userScanResults = auth()->user()->validateSteamAccountSteamAccount();
 
         // отправить на страницу с формой композиции по ID массив информации о композиции
+        return view('systems.compositions.form', ['compDataForm' => Composition::findOrFail($compId), 'messages' => $userScanResults,]);
     }
 
     /**
@@ -59,11 +62,47 @@ class CompositionController extends Controller
      */
     public function buyComposition(Request $request)
     {
-        return $request;
-        // вытащить данные
-        // валидировать данные
-        // отправить данные в БД
-        // если произошла ошибка, то вернуть статус ошибки
-        // иначе - редирект на страницу листинга заказов
+
+        $response = array(
+            'messages' => [
+                'transaction' => [],
+                'steam' => [],
+            ], // Для хранения информации для пользователя
+        );
+        
+
+        $buyCompResultData = Validator::make($request->all(), [ // Статусы доступа к данным пользователя
+            '_compHash' => 'exists:comp_requests,project_token',
+            '_visualization' => [
+                                    'required',
+                                    'in:0,1',
+                                    Rule::exists('comp_requests', 'visualization')
+                                        ->where(function ($query) use ($request) {
+                                            $query->where('project_token', $request->_compHash);
+                                    }),
+            ],
+            '_background' => 'required|url',
+        ], [
+            '_compHash.exists' => 'The product does not exists',
+            '_visualization.required' => 'The visualization is required',
+            '_visualization.in' => 'The visualization may have only 2 possible values',
+            '_visualization.exists' => 'Invalid visualization specified for current product',
+            '_background.required' => 'The background is required',
+            '_background.url' => 'Invalid URL of background',
+        ]);
+        
+
+        $response['messages']['transaction'] = $buyCompResultData->messages();
+        $response['messages']['steam'] = auth()->user()->validateSteamAccount();
+        
+
+        if (count($response['messages']['transaction']) == 0 && count($response['messages']['steam']) == 0)
+        {
+            $request->session()->flash('order', $request->all());
+            // return response()->json(['link' => route('acc-orders-showlist'),]);
+        }
+    
+        return response()->json(['messages' => $response['messages'],]);
+
     }
 }

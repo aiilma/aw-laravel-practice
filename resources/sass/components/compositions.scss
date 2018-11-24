@@ -1,7 +1,3 @@
-.compcard__list__cont {
-
-}
-
 
 .card-block.compcard-placer-infobox > p {
 
@@ -11,11 +7,12 @@
     }
 }
 
+
+
+
+
+
 /* COMPOSITION CARD */
-
-img[class^="compcard-extlook-"] {
-
-}
 
 .comparea {
     padding: 15px;
@@ -67,6 +64,13 @@ img[class^="compcard-extlook-"] {
     padding-top: 0;
 }
 
+
+
+
+
+
+
+
 /* PAGINATION */
 
 .compcard__list__pager {
@@ -104,4 +108,209 @@ img[class^="compcard-extlook-"] {
 
 .compcard__list__pager li.active span {
     background-color: #647484;
+}
+
+
+
+
+
+
+
+
+/* FORM */
+
+.sidebar-group {
+    position: relative;
+
+    p.sidebar-panel-item {
+        margin-bottom: 0.5rem;
+    }
+}
+
+// visualization component
+.aw__visualization__variants {
+
+    >.aw__form__component>label {
+        margin: 0 auto;
+    }
+
+    .aw__visual__case > input {
+        position: absolute;
+        visibility: hidden;
+    }
+
+    .aw__visual__case > input:checked + div {
+        cursor: default;
+        opacity: 1;
+    }
+
+    .aw__visual__case > .visualization__image {
+        width: 80px;
+        height: 104px;
+        opacity: 0.85;
+        cursor: pointer;
+        background-color: rgb(17, 18, 22);
+        background-size: 64px 88px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        border-radius: 10%;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    #visualCaseLong > .visualization__image {
+        background-image: url('/storage/img/aw_long_icon_alpha.svg');
+    }
+
+    #visualCaseShort > .visualization__image {
+        background-image: url('/storage/img/aw_short_icon_alpha.svg');
+    }
+
+    #visualCaseLong > input:checked + div {
+        background-image: url('/storage/img/aw_long_icon_alpha_active.svg');
+    }
+
+    #visualCaseShort > input:checked + div {
+        background-image: url('/storage/img/aw_short_icon_alpha_active.svg');
+    }
+
+    #visualCaseLong > input:disabled + div {
+        background-image: url('/storage/img/aw_long_icon_alpha_disabled.svg');
+        opacity: 0.5;
+
+        &:hover {
+            opacity: 0.65;
+        }
+    }
+
+    #visualCaseShort > input:disabled + div {
+        background-image: url('/storage/img/aw_short_icon_alpha_disabled.svg');
+        opacity: 0.5;
+
+        &:hover {
+            opacity: 0.65;
+        }
+    }
+
+}
+
+// user backgrounds list
+
+.user__bg__cont button[data-target="#collapseUserBackgrounds"] {
+    margin-bottom: 1rem;
+}
+
+#collapseUserBackgrounds {
+
+    border: 1px solid rgba(128, 128, 128, 0.25);
+    border-top: none;
+    margin: 0 auto;
+    text-align: left;
+
+    .user__bg__body {
+        margin: 0.5rem 0;
+    }
+}
+
+.user__bg__body>.user-bg-list-layer {
+    height: 234px;
+    min-height: 64px;
+    max-height: 234px;
+
+    #loader {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+}
+
+.user__bg__body>.user-bg-list-layer>ul {
+    height: 100%;
+    overflow-y: overlay;
+    margin: 0;
+    background: transparent;
+
+    .userbg-item {
+        padding: 0.4rem 0.4rem;
+        border-bottom: 2px solid transparent;
+        border-radius: 10px;
+
+        > button {
+            cursor: pointer;
+            opacity: 0.85;
+            width: 96px;
+            height: 96px;
+            background: transparent;
+            border: 2px solid rgba(128, 128, 128, 0.25);
+            border-radius: 5px;
+            outline: none;
+
+            &:hover {
+                opacity: 1;
+                transition: all .1s ease;
+                background: rgba(255, 190, 60, 0.25);
+                border: 2px solid rgba(255, 166, 0, 1);
+            }
+
+            &:active {
+                border: 2px solid rgb(255, 230, 180);
+                background: rgba(150, 150, 150, 0.25);
+                opacity: 0.85;
+            }
+        }
+    }
+}
+
+#collapseUserBackgrounds > div {
+    padding-top: 0;
+
+    .user__bg__controller {
+        border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+    }
+    .user__bg__body {
+        margin: 1rem 0;
+    }
+}
+
+.user__bg__controller > .user-bg-controls-group {
+    padding: 1rem 0;
+}
+
+.user__bg__controller > .user-bg-controls-group > a {
+    padding: 1rem;
+}
+
+.popover {
+    background: linear-gradient(to top right, #039be5 0%, #6cb0da 60%);
+    
+    > .popover-header {
+        color: #16191f;
+        background-color: transparent;
+        border: none;
+    }
+
+    .arrow:before,
+    .arrow:after {
+        border-right-color: #40a4e0;
+    }
+}
+
+// positions...
+.compcard__form__cont .aw-form-default-inputs {
+    text-align: center;
+}
+
+.compcard__form__cont .aw-form-controls {
+    text-align: right;
+    border-top: 1px solid rgba(128, 128, 128, 0.25);
+    padding: 1rem 0;
+
+    > button {
+        margin-right: 5rem;
+    }
 }

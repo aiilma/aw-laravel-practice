@@ -26,6 +26,11 @@
                                 @endif
                             </li>
                         @else
+                            {{-- balance --}}
+                            <li class="nav-item dropdown">
+                                <a href="{{route('payments-show')}}" class="ui aw-nav-link" title="$ {{ Auth::user()->balance }}">$ {{ Auth::user()->balance }} <span class="caret"></span></a>
+                            </li>
+                            {{-- dropdown menu --}}
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="ui aw-nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->username }} <span class="caret"></span>

@@ -7,18 +7,22 @@ use Artworch\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
-
-    public function index()
+    /**
+     * Возвращает HTML список доступных платежных систем
+     *
+     * @return string
+     */
+    public function showPayments(Request $request)
     {
-        
+        return view('systems.payments.list');
     }
 
-    public function showPaymentForm()
-    {
-        
-    }
-
-    public function sendPaymentRequest()
+    /**
+     * Выполнение транзакции пополнения баланса пользователя
+     *
+     * @return string
+     */
+    public function sendPaymentRequest(Request $request)
     {
         
     }

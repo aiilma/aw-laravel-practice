@@ -10,8 +10,11 @@ window.Popper = require('popper.js').default;
 
 try {
     window.$ = window.jQuery = require('jquery');
-
+    
     require('bootstrap');
+
+    // project ref libs
+    require('./jquery.toast.js');
 } catch (e) {}
 
 /**

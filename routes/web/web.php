@@ -26,17 +26,11 @@ Route::get('/compositions/c_{composition_id}', 'Compositions\CompositionControll
         ->where(['composition_id' => '[0-9]+'])
         ->name('compositions-fbuy');
 // buying from comp listing page...
-Route::post('/composition/buy', 'Compositions\CompositionController@buyComposition');
+Route::post('/composition/buy', 'Compositions\CompositionController@buyComposition')->name('compositions-form-buy');
 
-// buying from comp listing page
-// Route::get('/compositions/p_{number_page}/c_{composition_id}', 'Compositions\CompositionController@getCompositionInfo')->where(['number_page' => '[0-9]+', 'composition_id' => '[0-9]+']);
-// Route::post('/compositions/p_{number_page}/c_{composition_id}', 'Compositions\CompositionController@buyComposition')->where(['number_page' => '[0-9]+', 'composition_id' => '[0-9]+']);
-// Route::get('/compositions', 'Compositions\CompositionController@getCompositionInfo');
-// Route::post('/compositions', 'Compositions\CompositionController@buyComposition');
 
 // composition showcase
 Route::get('/showcase/c_{composition_id}', 'Compositions\CompositionController@getCompositionInfo')->where(['composition_id' => '[0-9]+']);
-
 // buying from showcase page
 Route::post('/showcase/c_{composition_id}', 'Compositions\CompositionController@buyComposition')->where(['composition_id' => '[0-9]+']);
 
@@ -49,7 +43,10 @@ Route::post('/showcase/c_{composition_id}', 'Compositions\CompositionController@
 Route::prefix('/account')->group(function() {
 
     // .com/account
-    Route::get('/', 'User\Account\AccountHomeController@index')->name('acc-home');
+    Route::get('/', 'User\Account\Account\AccountHomeController@index')->name('acc-home');
+    Route::get('/stats', 'User\Account\Account\AccountStatsController@index')->name('acc-stats');
+    Route::get('/notifications', 'User\Account\Account\AccountNotificationsController@index')->name('acc-notifications');
+    Route::get('/settings', 'User\Account\Account\AccountSettingsController@index')->name('acc-settings');
 
     // .com/account/prod...
     Route::prefix('/prod')->group(function() {
@@ -64,9 +61,42 @@ Route::prefix('/account')->group(function() {
     // .com/account/orders...
     Route::prefix('/orders')->group(function() {
         Route::get('/', 'User\Account\Orders\AccountOrderController@showList')->name('acc-orders-showlist');
+        Route::get('/download/{orderHash}', 'User\Account\Orders\AccountOrderController@downloadProduct')->name('acc-orders-downloadprod');
     });
-});
 
+
+    // optionals in account route...
+    /**
+     * Get backgrounds list from steam inventory
+     * .com/account/parse_backgrounds
+     * @return array
+     */
+    Route::post('/get_steam_backgrounds', function(Request $request) {
+        $response = array(
+            'messages' => [
+                'steam' => [],
+            ], // Для хранения информации для пользователя
+            'backgrounds' => '', // Для хранения промежуточных результатов
+        );
+        // Проверка доступа к данным пользователя
+        $response['messages']['steam'] = auth()->user()->validateSteamAccountSteamAccount();
+
+
+        // Если есть сообщения, то отправить их пользователю
+        if (count($response['messages']['steam']) !== 0)
+        {
+            return response()->json(array('messages' => $response['messages'],));
+        }
+
+
+        // Получить список фонов тещкуего пользователя в виде HTML
+        $response['backgrounds'] = auth()->user()->getBackgroundsListHtml();
+
+        return response()->json($response);
+        
+    })->name('get-steam-backgrounds');
+
+});
 
 
 
@@ -75,12 +105,12 @@ Route::prefix('/account')->group(function() {
  */
 Route::prefix('/payments')->group(function() {
     // show variants...
-    Route::get('/', 'Payments\PaymentController@index');
-    Route::post('/', 'Payments\PaymentController@index');
+    Route::get('/', 'Payments\PaymentController@showPayments')->name('payments-show');
+    Route::post('/', 'Payments\PaymentController@sendPaymentRequest')->name('payments-sendrequest');
 
-    // yandex money...
-    Route::get('/yamoney', 'Payments\PaymentController@showPaymentForm');
-    Route::post('/yamoney', 'Payments\PaymentController@sendPaymentRequest');
+    // // yandex money...
+    // Route::get('/yamoney', 'Payments\PaymentController@showPaymentForm')->name('payments-postindex');
+    // Route::post('/yamoney', 'Payments\PaymentController@sendPaymentRequest')->name('payments-postindex');
 });
 
 

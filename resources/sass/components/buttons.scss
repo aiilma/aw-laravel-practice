@@ -5,7 +5,6 @@
 
 }
 
-
 // reset link styles
 %clean-link {
     color: $fonto;
@@ -21,8 +20,27 @@
     }
 }
 
+%aw-btn-smart {
+    background: linear-gradient( to top right,rgba(117,117,117 ,1) 0%, rgba(33,33,33 ,1) 90%);
+    box-shadow: 1px 1px 30px rgba(33,33,33 ,1);
+    font-weight: 500;
+    color: #ddd;
+    min-width: 6rem;
+    width: 10rem;
+
+    &:active {
+        box-shadow: 0 1px 0 #000;
+    }
+
+    &:not(:disabled):not(.disabled).active,
+    &:not(:disabled):not(.disabled):active {
+        background-image: none;
+    }
+}
+
 /*------------------------------*/
 // Common Buttons...
+
 .aw-link {
     @extend %clean-link;
     color: rgba(128, 128, 128, 1);
@@ -46,6 +64,31 @@
     }
 }
 
+.btn.focus, .btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0rem rgba(0,123,255,.25);
+}
+
+
+// aw buttons...
+.aw-btn-smart-v2 {
+    @extend %aw-btn-smart;
+
+    &:hover {
+        background: linear-gradient( to top right, rgba(63,81,181,1) 0%, rgba(3,155,229 ,1) 40%);
+        box-shadow: 1px 1px 22px rgba(2,119,189 ,1);
+    }
+}
+
+.aw-btn-smart-v3 {
+    @extend %aw-btn-smart;
+
+    &:hover {
+        background: linear-gradient(to right top, rgb(199, 144, 72) 0%, rgb(255, 154, 23) 100%);
+        box-shadow: rgb(255, 163, 93) 1px 1px 22px;
+    }
+}
+
 // Account Buttons
 .ahead_monofiska,
 .aiteen_monofiska {
@@ -66,7 +109,6 @@
     
     > span {
         font-size: 24px;
-        // background-color: rgba(192, 192, 192, 0.1);
         background-color: $thin_light;
         box-shadow: rgba(0, 123, 255, 0) 0px 0px 0px 0.2rem;
         border-color: transparent;
@@ -87,8 +129,27 @@
     }
 
     &:active span {
-        color: black;
+        color: #23282f;
         transition: all 0.15s ease 0s;
+    }
+}
+
+.comp-link-req.disabled {
+
+    > span {
+        opacity: 0.65;
+    }
+
+    &:hover span {
+        background-color: rgba(232, 232, 232, 0.75);
+        box-shadow: rgba(227, 52, 47, 0.6) 1px 1px 100px;
+        color: rgba(227, 52, 47, 1);
+        opacity: 0.8;
+    }
+
+    &:active span {
+        opacity: 0.65;
+        color: #23282f;
     }
 }
 

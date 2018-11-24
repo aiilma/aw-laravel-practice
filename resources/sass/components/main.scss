@@ -14,7 +14,47 @@ body {
     max-width: 100%;
 }
 
+.aw_sidebar,
+.aw_section {
 
+    padding: 5px;
+
+    > div {
+        border: 1px solid $thin_light;
+        padding: 15px;
+        border-radius: 5px;
+        min-height: 380px;
+        background-color: $cpanel;
+    }
+
+    a, span,
+    h1, h2, h3, h4, h5 {
+        @extend %truncation;
+    }
+}
+
+// site alerts
+
+.aw-alert {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    text-align: center;
+    background: #1b2028;
+
+    > ul {
+        list-style-type: none;
+    }
+
+    > .aw-alert-danger-h {
+        color: rgba(255, 100, 100, 1);
+    }
+}
+
+.aw-alert-danger {
+    color: #f5c6cb;
+}
 
 /* HEADER */
 .navbar-brand {

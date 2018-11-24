@@ -19,7 +19,7 @@ class AccountProductionController extends Controller
     public function showUploader()
     {
         // show form
-        return view('user.account.production.upload');
+        return view('systems.user.account.production.upload');
     }
 
     /**

@@ -18,6 +18,14 @@ class Composition extends Model
         'published_at' => 'date:Y-m-d'
     ];
 
+
+    public static function buy($formData)
+    {
+        return [
+            'qq' => $formData,
+        ];
+    }
+
     /**
      * Relation to composition request; one to one
      *

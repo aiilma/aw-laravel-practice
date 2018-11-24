@@ -18,7 +18,7 @@ class CreateCompRequestsTable extends Migration
                 $table->increments('id')->comment('Первичный уникальный ИД заявки на загрузку композиции');
 
                 $table->string('title', 64);
-                $table->decimal('custom_price', 8, 2);
+                $table->decimal('custom_price', 8, 2)->unsigned();
                 $table->char('visualization', 1)->comment('Допустимые формы отображения/визуализации (L / S), характерные проекту. Определяет пользователь');
                 $table->json('inputs')->nullable()->comment('Поля формы, которые определяются пользователем');
                 $table->string('project_token', 255)->unique();
