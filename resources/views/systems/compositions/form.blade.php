@@ -80,7 +80,7 @@
                         </div>
 
                         {{-- BACKGROUNDS LIST CONTROLLER --}}
-                        <div class="form-group user__bg__cont">
+                        <div class="form-group aw__user__bg__variant">
                             <div class="aw__form__label">
                                 <label>Background:</label>
                             </div>

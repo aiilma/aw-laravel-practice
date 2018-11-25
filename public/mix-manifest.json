@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/js/order_controls.js": "/js/order_controls.js",
     "/js/backgrounds_load.js": "/js/backgrounds_load.js",
     "/js/compositions_listing.js": "/js/compositions_listing.js",
     "/js/compositions_form.js": "/js/compositions_form.js"

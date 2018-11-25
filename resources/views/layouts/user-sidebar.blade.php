@@ -56,6 +56,25 @@
         </div>
     </div>
 </div>
+{{-- Orders --}}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5 class="panel-title">
+            <a data-toggle="collapse" class="aw-link ahead_monofiska" data-parent="#accordion" href="#collapseOrders">Orders</a>
+        </h5>
+    </div>
+    <div id="collapseOrders" class="panel-collapse collapse">
+        <div class="panel-body">
+            <table class="table">
+                <tr>
+                    <td>
+                        <a class="aw-link aiteen_monofiska" href="{{route('acc-orders-showlist')}}">List</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 {{-- Specification --}}
 <div class="panel panel-default">
     <div class="panel-heading">

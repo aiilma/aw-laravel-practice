@@ -49,7 +49,7 @@ class CompositionController extends Controller
     public function getCompositionInfo(Request $request, $compId)
     {
         // Проверка доступа к данным пользователя
-        $userScanResults = auth()->user()->validateSteamAccountSteamAccount();
+        $userScanResults = auth()->user()->validateSteamAccount();
 
         // отправить на страницу с формой композиции по ID массив информации о композиции
         return view('systems.compositions.form', ['compDataForm' => Composition::findOrFail($compId), 'messages' => $userScanResults,]);
@@ -62,14 +62,17 @@ class CompositionController extends Controller
      */
     public function buyComposition(Request $request)
     {
-
         $response = array(
             'messages' => [
                 'transaction' => [],
                 'steam' => [],
             ], // Для хранения информации для пользователя
         );
-        
+
+        $request->request->add(['_userBalance' => auth()->user()->balance]);
+        $request->request->add(['_ordersCount' => count($request->session()->get('orders_cart')),]);
+        $request->request->add(['_orderHash' => str_random(255),]);
+
 
         $buyCompResultData = Validator::make($request->all(), [ // Статусы доступа к данным пользователя
             '_compHash' => 'exists:comp_requests,project_token',
@@ -82,6 +85,8 @@ class CompositionController extends Controller
                                     }),
             ],
             '_background' => 'required|url',
+            '_userBalance' => 'numeric|gte:'.CompRequest::where('project_token', '=', $request->_compHash)->first()->custom_price,
+            '_ordersCount' => 'lte:'.(integer)config('orders.max_orders_per_time'),
         ], [
             '_compHash.exists' => 'The product does not exists',
             '_visualization.required' => 'The visualization is required',
@@ -89,6 +94,9 @@ class CompositionController extends Controller
             '_visualization.exists' => 'Invalid visualization specified for current product',
             '_background.required' => 'The background is required',
             '_background.url' => 'Invalid URL of background',
+            '_userBalance.numeric' => 'Your balance must have a numeric format',
+            '_userBalance.gte' => 'Is not enough of cash on your balance',
+            '_ordersCount.lte' => 'Too many orders in queue session',
         ]);
         
 
@@ -98,7 +106,13 @@ class CompositionController extends Controller
 
         if (count($response['messages']['transaction']) == 0 && count($response['messages']['steam']) == 0)
         {
-            $request->session()->flash('order', $request->all());
+            if (!$request->session()->has('orders_cart'))
+            {
+                $request->session()->put('orders_cart', []);
+            }
+
+            $request->session()->push('orders_cart', $request->all());
+
             // return response()->json(['link' => route('acc-orders-showlist'),]);
         }
     

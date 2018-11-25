@@ -2,7 +2,28 @@
 
 // reset button styles
 %clean-button {
+    color: $fonto;
+    font-weight: 500;
+    background: transparent;
+    border:none;
 
+    &:hover {
+        color: $fonto-mx;
+        transition: all .1s ease;
+    }
+
+    &:active {
+        opacity: 0.8;
+    }
+
+    &:focus {
+        box-shadow: rgba(0, 123, 255, 0) 0px 0px 0px 0.2rem;
+        outline: 0px;
+    }
+
+    &:not(:disabled):not(.disabled) {
+        cursor: pointer;
+    }
 }
 
 // reset link styles
@@ -41,13 +62,14 @@
 /*------------------------------*/
 // Common Buttons...
 
+.aw-btn {
+    @extend %clean-button;
+    color: rgba(128, 128, 128, 1);
+}
+
 .aw-link {
     @extend %clean-link;
     color: rgba(128, 128, 128, 1);
-
-    &:hover {
-        transition: all .1s ease;
-    }
 }
 
 .aw-nav-link {
@@ -88,6 +110,53 @@
         box-shadow: rgb(255, 163, 93) 1px 1px 22px;
     }
 }
+
+// modal buttons
+.modal-header .close {
+    margin: -1rem -1rem -1rem 0;
+}
+
+.close {
+    color: #ddd;
+    opacity: .75;
+    text-shadow: 0 1px 0 rgb(255, 255, 255);
+}
+
+.close:not(:disabled):not(.disabled):focus, .close:not(:disabled):not(.disabled):hover {
+    color: #ddd;
+    opacity: 1;
+    outline: none;
+}
+
+.close:not(:disabled):not(.disabled):active {
+    opacity: .75;
+}
+
+.btn-modal-v1 {
+    @extend %clean-button;
+    background: #1d1f24;
+    padding: 26px 42px;
+    border-radius: 0;
+    border-top-left-radius: 85%;
+    transition: all .2s ease;
+}
+
+.btn-modal-v1:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.0);
+}
+
+.btn-modal-v1:hover {
+    transition: all .2s ease;
+    color: #fff;
+}
+
+.btn-modal-v1:active {
+    transition: all .0s ease;
+    opacity: 1;
+    color: #bbb;
+}
+
 
 // Account Buttons
 .ahead_monofiska,
@@ -152,6 +221,8 @@
         color: #23282f;
     }
 }
+
+
 
 
 /* FOOTER */

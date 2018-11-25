@@ -25,7 +25,6 @@ try {
                 data: buyCompositionData,
                 dataType: 'json',
                 success: function(result) {
-                    console.log(result);
 
                     let heading = 'Undefined',
                         text = 'Whoops! We have no messages for you :(',
@@ -53,9 +52,7 @@ try {
 
                         for (let key in result.messages) {
                             for (let index in result.messages[key]) {
-                                if (result.messages.key.hasOwnProperty(index)) {
-                                    noteCfg['text'] = result.messages.key[index];
-                                }
+                                noteCfg['text'] = result.messages[key][index][0];
                             }
                         }
 

@@ -1,0 +1,178 @@
+// контейнер заказов
+.aw__user__orders__table {
+    
+    // заголовочная строка...
+    .aw__user__orders__table__titles {
+        > div {
+            background: linear-gradient(to right top, rgb(199, 144, 72) 0%, rgb(255, 154, 23) 100%);
+        }
+        
+        .aw__orders__table__titlecell {
+            padding: 1rem;
+            border-width: 2px 2px 2px;
+            border-style: solid solid none;
+            border-color: rgba(247, 255, 154, 0.15) rgba(247, 255, 154, 0.15) rgba(247, 255, 154, 0.15);
+            border-image: initial;
+            border-bottom: none;
+        }
+    
+        .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 0px;
+        }
+    }
+
+    // содержимое таблицы
+    .user__order__dataset {
+        background-color: rgb(28, 31, 36);
+        height: 550px;
+        padding: 1rem 0px;
+        border-bottom: 2px solid rgba(247, 255, 154, 0.15);
+        overflow: auto;
+
+        .row__user__current__order {
+            min-height: 32px;
+            width: 100%;
+            margin: 0.5rem auto;
+            padding: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(255, 255, 255, 0.15));
+        }
+
+        .row__user__current__order[data-order-status="wait"] {
+            background: linear-gradient(rgba(255, 217, 102, 0.75), rgba(255, 255, 255, 0.15));
+        }
+
+        .row__user__current__order[data-order-status="process"] {
+            background: linear-gradient(rgba(255, 102, 125, 0.75), rgba(255, 255, 255, 0.15));
+        }
+
+        .row__user__current__order[data-order-status="export"] {
+            background: linear-gradient(rgba(12, 218, 255, 0.75), rgba(255, 255, 255, 0.15));
+        }
+
+        .row__user__current__order[data-order-status="done"] {
+            background: linear-gradient(rgba(0, 255, 11, 0.75), rgba(255, 255, 255, 0.15));
+        }
+    }
+}
+
+
+.user__order__dataset > .row__user__current__order {
+    
+    .aw-link, .aw-btn {
+        font-weight: 600;
+        color: rgba(192, 192, 192, 1);
+
+        &:hover {
+            color: $fonto-mx;
+        }
+
+        &:active {
+            opacity: 0.8;
+        }
+    }
+
+    > .user__order__cell {
+        text-align: center;
+        margin: auto 0px;
+
+        a, span, p, button {
+            @extend %truncation;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        // confirm/deny buttons
+        > a[class*="aw__icon__"] {
+            margin: 5px;
+            opacity: 0.75;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &:active {
+                opacity: 0.75;
+            }
+        }
+    }
+
+    > .user__order__cell:first-child {
+        padding-left: 0px;
+    }
+
+    > .user__order__cell:last-child {
+        padding-right: 0px;
+        cursor: default;
+    }
+}
+
+
+// modal window design...
+.modal-dialog.order__dataview {
+    padding: 45px 0px 0px 10px;
+    border: 1px solid rgba(247, 255, 154, 0.15);
+    border-radius: 50% 30px 0% 45%;
+    border-top-right-radius: 30px;
+    min-height: 300px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 8px 0px, rgba(0, 0, 0, 0.17) 0px 7px 20px 0px;
+    background-color: rgba(0, 0, 0, 1);
+
+    > .modal-content > .modal-body {
+        border: none;
+        background: none;
+    }
+}
+
+.modal-dialog.order__dataview.wait {
+    background-color: rgba(175, 161, 16, 1);    
+}
+
+.modal-dialog.order__dataview.process {
+    background-color: rgba(202, 70, 90, 1);    
+}
+
+.modal-dialog.order__dataview.export {
+    background-color: rgba(43, 158, 179, 1);    
+}
+
+.modal-dialog.order__dataview.done {
+    background-color: rgba(71, 167, 57, 1);    
+}
+
+.modal-content.mdc__order__data {
+    text-align: center;
+    min-height: 235px;
+    border-radius: 61px 61px 0% 50%;
+}
+
+.modal-content.mdc__order__data > .modal-header {
+    margin-top: -50px;
+}
+
+.order__data__background {
+    width: 96px;
+    height: 96px;
+}
+
+.fg__orderdata__vboxs > label > .vcase__.locked {
+    cursor: default;
+}
+
+
+// 
+
+.fg__orderdata__default {
+
+    > .aw__user__bg__variant .order__data__background > img,
+    {
+        opacity: 0.5;
+    }
+    
+    > .aw__user__bg__variant .order__data__background > img:hover,
+    {
+        opacity: 0.65;
+    }
+
+}

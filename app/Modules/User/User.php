@@ -44,7 +44,7 @@ class User extends Authenticatable
      *
      * @return array
      */
-    public function validateSteamAccountSteamAccount()
+    public function validateSteamAccount()
     {
         $user =  [ // Статусы доступа к данным пользователя
             'is_steamid' => $this->isBindedSteam(),

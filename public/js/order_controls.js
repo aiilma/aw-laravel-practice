@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 45);
+/******/ 	return __webpack_require__(__webpack_require__.s = 47);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -10437,15 +10437,15 @@ return jQuery;
 
 /***/ }),
 
-/***/ 45:
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(46);
+module.exports = __webpack_require__(48);
 
 
 /***/ }),
 
-/***/ 46:
+/***/ 48:
 /***/ (function(module, exports, __webpack_require__) {
 
 try {
@@ -10458,55 +10458,60 @@ try {
             }
         });
 
+        $(function () {
+
+            // событие открытия модального окна
+            $("#orderDataModalWrapper").on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var orderstatus = button.parents(".row__user__current__order").attr('data-order-status');
+                $(this).children().attr('class', 'modal-dialog modal-lg order__dataview ' + orderstatus);
+            });
+
+            $("#orderDataModalWrapper").on('hidden.bs.modal', function (event) {
+                $(this).children().attr('class', 'modal-dialog modal-lg order__dataview');
+            });
+        });
+
         // AJAX. 
-        $('#buyCompositionBtn').on('click', function (e) {
+        $('#confirmOrderBtn').on('click', function (e) {
             // form data object
-            var buyCompositionData = {
-                _visualization: $('.aw__visual__case>input:checked').val(),
-                _background: $("#userBackgroundInput").val(),
-                _compHash: $("#compositionHash").val() // get from url on current page
+            var orderData = {
+                message: 'acceptAJAX'
+                // _visualization: $('.aw__visual__case>input:checked').val(),
+                // _background: $("#userBackgroundInput").val(),
+                // _compHash: $("#compositionHash").val(), // get from url on current page
             };
 
             // request
             $.ajax({
                 url: e.target.attributes['data-link'].value,
                 type: "POST",
-                data: buyCompositionData,
+                data: orderData,
                 dataType: 'json',
                 success: function success(result) {
+                    console.log(result);
+                }
+            });
+        });
 
-                    var heading = 'Undefined',
-                        text = 'Whoops! We have no messages for you :(',
-                        bgColor = 'rgba(39, 45, 51, 1)';
+        // AJAX. 
+        $('#denyOrderBtn').on('click', function (e) {
+            // form data object
+            var orderData = {
+                message: 'declineAJAX'
+                // _visualization: $('.aw__visual__case>input:checked').val(),
+                // _background: $("#userBackgroundInput").val(),
+                // _compHash: $("#compositionHash").val(), // get from url on current page
+            };
 
-                    // объект кфг уведомления
-                    var noteCfg = {
-                        heading: heading,
-                        text: text,
-                        showHideTransition: 'slide',
-                        loaderBg: 'rgba(255,226,163, 1)',
-                        loader: false,
-                        stack: 1,
-                        hideAfter: 6500,
-                        textAlign: 'center',
-                        position: 'bottom-right',
-                        bgColor: bgColor
-                    };
-
-                    if (result.messages.steam.length !== 0 || result.messages.transaction.length !== 0) {
-                        noteCfg['heading'] = 'Whoops!';
-                        noteCfg['text'] = '';
-
-                        for (var key in result.messages) {
-                            for (var index in result.messages[key]) {
-                                noteCfg['text'] = result.messages[key][index][0];
-                            }
-                        }
-
-                        $.toast(noteCfg);
-                    } else {
-                        window.location.href = 'https://artworch.com/account/orders/';
-                    }
+            // request
+            $.ajax({
+                url: e.target.attributes['data-link'].value,
+                type: "POST",
+                data: orderData,
+                dataType: 'json',
+                success: function success(result) {
+                    console.log(result);
                 }
             });
         });

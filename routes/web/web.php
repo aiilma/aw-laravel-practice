@@ -62,6 +62,27 @@ Route::prefix('/account')->group(function() {
     Route::prefix('/orders')->group(function() {
         Route::get('/', 'User\Account\Orders\AccountOrderController@showList')->name('acc-orders-showlist');
         Route::get('/download/{orderHash}', 'User\Account\Orders\AccountOrderController@downloadProduct')->name('acc-orders-downloadprod');
+
+
+        /**
+         * Confirm order and write order data in database
+         * .com/account/orders/confirm
+         * @return bool
+         */
+        Route::post('/confirm', function(\Illuminate\Http\Request $request) {
+            // 
+            return response()->json($request->all());
+        })->name('acc-orders-confirm');
+
+        /**
+         * Deny order and delete data of order from session
+         * .com/account/orders/deny
+         * @return bool
+         */
+        Route::post('/deny', function(\Illuminate\Http\Request $request) {
+            // 
+            return response()->json($request->all());
+        })->name('acc-orders-deny');
     });
 
 
@@ -71,7 +92,7 @@ Route::prefix('/account')->group(function() {
      * .com/account/parse_backgrounds
      * @return array
      */
-    Route::post('/get_steam_backgrounds', function(Request $request) {
+    Route::post('/get_steam_backgrounds', function(\Illuminate\Http\Request $request) {
         $response = array(
             'messages' => [
                 'steam' => [],
@@ -79,7 +100,7 @@ Route::prefix('/account')->group(function() {
             'backgrounds' => '', // Для хранения промежуточных результатов
         );
         // Проверка доступа к данным пользователя
-        $response['messages']['steam'] = auth()->user()->validateSteamAccountSteamAccount();
+        $response['messages']['steam'] = auth()->user()->validateSteamAccount();
 
 
         // Если есть сообщения, то отправить их пользователю
@@ -124,10 +145,10 @@ Route::prefix('/payments')->group(function() {
  */
 
 // Fictive accepting/declining of user products
-Route::get('/p/{compid}-{status}', function(Request $request, $compid, $status) {
+Route::get('/p/{compReqId}-{status}', function(Request $request, $compReqId, $status) {
 
     $project = [
-        'hash' => $projectToken = \Artworch\Modules\User\Account\CompRequest::find($compid)->project_token,
+        'hash' => $projectToken = \Artworch\Modules\User\Account\CompRequest::find($compReqId)->project_token,
     ];
     $project['dir']['relative'] = 'compositions/production/requests/';
     $project['pictures']['preview'] = $project['dir']['relative'] . $projectToken . '/' . $projectToken . '.gif';
@@ -144,8 +165,8 @@ Route::get('/p/{compid}-{status}', function(Request $request, $compid, $status) 
         }
 
         // обновление статуса заявки на неутвердительный
-        \Artworch\Modules\User\Account\CompRequest::find($compid)->update(['accept_status' => '0',]);
-        \Artworch\Modules\User\Account\CompRequest::find($compid)->composition()->delete();
+        \Artworch\Modules\User\Account\CompRequest::find($compReqId)->update(['accept_status' => '0',]);
+        \Artworch\Modules\User\Account\CompRequest::find($compReqId)->composition()->delete();
     } else if ($status == 'accept') {
         // если картинки существуют в директории проекта локального хранилища по хешу, то разместить в публичной директории (storePublicly)
         if (Storage::exists($project['pictures']['preview']) &&
@@ -156,14 +177,14 @@ Route::get('/p/{compid}-{status}', function(Request $request, $compid, $status) 
         }
 
         // обновление статуса заявки на утвердительный
-        \Artworch\Modules\User\Account\CompRequest::find($compid)->update(['accept_status' => '1',]);
-        \Artworch\Modules\User\Account\CompRequest::find($compid)->composition()->create(['expire_at' => Carbon\Carbon::now()->addMonth()]);
+        \Artworch\Modules\User\Account\CompRequest::find($compReqId)->update(['accept_status' => '1',]);
+        \Artworch\Modules\User\Account\CompRequest::find($compReqId)->composition()->create(['expire_at' => Carbon\Carbon::now()->addMonth()]);
 
         // изменение статус отображения на утвердительный
-        \Artworch\Modules\User\Account\CompRequest::find($compid)->composition()->update(['view_status' => '1',]);
+        \Artworch\Modules\User\Account\CompRequest::find($compReqId)->composition()->update(['view_status' => '1',]);
     }
 
-    dd(\Artworch\Modules\User\Account\CompRequest::find($compid)->composition);
+    dd(\Artworch\Modules\User\Account\CompRequest::find($compReqId)->composition);
 });
 
 // Clearing...

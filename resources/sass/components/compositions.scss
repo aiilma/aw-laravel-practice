@@ -127,78 +127,11 @@
     }
 }
 
-// visualization component
-.aw__visualization__variants {
 
-    >.aw__form__component>label {
-        margin: 0 auto;
-    }
-
-    .aw__visual__case > input {
-        position: absolute;
-        visibility: hidden;
-    }
-
-    .aw__visual__case > input:checked + div {
-        cursor: default;
-        opacity: 1;
-    }
-
-    .aw__visual__case > .visualization__image {
-        width: 80px;
-        height: 104px;
-        opacity: 0.85;
-        cursor: pointer;
-        background-color: rgb(17, 18, 22);
-        background-size: 64px 88px;
-        background-repeat: no-repeat;
-        background-position: center center;
-        border-radius: 10%;
-
-        &:hover {
-            opacity: 1;
-        }
-    }
-
-    #visualCaseLong > .visualization__image {
-        background-image: url('/storage/img/aw_long_icon_alpha.svg');
-    }
-
-    #visualCaseShort > .visualization__image {
-        background-image: url('/storage/img/aw_short_icon_alpha.svg');
-    }
-
-    #visualCaseLong > input:checked + div {
-        background-image: url('/storage/img/aw_long_icon_alpha_active.svg');
-    }
-
-    #visualCaseShort > input:checked + div {
-        background-image: url('/storage/img/aw_short_icon_alpha_active.svg');
-    }
-
-    #visualCaseLong > input:disabled + div {
-        background-image: url('/storage/img/aw_long_icon_alpha_disabled.svg');
-        opacity: 0.5;
-
-        &:hover {
-            opacity: 0.65;
-        }
-    }
-
-    #visualCaseShort > input:disabled + div {
-        background-image: url('/storage/img/aw_short_icon_alpha_disabled.svg');
-        opacity: 0.5;
-
-        &:hover {
-            opacity: 0.65;
-        }
-    }
-
-}
 
 // user backgrounds list
 
-.user__bg__cont button[data-target="#collapseUserBackgrounds"] {
+.user__bg__variant button[data-target="#collapseUserBackgrounds"] {
     margin-bottom: 1rem;
 }
 
@@ -229,7 +162,7 @@
     }
 }
 
-.user__bg__body>.user-bg-list-layer>ul {
+.aw__user__bg__body>.user-bg-list-layer>ul {
     height: 100%;
     overflow-y: overlay;
     margin: 0;

@@ -14,8 +14,7 @@ class AccountOrderController extends Controller
      */
     public function showList(Request $request)
     {
-        $session = $request->session()->get('order');
-        return view('systems.user.account.orders.list', ['session' => $session]);
+        return view('systems.user.account.orders.list', ['orders' => $request->session()->get('orders_cart')]);
     }
 
     /**

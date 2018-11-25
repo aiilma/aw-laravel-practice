@@ -32,6 +32,8 @@
 .jq-icon-warning { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGYSURBVEhL5ZSvTsNQFMbXZGICMYGYmJhAQIJAICYQPAACiSDB8AiICQQJT4CqQEwgJvYASAQCiZiYmJhAIBATCARJy+9rTsldd8sKu1M0+dLb057v6/lbq/2rK0mS/TRNj9cWNAKPYIJII7gIxCcQ51cvqID+GIEX8ASG4B1bK5gIZFeQfoJdEXOfgX4QAQg7kH2A65yQ87lyxb27sggkAzAuFhbbg1K2kgCkB1bVwyIR9m2L7PRPIhDUIXgGtyKw575yz3lTNs6X4JXnjV+LKM/m3MydnTbtOKIjtz6VhCBq4vSm3ncdrD2lk0VgUXSVKjVDJXJzijW1RQdsU7F77He8u68koNZTz8Oz5yGa6J3H3lZ0xYgXBK2QymlWWA+RWnYhskLBv2vmE+hBMCtbA7KX5drWyRT/2JsqZ2IvfB9Y4bWDNMFbJRFmC9E74SoS0CqulwjkC0+5bpcV1CZ8NMej4pjy0U+doDQsGyo1hzVJttIjhQ7GnBtRFN1UarUlH8F3xict+HY07rEzoUGPlWcjRFRr4/gChZgc3ZL2d8oAAAAASUVORK5CYII='); background-color: #8a6d3b; color: #fcf8e3; border-color: #faebcc; }
 .jq-icon-error { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHOSURBVEhLrZa/SgNBEMZzh0WKCClSCKaIYOED+AAKeQQLG8HWztLCImBrYadgIdY+gIKNYkBFSwu7CAoqCgkkoGBI/E28PdbLZmeDLgzZzcx83/zZ2SSXC1j9fr+I1Hq93g2yxH4iwM1vkoBWAdxCmpzTxfkN2RcyZNaHFIkSo10+8kgxkXIURV5HGxTmFuc75B2RfQkpxHG8aAgaAFa0tAHqYFfQ7Iwe2yhODk8+J4C7yAoRTWI3w/4klGRgR4lO7Rpn9+gvMyWp+uxFh8+H+ARlgN1nJuJuQAYvNkEnwGFck18Er4q3egEc/oO+mhLdKgRyhdNFiacC0rlOCbhNVz4H9FnAYgDBvU3QIioZlJFLJtsoHYRDfiZoUyIxqCtRpVlANq0EU4dApjrtgezPFad5S19Wgjkc0hNVnuF4HjVA6C7QrSIbylB+oZe3aHgBsqlNqKYH48jXyJKMuAbiyVJ8KzaB3eRc0pg9VwQ4niFryI68qiOi3AbjwdsfnAtk0bCjTLJKr6mrD9g8iq/S/B81hguOMlQTnVyG40wAcjnmgsCNESDrjme7wfftP4P7SP4N3CJZdvzoNyGq2c/HWOXJGsvVg+RA/k2MC/wN6I2YA2Pt8GkAAAAASUVORK5CYII='); background-color: #a94442; color: #f2dede; border-color: #ebccd1; }
 .jq-icon-success { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADsSURBVEhLY2AYBfQMgf///3P8+/evAIgvA/FsIF+BavYDDWMBGroaSMMBiE8VC7AZDrIFaMFnii3AZTjUgsUUWUDA8OdAH6iQbQEhw4HyGsPEcKBXBIC4ARhex4G4BsjmweU1soIFaGg/WtoFZRIZdEvIMhxkCCjXIVsATV6gFGACs4Rsw0EGgIIH3QJYJgHSARQZDrWAB+jawzgs+Q2UO49D7jnRSRGoEFRILcdmEMWGI0cm0JJ2QpYA1RDvcmzJEWhABhD/pqrL0S0CWuABKgnRki9lLseS7g2AlqwHWQSKH4oKLrILpRGhEQCw2LiRUIa4lwAAAABJRU5ErkJggg=='); color: #dff0d8; background-color: #3c763d; border-color: #d6e9c6; }
+@charset "UTF-8";
+
 @font-face {
   font-family: 'Didact Gothic';
   src: url("/fonts/DidactGothic-Regular.eot");
@@ -10532,6 +10534,10 @@ body {
 .aw_section h4,
 .aw_section h5,
 .ui.aw-nav-link,
+.user__order__dataset > .row__user__current__order > .user__order__cell a,
+.user__order__dataset > .row__user__current__order > .user__order__cell span,
+.user__order__dataset > .row__user__current__order > .user__order__cell p,
+.user__order__dataset > .row__user__current__order > .user__order__cell button,
 .card-block.compcard-placer-infobox > p > span,
 .card-block.compcard-placer-infobox > p a {
   white-space: nowrap;
@@ -10594,6 +10600,161 @@ body {
   background-color: rgba(52, 58, 64, 0.23);
 }
 
+/* Общие стили модального окна */
+
+.form-group:first-child,
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.modal-lg {
+  max-width: 700px;
+}
+
+.modal-content {
+  -webkit-box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+          box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+  background-color: #1c1f24;
+  border: 1px solid rgba(247, 255, 154, 0.15);
+  border-radius: 3px;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-body {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-bottom: 3px solid rgba(142, 143, 146, 0.35);
+  border-top: 3px solid rgba(142, 143, 146, 0.35);
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+.aw__visualization__variants > .aw__form__component > label {
+  margin: 0 auto;
+}
+
+.aw__visualization__variants .aw__visual__case > input {
+  position: absolute;
+  visibility: hidden;
+}
+
+.aw__visualization__variants .aw__visual__case > input:checked + div {
+  cursor: default;
+  opacity: 1;
+}
+
+.aw__visualization__variants .aw__visual__case > .visualization__image {
+  width: 80px;
+  height: 104px;
+  opacity: 0.85;
+  cursor: pointer;
+  background-color: #111216;
+  background-size: 64px 88px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 10%;
+}
+
+.aw__visualization__variants .aw__visual__case > .visualization__image:hover {
+  opacity: 1;
+}
+
+.aw__visualization__variants #visualCaseLong > .visualization__image {
+  background-image: url("/storage/img/aw_long_icon_alpha.svg");
+}
+
+.aw__visualization__variants #visualCaseShort > .visualization__image {
+  background-image: url("/storage/img/aw_short_icon_alpha.svg");
+}
+
+.aw__visualization__variants #visualCaseLong > input:checked + div {
+  background-image: url("/storage/img/aw_long_icon_alpha_active.svg");
+}
+
+.aw__visualization__variants #visualCaseShort > input:checked + div {
+  background-image: url("/storage/img/aw_short_icon_alpha_active.svg");
+}
+
+.aw__visualization__variants #visualCaseLong > input:disabled + div {
+  background-image: url("/storage/img/aw_long_icon_alpha_disabled.svg");
+  opacity: 0.5;
+}
+
+.aw__visualization__variants #visualCaseLong > input:disabled + div:hover {
+  opacity: 0.65;
+}
+
+.aw__visualization__variants #visualCaseShort > input:disabled + div {
+  background-image: url("/storage/img/aw_short_icon_alpha_disabled.svg");
+  opacity: 0.5;
+}
+
+.aw__visualization__variants #visualCaseShort > input:disabled + div:hover {
+  opacity: 0.65;
+}
+
+.current__user__background {
+  visibility: hidden;
+  display: none;
+}
+
+.optional-input,
+.aw__common__textinput {
+  outline: none;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  background-color: silver;
+  padding: 5px;
+  font-weight: 500;
+  -webkit-transition: all .125s ease;
+  transition: all .125s ease;
+  color: black;
+  position: relative;
+  width: 40%;
+  -webkit-appearance: none;
+}
+
+.optional-input:focus,
+.aw__common__textinput:focus {
+  color: black;
+  -webkit-box-shadow: white 0px 0px 15px 0px;
+          box-shadow: white 0px 0px 15px 0px;
+  background-color: #e0e0e0;
+  border-color: #e0e0e0;
+  outline: none;
+  -webkit-transition: all .125s ease;
+  transition: all .125s ease;
+}
+
+.optional-input::-webkit-input-placeholder,
+.aw__common__textinput::-webkit-input-placeholder {
+  color: #444;
+  -webkit-transition: ease-in 0.3s;
+  transition: ease-in 0.3s;
+  -webkit-transform-origin: 0 50%;
+          transform-origin: 0 50%;
+  font-weight: 500;
+}
+
+.optional-input:focus::-webkit-input-placeholder,
+.aw__common__textinput:focus::-webkit-input-placeholder {
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  opacity: 0;
+}
+
+.optional-inputs-group > div .form-label {
+  margin-bottom: .25rem;
+}
+
+.optional-inputs-group > .form-group {
+  position: relative;
+}
+
 /* FOOTER */
 
 footer {
@@ -10616,6 +10777,211 @@ footer {
 
 .panel-body .table {
   margin-bottom: 0px;
+}
+
+.aw__user__orders__table .aw__user__orders__table__titles > div {
+  background: -webkit-gradient(linear, left bottom, right top, from(#c79048), to(#ff9a17));
+  background: linear-gradient(to right top, #c79048 0%, #ff9a17 100%);
+}
+
+.aw__user__orders__table .aw__user__orders__table__titles .aw__orders__table__titlecell {
+  padding: 1rem;
+  border-width: 2px 2px 2px;
+  border-style: solid solid none;
+  border-color: rgba(247, 255, 154, 0.15) rgba(247, 255, 154, 0.15) rgba(247, 255, 154, 0.15);
+  -o-border-image: initial;
+     border-image: initial;
+  border-bottom: none;
+}
+
+.aw__user__orders__table .aw__user__orders__table__titles .h1,
+.aw__user__orders__table .aw__user__orders__table__titles .h2,
+.aw__user__orders__table .aw__user__orders__table__titles .h3,
+.aw__user__orders__table .aw__user__orders__table__titles .h4,
+.aw__user__orders__table .aw__user__orders__table__titles .h5,
+.aw__user__orders__table .aw__user__orders__table__titles .h6,
+.aw__user__orders__table .aw__user__orders__table__titles h1,
+.aw__user__orders__table .aw__user__orders__table__titles h2,
+.aw__user__orders__table .aw__user__orders__table__titles h3,
+.aw__user__orders__table .aw__user__orders__table__titles h4,
+.aw__user__orders__table .aw__user__orders__table__titles h5,
+.aw__user__orders__table .aw__user__orders__table__titles h6 {
+  margin-bottom: 0px;
+}
+
+.aw__user__orders__table .user__order__dataset {
+  background-color: #1c1f24;
+  height: 550px;
+  padding: 1rem 0px;
+  border-bottom: 2px solid rgba(247, 255, 154, 0.15);
+  overflow: auto;
+}
+
+.aw__user__orders__table .user__order__dataset .row__user__current__order {
+  min-height: 32px;
+  width: 100%;
+  margin: 0.5rem auto;
+  padding: 0;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.45)), to(rgba(255, 255, 255, 0.15)));
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(255, 255, 255, 0.15));
+}
+
+.aw__user__orders__table .user__order__dataset .row__user__current__order[data-order-status="wait"] {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 217, 102, 0.75)), to(rgba(255, 255, 255, 0.15)));
+  background: linear-gradient(rgba(255, 217, 102, 0.75), rgba(255, 255, 255, 0.15));
+}
+
+.aw__user__orders__table .user__order__dataset .row__user__current__order[data-order-status="process"] {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 102, 125, 0.75)), to(rgba(255, 255, 255, 0.15)));
+  background: linear-gradient(rgba(255, 102, 125, 0.75), rgba(255, 255, 255, 0.15));
+}
+
+.aw__user__orders__table .user__order__dataset .row__user__current__order[data-order-status="export"] {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(12, 218, 255, 0.75)), to(rgba(255, 255, 255, 0.15)));
+  background: linear-gradient(rgba(12, 218, 255, 0.75), rgba(255, 255, 255, 0.15));
+}
+
+.aw__user__orders__table .user__order__dataset .row__user__current__order[data-order-status="done"] {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 255, 11, 0.75)), to(rgba(255, 255, 255, 0.15)));
+  background: linear-gradient(rgba(0, 255, 11, 0.75), rgba(255, 255, 255, 0.15));
+}
+
+.user__order__dataset > .row__user__current__order .aw-link,
+.user__order__dataset > .row__user__current__order .aw-btn {
+  font-weight: 600;
+  color: silver;
+}
+
+.user__order__dataset > .row__user__current__order .aw-link:hover,
+.user__order__dataset > .row__user__current__order .aw-btn:hover {
+  color: white;
+}
+
+.user__order__dataset > .row__user__current__order .aw-link:active,
+.user__order__dataset > .row__user__current__order .aw-btn:active {
+  opacity: 0.8;
+}
+
+.user__order__dataset > .row__user__current__order > .user__order__cell {
+  text-align: center;
+  margin: auto 0px;
+}
+
+.user__order__dataset > .row__user__current__order > .user__order__cell p {
+  margin: 0;
+}
+
+.user__order__dataset > .row__user__current__order > .user__order__cell > a[class*="aw__icon__"] {
+  margin: 5px;
+  opacity: 0.75;
+}
+
+.user__order__dataset > .row__user__current__order > .user__order__cell > a[class*="aw__icon__"]:hover {
+  opacity: 1;
+}
+
+.user__order__dataset > .row__user__current__order > .user__order__cell > a[class*="aw__icon__"]:active {
+  opacity: 0.75;
+}
+
+.user__order__dataset > .row__user__current__order > .user__order__cell:first-child {
+  padding-left: 0px;
+}
+
+.user__order__dataset > .row__user__current__order > .user__order__cell:last-child {
+  padding-right: 0px;
+  cursor: default;
+}
+
+.modal-dialog.order__dataview {
+  padding: 45px 0px 0px 10px;
+  border: 1px solid rgba(247, 255, 154, 0.15);
+  border-radius: 50% 30px 0% 45%;
+  border-top-right-radius: 30px;
+  min-height: 300px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 8px 0px, rgba(0, 0, 0, 0.17) 0px 7px 20px 0px;
+          box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 8px 0px, rgba(0, 0, 0, 0.17) 0px 7px 20px 0px;
+  background-color: black;
+}
+
+.modal-dialog.order__dataview > .modal-content > .modal-body {
+  border: none;
+  background: none;
+}
+
+.modal-dialog.order__dataview.wait {
+  background-color: #afa110;
+}
+
+.modal-dialog.order__dataview.process {
+  background-color: #ca465a;
+}
+
+.modal-dialog.order__dataview.export {
+  background-color: #2b9eb3;
+}
+
+.modal-dialog.order__dataview.done {
+  background-color: #47a739;
+}
+
+.modal-content.mdc__order__data {
+  text-align: center;
+  min-height: 235px;
+  border-radius: 61px 61px 0% 50%;
+}
+
+.modal-content.mdc__order__data > .modal-header {
+  margin-top: -50px;
+}
+
+.order__data__background {
+  width: 96px;
+  height: 96px;
+}
+
+.fg__orderdata__vboxs > label > .vcase__.locked {
+  cursor: default;
+}
+
+.fg__orderdata__default > .aw__user__bg__variant .order__data__background > img {
+  opacity: 0.5;
+}
+
+.fg__orderdata__default > .aw__user__bg__variant .order__data__background > img:hover {
+  opacity: 0.65;
+}
+
+.aw-btn,
+.btn-modal-v1 {
+  color: #d8d8d8;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+}
+
+.aw-btn:hover,
+.btn-modal-v1:hover {
+  color: white;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+}
+
+.aw-btn:active,
+.btn-modal-v1:active {
+  opacity: 0.8;
+}
+
+.aw-btn:focus,
+.btn-modal-v1:focus {
+  -webkit-box-shadow: rgba(0, 123, 255, 0) 0px 0px 0px 0.2rem;
+          box-shadow: rgba(0, 123, 255, 0) 0px 0px 0px 0.2rem;
+  outline: 0px;
+}
+
+.aw-btn:not(:disabled):not(.disabled),
+.btn-modal-v1:not(:disabled):not(.disabled) {
+  cursor: pointer;
 }
 
 .aw-link,
@@ -10666,13 +11032,12 @@ footer {
 
 /*------------------------------*/
 
-.aw-link {
+.aw-btn {
   color: gray;
 }
 
-.aw-link:hover {
-  -webkit-transition: all .1s ease;
-  transition: all .1s ease;
+.aw-link {
+  color: gray;
 }
 
 .aw-nav-link {
@@ -10706,6 +11071,55 @@ footer {
   background: linear-gradient(to right top, #c79048 0%, #ff9a17 100%);
   -webkit-box-shadow: #ffa35d 1px 1px 22px;
           box-shadow: #ffa35d 1px 1px 22px;
+}
+
+.modal-header .close {
+  margin: -1rem -1rem -1rem 0;
+}
+
+.close {
+  color: #ddd;
+  opacity: .75;
+  text-shadow: 0 1px 0 white;
+}
+
+.close:not(:disabled):not(.disabled):focus,
+.close:not(:disabled):not(.disabled):hover {
+  color: #ddd;
+  opacity: 1;
+  outline: none;
+}
+
+.close:not(:disabled):not(.disabled):active {
+  opacity: .75;
+}
+
+.btn-modal-v1 {
+  background: #1d1f24;
+  padding: 26px 42px;
+  border-radius: 0;
+  border-top-left-radius: 85%;
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+}
+
+.btn-modal-v1:focus {
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0);
+          box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0);
+}
+
+.btn-modal-v1:hover {
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  color: #fff;
+}
+
+.btn-modal-v1:active {
+  -webkit-transition: all .0s ease;
+  transition: all .0s ease;
+  opacity: 1;
+  color: #bbb;
 }
 
 .ahead_monofiska,
@@ -10880,71 +11294,7 @@ footer > .container > ul:first-child a {
   margin-bottom: 0.5rem;
 }
 
-.aw__visualization__variants > .aw__form__component > label {
-  margin: 0 auto;
-}
-
-.aw__visualization__variants .aw__visual__case > input {
-  position: absolute;
-  visibility: hidden;
-}
-
-.aw__visualization__variants .aw__visual__case > input:checked + div {
-  cursor: default;
-  opacity: 1;
-}
-
-.aw__visualization__variants .aw__visual__case > .visualization__image {
-  width: 80px;
-  height: 104px;
-  opacity: 0.85;
-  cursor: pointer;
-  background-color: #111216;
-  background-size: 64px 88px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  border-radius: 10%;
-}
-
-.aw__visualization__variants .aw__visual__case > .visualization__image:hover {
-  opacity: 1;
-}
-
-.aw__visualization__variants #visualCaseLong > .visualization__image {
-  background-image: url("/storage/img/aw_long_icon_alpha.svg");
-}
-
-.aw__visualization__variants #visualCaseShort > .visualization__image {
-  background-image: url("/storage/img/aw_short_icon_alpha.svg");
-}
-
-.aw__visualization__variants #visualCaseLong > input:checked + div {
-  background-image: url("/storage/img/aw_long_icon_alpha_active.svg");
-}
-
-.aw__visualization__variants #visualCaseShort > input:checked + div {
-  background-image: url("/storage/img/aw_short_icon_alpha_active.svg");
-}
-
-.aw__visualization__variants #visualCaseLong > input:disabled + div {
-  background-image: url("/storage/img/aw_long_icon_alpha_disabled.svg");
-  opacity: 0.5;
-}
-
-.aw__visualization__variants #visualCaseLong > input:disabled + div:hover {
-  opacity: 0.65;
-}
-
-.aw__visualization__variants #visualCaseShort > input:disabled + div {
-  background-image: url("/storage/img/aw_short_icon_alpha_disabled.svg");
-  opacity: 0.5;
-}
-
-.aw__visualization__variants #visualCaseShort > input:disabled + div:hover {
-  opacity: 0.65;
-}
-
-.user__bg__cont button[data-target="#collapseUserBackgrounds"] {
+.user__bg__variant button[data-target="#collapseUserBackgrounds"] {
   margin-bottom: 1rem;
 }
 
@@ -10974,20 +11324,20 @@ footer > .container > ul:first-child a {
   margin: auto;
 }
 
-.user__bg__body > .user-bg-list-layer > ul {
+.aw__user__bg__body > .user-bg-list-layer > ul {
   height: 100%;
   overflow-y: overlay;
   margin: 0;
   background: transparent;
 }
 
-.user__bg__body > .user-bg-list-layer > ul .userbg-item {
+.aw__user__bg__body > .user-bg-list-layer > ul .userbg-item {
   padding: 0.4rem 0.4rem;
   border-bottom: 2px solid transparent;
   border-radius: 10px;
 }
 
-.user__bg__body > .user-bg-list-layer > ul .userbg-item > button {
+.aw__user__bg__body > .user-bg-list-layer > ul .userbg-item > button {
   cursor: pointer;
   opacity: 0.85;
   width: 96px;
@@ -10998,7 +11348,7 @@ footer > .container > ul:first-child a {
   outline: none;
 }
 
-.user__bg__body > .user-bg-list-layer > ul .userbg-item > button:hover {
+.aw__user__bg__body > .user-bg-list-layer > ul .userbg-item > button:hover {
   opacity: 1;
   -webkit-transition: all .1s ease;
   transition: all .1s ease;
@@ -11006,7 +11356,7 @@ footer > .container > ul:first-child a {
   border: 2px solid #ffa600;
 }
 
-.user__bg__body > .user-bg-list-layer > ul .userbg-item > button:active {
+.aw__user__bg__body > .user-bg-list-layer > ul .userbg-item > button:active {
   border: 2px solid #ffe6b4;
   background: rgba(150, 150, 150, 0.25);
   opacity: 0.85;

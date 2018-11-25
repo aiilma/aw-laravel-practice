@@ -8,22 +8,22 @@
       <!-- Social buttons -->
       <ul class="foo-socials list-unstyled btnset-socials list-inline text-left m-0">
         <li class="list-inline-item">
-          <a class="aw-link btn-floating btn-tw mx-1" href="#">
+          <a class="aw-link btn-floating btn-tw mx-1" href="#" target="_blank">
             <i class="fa fa-vk"></i>
           </a>
         </li>
         <li class="list-inline-item">
-          <a class="aw-link btn-floating btn-tw mx-1" href="#">
+          <a class="aw-link btn-floating btn-tw mx-1" href="#" target="_blank">
             <i class="fa fa-twitter"></i>
           </a>
         </li>
         <li class="list-inline-item">
-          <a class="aw-link btn-floating btn-tw mx-1" href="#">
+          <a class="aw-link btn-floating btn-tw mx-1" href="https://steamcommunity.com/groups/artworch" target="_blank">
             <i class="fa fa-steam"></i>
           </a>
         </li>
         <li class="list-inline-item">
-          <a class="aw-link btn-floating btn-tw mx-1" href="#">
+          <a class="aw-link btn-floating btn-tw mx-1" href="#" target="_blank">
             <i class="fa fa-youtube-play"></i>
           </a>
         </li>

@@ -15,4 +15,5 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/packets/user/backgrounds_load.js', 'public/js')
     .js('resources/js/packets/compositions/compositions_listing.js', 'public/js')
     .js('resources/js/packets/compositions/compositions_form.js', 'public/js')
+    .js('resources/js/packets/user/orders/order_controls.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
