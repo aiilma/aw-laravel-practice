@@ -43,7 +43,7 @@ class Order extends Model
      * Транзакция вычисления денежного баланса у обеих сторон и добавления информации о заказе в БД
      *
      * @param [array] $data
-     * @return void
+     * @return array
      */
     public static function add($data)
     {
@@ -64,6 +64,7 @@ class Order extends Model
             $order->customer_id = auth()->user()->id;
             $order->project_ref = $data['_compHash'];
             $order->order_token = $data['_orderHash'];
+            $order->status = '1';
             $order->user_data = json_encode(self::getOrderDataByHash($data['_orderHash']));
             $order->save();
 
@@ -76,6 +77,8 @@ class Order extends Model
                     Session::forget('orders_cart.'.(string)$index);
                 }
             }
+
+            return $order;
     }
 
     /**
@@ -165,6 +168,36 @@ class Order extends Model
         }
     }
 
+
+    /**
+     * Возвращает html заказа в соответствие его полям и аттрибутам
+     *
+     * @return string
+     */
+    public function getHtml()
+    {
+        return  '
+                <li class="row col-12 row__user__current__order" data-order-status="'.$this->getStatusOfAttr().'">
+                  <div class="col-3 col-xl-3 user__order__cell">
+                    <a class="aw-link" href="#" role="button">'.$this->compRequest->title.'</a>
+                  </div>
+                  <div class="col-3 col-xl-3 user__order__cell">
+                    <button class="aw-btn aw__btn__check__order__info" data-toggle="modal" data-target="#orderDataModalWrapper" data-link="'.substr(route('acc-orders-getorderinfo'), strlen(url('/'))).'">
+                      Check
+                    </button>
+                  </div>
+                  <div class="col-3 col-xl-3 user__order__cell">
+                    <p class="order__cell__timedate">'.$this->updated_at->format('d.m.Y').'</p>
+                    <p class="order__cell__timedate">'.$this->updated_at->format('H:i:s').'</p>
+                  </div>
+                  <div class="col-3 col-xl-3 user__order__cell">
+                    <span>'.$this->getStatusHtml().'</span>
+                  </div>
+                  <input type="hidden" name="_compHash" value="'.$this->project_ref.'">
+                  <input type="hidden" name="_orderHash" value="'.$this->order_token.'">
+                </li>
+                ';
+    }
 
     // TODO: метод получения данных о заказе пользователя (поле user_data в представлении массива)
 

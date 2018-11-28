@@ -78,6 +78,7 @@ Route::prefix('/account')->group(function() {
                     'op' => [],
                 ],
                 'done' => false,
+                'html' => null,
             ];
 
             // ВАЛИДАЦИЯ ВХОДНЫХ ДАННЫХ
@@ -103,7 +104,8 @@ Route::prefix('/account')->group(function() {
             // вычисление и обновление баланса обеих сторон (заказчик, дизайнер);
             // добавление информации о заказе в БД;
             // удаление из временного хранилища;
-            Artworch\Modules\User\Account\Order::add($request->all());
+            $response['html']['order'] = Artworch\Modules\User\Account\Order::add($request->all())->getHtml();
+            $response['html']['uiBalance'] = auth()->user()->getBalanceHtml();
             $response['done'] = true;
             // отправить данные о заказе на клиентскую сторону (обновить страницу на клиенте)
             return response()->json($response);

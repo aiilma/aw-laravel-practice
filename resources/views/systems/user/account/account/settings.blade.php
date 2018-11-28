@@ -10,6 +10,20 @@
 @section('section')
     <h2 class="text-center">Settings</h2>
 
+    {{-- ERRORS --}}
+    <div class="compcard__form__cont__errors">
+        @if ($errors->any())
+            <div class="aw-alert aw-alert-danger">
+                <h2 class="aw-alert-danger-h">Unavailable action. Reasons:</h2>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
+    
     <div class="profile-content">
         {{-- Account Infobox --}}
         <div class="acc-home-infobox">

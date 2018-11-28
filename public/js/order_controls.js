@@ -10501,8 +10501,11 @@ try {
                 data: orderData,
                 dataType: 'json',
                 success: function success(result) {
+                    console.log(result);
                     if (result.done === true) {
                         $(e.target).parents(".row__user__current__order").remove();
+                        $('.user__order__dataset').prepend(result.html.order);
+                        $('.navbar-nav .aw__ui__balance').html(result.html.uiBalance);
 
                         // объект кфг уведомления
                         notifierCfg['heading'] = 'Success!';
@@ -10563,7 +10566,7 @@ try {
         });
 
         // AJAX. check data order
-        $('.aw__btn__check__order__info').on('click', function (e) {
+        $('.user__order__dataset').on('click', '.aw__btn__check__order__info', function (e) {
 
             // data object
             var orderData = {

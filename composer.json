@@ -12,6 +12,7 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.4.0",
+        "league/omnipay": "^3",
         "sunra/php-simple-html-dom-parser": "1.5.2"
     },
     "require-dev": {

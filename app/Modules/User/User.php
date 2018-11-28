@@ -39,6 +39,20 @@ class User extends Authenticatable
 
 
 
+
+    /**
+     * Возвращает html строку денежного баланса пользователя
+     *
+     * @return string
+     */
+    public function getBalanceHtml()
+    {
+        return '
+                <a href="'.route('payments-show').'" class="ui aw-nav-link" title="$ '.number_format($this->balance, 2).'">$ '.number_format($this->balance, 2).'<span class="caret"></span></a>
+                ';
+    }
+
+
     // ----------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Steam
     // ----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -355,8 +369,8 @@ class User extends Authenticatable
         ];
 
         $order = json_decode(Order::where('order_token', '=', $orderHash)->first()->user_data, true);
-        $data['visualization'] = $order['visualization'];
-        $data['background'] = $order['background'];
+        $data['visualization'] = $order['default']['visualization'];
+        $data['background'] = $order['default']['background'];
 
         return $data;
     }
@@ -375,11 +389,11 @@ class User extends Authenticatable
                     'userOrdersCount' => auth()->user()->orders->count(),
                 ], [
                     'userBalance' => 'numeric|gte:'.CompRequest::where('project_token', '=', $compHash)->first()->custom_price,
-                    'userOrdersCount' => 'lte:'.(integer)config('orders.max_orders_per_time'),
+                    'userOrdersCount' => 'lt:'.(integer)config('orders.max_orders_per_time'),
                 ], [
                     'userBalance.numeric' => 'Your balance must have a numeric format',
                     'userBalance.gte' => 'Is not enough of cash on your balance',
-                    'userOrdersCount.lte' => 'You can\'t buy compositions while it is limited to 5',
+                    'userOrdersCount.lt' => 'You can\'t buy compositions while it is limited to 5',
                 ])->messages();
     }
 

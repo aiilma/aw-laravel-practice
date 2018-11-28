@@ -54,9 +54,12 @@ try {
                 data: orderData,
                 dataType: 'json',
                 success: function(result) {
+                    console.log(result);
                     if (result.done === true)
                     {
                         $(e.target).parents(".row__user__current__order").remove();
+                        $('.user__order__dataset').prepend(result.html.order);
+                        $('.navbar-nav .aw__ui__balance').html(result.html.uiBalance);
 
                         // объект кфг уведомления
                         notifierCfg['heading'] = 'Success!';
@@ -120,9 +123,10 @@ try {
         });
 
 
+
         // AJAX. check data order
-        $('.aw__btn__check__order__info').on('click', (e) => {
-        
+        $('.user__order__dataset').on('click', '.aw__btn__check__order__info', function (e) {
+
             // data object
             let orderData = {
                 _orderHash: $(e.target).parents(".row__user__current__order").children('input[name="_orderHash"]').val(),
@@ -152,6 +156,7 @@ try {
                     // paste fresh HTML code of two components (visualization, background)
                     $('.aw__visualization__variants>.aw__form__component').html(visualizationHtmlPatt);
                     $('.aw__user__bg__variant>.aw__form__component').html(backgroundHtmlPatt);
+                    
 
                     console.log(result);
                     // if data is received...
@@ -191,8 +196,11 @@ try {
                     $('.aw__user__bg__variant>.aw__form__component>#backgroundLoader').remove();
                 },
             });
-            
+
         });
+
+
+
 
     });
 } catch (e) {}

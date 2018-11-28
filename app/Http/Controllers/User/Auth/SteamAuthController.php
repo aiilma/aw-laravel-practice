@@ -8,6 +8,7 @@ use Session;
 use Artworch\Modules\User\User;
 use Artworch\Http\Controllers\Controller;
 use Invisnik\LaravelSteamAuth\SteamAuth;
+use Validator;
 
 
 class SteamAuthController extends Controller
@@ -57,8 +58,26 @@ class SteamAuthController extends Controller
             $info = $this->steam->getUserInfo();
 
             if (!is_null($info)) {
-                $this->steamBind($info);
 
+                $response = [
+                    'messages' => null,
+                ];
+
+                $response['messages'] = Validator::make([
+                    'steamid' => $info->steamID64,
+                ],[
+                    'steamid' => 'unique:users',
+                ],[
+                    'steamid.unique' => 'The '.$info->steamID64.' is already binded',
+                ])->messages();
+        
+
+                if (count($response['messages']) > 0)
+                {
+                    return redirect()->route('acc-settings')->withErrors($response['messages']);
+                }
+
+                $this->steamBind($info);
                 return redirect($this->redirectURL); // redirect to site
             }
         }

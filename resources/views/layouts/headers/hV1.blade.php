@@ -27,8 +27,8 @@
                             </li>
                         @else
                             {{-- balance --}}
-                            <li class="nav-item dropdown">
-                                <a href="{{route('payments-show')}}" class="ui aw-nav-link" title="$ {{ Auth::user()->balance }}">$ {{ Auth::user()->balance }} <span class="caret"></span></a>
+                            <li class="nav-item dropdown aw__ui__balance">
+                                {!!auth()->user()->getBalanceHtml()!!}
                             </li>
                             {{-- dropdown menu --}}
                             <li class="nav-item dropdown">
