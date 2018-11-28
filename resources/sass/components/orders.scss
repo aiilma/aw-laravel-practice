@@ -28,9 +28,12 @@
         padding: 1rem 0px;
         border-bottom: 2px solid rgba(247, 255, 154, 0.15);
         overflow: auto;
+        align-content: flex-start;
 
         .row__user__current__order {
             min-height: 32px;
+            max-height: 86px;
+            height: 84px;
             width: 100%;
             margin: 0.5rem auto;
             padding: 0;

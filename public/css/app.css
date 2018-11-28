@@ -10815,10 +10815,14 @@ footer {
   padding: 1rem 0px;
   border-bottom: 2px solid rgba(247, 255, 154, 0.15);
   overflow: auto;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
 }
 
 .aw__user__orders__table .user__order__dataset .row__user__current__order {
   min-height: 32px;
+  max-height: 86px;
+  height: 84px;
   width: 100%;
   margin: 0.5rem auto;
   padding: 0;
@@ -11305,17 +11309,17 @@ footer > .container > ul:first-child a {
   text-align: left;
 }
 
-#collapseUserBackgrounds .user__bg__body {
+#collapseUserBackgrounds .aw__user__bg__body {
   margin: 0.5rem 0;
 }
 
-.user__bg__body > .user-bg-list-layer {
+.aw__user__bg__body > .user-bg-list-layer {
   height: 234px;
   min-height: 64px;
   max-height: 234px;
 }
 
-.user__bg__body > .user-bg-list-layer #loader {
+.aw__user__bg__body > .user-bg-list-layer #loader {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -11366,19 +11370,19 @@ footer > .container > ul:first-child a {
   padding-top: 0;
 }
 
-#collapseUserBackgrounds > div .user__bg__controller {
+#collapseUserBackgrounds > div .aw__user__bg__controller {
   border-bottom: 1px solid rgba(128, 128, 128, 0.25);
 }
 
-#collapseUserBackgrounds > div .user__bg__body {
+#collapseUserBackgrounds > div .aw__user__bg__body {
   margin: 1rem 0;
 }
 
-.user__bg__controller > .user-bg-controls-group {
+.aw__user__bg__controller > .user-bg-controls-group {
   padding: 1rem 0;
 }
 
-.user__bg__controller > .user-bg-controls-group > a {
+.aw__user__bg__controller > .user-bg-controls-group > a {
   padding: 1rem;
 }
 

@@ -3,6 +3,7 @@
 namespace Artworch\Modules\User;
 
 use Artworch\Notifications\VerifyEmail;
+use Artworch\Modules\User\Account\Order;
 use Artworch\Modules\User\Account\CompRequest;
 use Artworch\Modules\Compositions\Composition;
 use Illuminate\Notifications\Notifiable;
@@ -38,6 +39,9 @@ class User extends Authenticatable
 
 
 
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Steam
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     /**
      * Возвращает статус доступа к Steam аккаунту текущего пользователя
@@ -249,6 +253,141 @@ class User extends Authenticatable
     }
 
     /**
+     * Возвращает инвентарь в качестве массива
+     *
+     * @return array
+     */
+    private function parseSteamInv()
+    {
+        $userInventoryUrl = 'https://steamcommunity.com/profiles/'.$this->steamid.'/inventory/json/753/6/2';
+
+        
+        if (Cache::has('aw_steam_inv')) {
+            $userInventoryJson = Cache::get('aw_steam_inv');
+        } else {
+            $userInventoryJson = file_get_contents($userInventoryUrl);
+            Cache::put('aw_steam_inv', $userInventoryJson, 5); // 5 minutes
+        }
+
+
+        $userInventory = json_decode($userInventoryJson, true);
+        return $userInventory;
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Composition Requests
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Валидация на лимит по количеству продукции текущего пользователя
+     * Возвращает не пустой массив ошибочных сообщений, если было отправлено больше установленного сервером количества заявок
+     *
+     * @return array
+     */
+    public function validateOnSendProductionRequest()
+    {
+        return Validator::make([
+                    'userProdCount' => auth()->user()->compRequests->count(),
+                ], [
+                    'userProdCount' => 'lte:'.(integer)config('production.max_requests_per_time'),
+                ], [
+                    'userProdCount.lte' => 'You can\'t send requests anymore. Max count of any production activity for your account (including your products on sale) is equals to 5',
+                ])->messages();
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Orders
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    /**
+     * Возвращает true, если заказ существует в БД или сессии текущего пользователя
+     *
+     * @param [string] $orderHash
+     * @return bool
+     */
+    public function orderExistsInSession($orderHash)
+    {
+        // проверить данные о заказе напрямую, то есть по ключу сессии
+        foreach (session('orders_cart') as $index => $orderData)
+        {
+            // если найден
+            if ($orderData['orderHash'] === $orderHash)
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Возвращает непотвержденный заказ по токену из временного хранилища (сессии)
+     *
+     * @param [array] $orderHash
+     * @return array
+     */
+    public function getUnconfirmedOrderByHash($orderHash)
+    {
+        $data = [];
+
+        foreach (session('orders_cart') as $index => $orderData)
+        {
+            // если заказ существуют (параметр _orderHash объекта $request есть в массиве)
+            if ($orderData['orderHash'] === $orderHash)
+            {   
+                $data = $orderData;
+            }    
+        }
+        
+        // вернуть ответ с найденными необходимыми данными о заказае
+        return $data;
+    }
+
+    /**
+     * Возвращает потвержденный заказ по токену из хранилища (базы данных)
+     *
+     * @param [array] $orderHash
+     * @return json
+     */
+    public function getConfirmedOrderByHash($orderHash)
+    {
+        $data = [
+            'visualization' => null,
+            'background' => null,
+        ];
+
+        $order = json_decode(Order::where('order_token', '=', $orderHash)->first()->user_data, true);
+        $data['visualization'] = $order['visualization'];
+        $data['background'] = $order['background'];
+
+        return $data;
+    }
+
+    /**
+     * Валидация прав пользователя покупать композицию
+     * Возвращает не пустой массив ошибочных сообщений, если покупать нельзя
+     *
+     * @param [string] $compHash
+     * @return array
+     */
+    public function validateUserPermissionsToBuyComposition($compHash)
+    {
+        return Validator::make([
+                    'userBalance' => auth()->user()->balance,
+                    'userOrdersCount' => auth()->user()->orders->count(),
+                ], [
+                    'userBalance' => 'numeric|gte:'.CompRequest::where('project_token', '=', $compHash)->first()->custom_price,
+                    'userOrdersCount' => 'lte:'.(integer)config('orders.max_orders_per_time'),
+                ], [
+                    'userBalance.numeric' => 'Your balance must have a numeric format',
+                    'userBalance.gte' => 'Is not enough of cash on your balance',
+                    'userOrdersCount.lte' => 'You can\'t buy compositions while it is limited to 5',
+                ])->messages();
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Mail
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    /**
      * Returns true if user verified
      * 
      * @return boolean
@@ -267,6 +406,10 @@ class User extends Authenticatable
     {
         $this->notify(new VerifyEmail($this));
     }
+
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Relationships
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     /**
      * Relation to composition requests; one to many
@@ -289,26 +432,13 @@ class User extends Authenticatable
         return $this->hasManyThrough(Composition::class, CompRequest::class, 'author_id', 'comp_request_id');
     }
 
-
     /**
-     * Возвращает инвентарь в качестве массива
+     * Relation to orders; has many orders
      *
-     * @return array
+     * @return void
      */
-    private function parseSteamInv()
+    public function orders()
     {
-        $userInventoryUrl = 'https://steamcommunity.com/profiles/'.$this->steamid.'/inventory/json/753/6/2';
-
-        
-        if (Cache::has('aw_steam_inv')) {
-            $userInventoryJson = Cache::get('aw_steam_inv');
-        } else {
-            $userInventoryJson = file_get_contents($userInventoryUrl);
-            Cache::put('aw_steam_inv', $userInventoryJson, 5); // 5 minutes
-        }
-
-
-        $userInventory = json_decode($userInventoryJson, true);
-        return $userInventory;
+        return $this->hasMany(Order::class, 'customer_id');
     }
 }

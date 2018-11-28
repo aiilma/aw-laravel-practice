@@ -67,22 +67,137 @@ Route::prefix('/account')->group(function() {
         /**
          * Confirm order and write order data in database
          * .com/account/orders/confirm
-         * @return bool
+         * @return array
          */
         Route::post('/confirm', function(\Illuminate\Http\Request $request) {
-            // 
-            return response()->json($request->all());
+
+            // получить данные о композиции (прайс)
+            // получить данные пользовательского заказа
+            $response = [
+                'messages' => [
+                    'op' => [],
+                ],
+                'done' => false,
+            ];
+
+            // ВАЛИДАЦИЯ ВХОДНЫХ ДАННЫХ
+            // если заказ по хешу существует
+            if (auth()->user()->orderExistsInSession($request->_orderHash))
+            {
+                $response['messages']['op'] = auth()->user()->validateUserPermissionsToBuyComposition($request->_compHash);
+
+                // если пользователь не может покупать данную композицию (хватает денежных средств; не больше config(N) заказов в активе), то
+                if (count($response['messages']['op']) !== 0)
+                {
+                    // вывести сообщение с причиной о невозможности выполнения приобретения выбранного продукта
+                    return response()->json(['messages' => $response['messages']['op']]);
+                }
+            }
+            else
+            {
+                // Заказа больше не существует
+                $response['messages']['op'][] = 'A time for confirming this order is expired. Please, try to add an order again if you still want to get this product :)';
+                return response()->json(['messages' => $response['messages']['op']]);
+            }
+
+            // вычисление и обновление баланса обеих сторон (заказчик, дизайнер);
+            // добавление информации о заказе в БД;
+            // удаление из временного хранилища;
+            Artworch\Modules\User\Account\Order::add($request->all());
+            $response['done'] = true;
+            // отправить данные о заказе на клиентскую сторону (обновить страницу на клиенте)
+            return response()->json($response);
+
         })->name('acc-orders-confirm');
 
         /**
          * Deny order and delete data of order from session
          * .com/account/orders/deny
-         * @return bool
+         * @return array
          */
         Route::post('/deny', function(\Illuminate\Http\Request $request) {
-            // 
-            return response()->json($request->all());
+            $response = [
+                'messages' => [
+                    'steam' => [],
+                    'op' => [],
+                ],
+                'done' => false,
+            ];
+
+            // если существует сессия непотвержденных заказов
+            if ($request->session()->has('orders_cart') === true)
+            {
+                // перебирая все неподтвержденные заказы, искать неподтвержденный заказ по хешу
+                foreach ($request->session()->get('orders_cart') as $index => $orderData)
+                {
+                    // если найден
+                    if ($orderData['orderHash'] === $request->_orderHash)
+                    {
+                        // удалить из сессии
+                        $request->session()->forget('orders_cart.'.(string)$index);
+                        $response['done'] = true;
+                        return response()->json(['done' => $response['done'],]);
+                    }
+                }
+                
+                // вывести сообщение "Время на подтверждение заказа истекло. Его больше не существует"
+                $response['messages']['op'][] = 'A time for confirming this order is expired. Is not actual data received';
+                return response()->json(['messages' => $response['messages']['op']]);
+            }
+            else
+            {
+                // вывести сообщение "Время на подтверждение заказа истекло. Его больше не существует"
+                $response['messages']['op'][] = 'A time for confirming this order is expired. Is not actual data received';
+                return response()->json(['messages' => $response['messages']['op']]);
+            }
+
         })->name('acc-orders-deny');
+
+        /**
+         * Get order info by hash of order
+         * .com/account/orders/get_order_info
+         * @return array
+         */
+        Route::post('/get_order_info', function(\Illuminate\Http\Request $request) {
+            
+            $response = [
+                'messages' => [
+                    'steam' => [],
+                    'op' => [],
+                ],
+                'orderData' => null,
+            ];
+
+            // если заказ находится в сессии (проверять по параметру)
+            if ($request->_isUnconfirmedOrder == "true")
+            {
+                if (auth()->user()->orderExistsInSession($request->_orderHash))
+                {
+                    // вернуть ответ с найденными необходимыми данными о заказае
+                    $response['orderData'] = auth()->user()->getUnconfirmedOrderByHash($request->_orderHash);
+                    return response()->json(['orderData' => $response['orderData'],]);
+                }
+                // если в сессии по ключу ('orders_tmp') содержатся данные о заказах
+                else
+                {
+                    // вернуть в качестве ответа сообщение о том, что "возможно, время ожидания принятия заказа истекло"
+                    $response['messages']['op'][] = 'A time for confirming this order is expired. Is not actual data received';
+                    return response()->json(['messages' => $response['messages']['op']]);
+                }
+            }
+            elseif ($request->_isUnconfirmedOrder == "false")
+            {
+                // если в базе данных существует запись заказа по токену заказа
+                $response['orderData'] = auth()->user()->getConfirmedOrderByHash($request->_orderHash);
+                return response()->json(['orderData' => $response['orderData'],]);
+            }
+            else
+            {
+                $response['messages']['op'][] = 'Something wrong...';
+                return response()->json(['messages' => $response['messages']['op']]);
+            }
+
+        })->name('acc-orders-getorderinfo');
     });
 
 

@@ -16,7 +16,8 @@ class CreateOrdersTable extends Migration
         if (!Schema::hasTable('orders')) {
         Schema::create('orders', function (Blueprint $table) {
                 $table->string('order_token', 255)->primary();
-                $table->char('status', 1)->nullable();
+                $table->string('project_ref', 255);
+                $table->char('status', 1)->default('1');
                 $table->json('user_data');
                 $table->timestamps();
                 $table->datetime('downloaded_at')->nullable();

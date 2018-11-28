@@ -10472,46 +10472,163 @@ try {
             });
         });
 
-        // AJAX. 
-        $('#confirmOrderBtn').on('click', function (e) {
+        // notifier configurations...
+        var notifierCfg = {
+            heading: 'Undefined',
+            text: 'Whoops! We got an unregistered error :(',
+            showHideTransition: 'slide',
+            loaderBg: 'rgba(255,226,163, 1)',
+            loader: false,
+            stack: 1,
+            hideAfter: 6500,
+            textAlign: 'center',
+            position: 'bottom-right',
+            bgColor: 'rgba(39, 45, 51, 1)'
+        };
+
+        // AJAX. confirm order
+        $('.aw__icon__confirm').on('click', function (e) {
             // form data object
             var orderData = {
-                message: 'acceptAJAX'
-                // _visualization: $('.aw__visual__case>input:checked').val(),
-                // _background: $("#userBackgroundInput").val(),
-                // _compHash: $("#compositionHash").val(), // get from url on current page
+                _orderHash: $(e.target).parents(".row__user__current__order").children('input[name="_orderHash"]').val(),
+                _compHash: $(e.target).parents(".row__user__current__order").children('input[name="_compHash"]').val()
             };
 
             // request
             $.ajax({
-                url: e.target.attributes['data-link'].value,
+                url: $(".aw__icon__confirm").attr('data-link'),
                 type: "POST",
                 data: orderData,
                 dataType: 'json',
                 success: function success(result) {
-                    console.log(result);
+                    if (result.done === true) {
+                        $(e.target).parents(".row__user__current__order").remove();
+
+                        // объект кфг уведомления
+                        notifierCfg['heading'] = 'Success!';
+                        notifierCfg['text'] = 'Your order has been confirmed';
+
+                        $.toast(notifierCfg);
+                    } else {
+                        // объект кфг уведомления
+                        notifierCfg['heading'] = 'Whoops!';
+                        notifierCfg['text'] = '';
+
+                        for (var key in result.messages) {
+                            notifierCfg['text'] = result.messages[key];
+                        }
+
+                        $.toast(notifierCfg);
+                    }
                 }
             });
         });
 
-        // AJAX. 
-        $('#denyOrderBtn').on('click', function (e) {
+        // AJAX. deny order
+        $('.aw__icon__deny').on('click', function (e) {
             // form data object
             var orderData = {
-                message: 'declineAJAX'
-                // _visualization: $('.aw__visual__case>input:checked').val(),
-                // _background: $("#userBackgroundInput").val(),
-                // _compHash: $("#compositionHash").val(), // get from url on current page
+                _orderHash: $(e.target).parents(".row__user__current__order").children('input[name="_orderHash"]').val()
             };
 
             // request
             $.ajax({
-                url: e.target.attributes['data-link'].value,
+                url: $(".aw__icon__deny").attr('data-link'),
                 type: "POST",
                 data: orderData,
                 dataType: 'json',
                 success: function success(result) {
+
+                    if (result.done === true) {
+                        $(e.target).parents(".row__user__current__order").remove();
+
+                        // объект кфг уведомления
+                        notifierCfg['heading'] = 'Success!';
+                        notifierCfg['text'] = 'Your unconfirmed order has been removed';
+
+                        $.toast(notifierCfg);
+                    } else {
+                        // объект кфг уведомления
+                        notifierCfg['heading'] = 'Whoops!';
+                        notifierCfg['text'] = '';
+
+                        for (var key in result.messages) {
+                            notifierCfg['text'] = result.messages[key];
+                        }
+
+                        $.toast(notifierCfg);
+                    }
+                }
+            });
+        });
+
+        // AJAX. check data order
+        $('.aw__btn__check__order__info').on('click', function (e) {
+
+            // data object
+            var orderData = {
+                _orderHash: $(e.target).parents(".row__user__current__order").children('input[name="_orderHash"]').val(),
+                _isUnconfirmedOrder: ['cart'].indexOf($(e.target).parents(".row__user__current__order").attr('data-order-status')) > -1 ? true : false
+            };
+
+            var visualizationHtmlPatt = $('.aw__visualization__variants>.aw__form__component').html();
+            var backgroundHtmlPatt = $('.aw__user__bg__variant>.aw__form__component').html();
+
+            // request
+            $.ajax({
+                url: $(".aw__btn__check__order__info").attr('data-link'),
+                type: "POST",
+                data: orderData,
+                dataType: 'json',
+                beforeSend: function beforeSend() {
+                    visualizationHtmlPatt = $('.aw__visualization__variants>.aw__form__component').html();
+                    backgroundHtmlPatt = $('.aw__user__bg__variant>.aw__form__component').html();
+
+                    $('.aw__visualization__variants>.aw__form__component').html('<img id="visualizationLoader" src="//artworch.com/storage/img/light-loader.svg">');
+                    $('.aw__user__bg__variant>.aw__form__component').html('<img id="backgroundLoader" src="//artworch.com/storage/img/light-loader.svg">');
+
+                    $('#visualizationLoader').show();
+                    $('#backgroundLoader').show();
+                },
+                success: function success(result) {
+                    // paste fresh HTML code of two components (visualization, background)
+                    $('.aw__visualization__variants>.aw__form__component').html(visualizationHtmlPatt);
+                    $('.aw__user__bg__variant>.aw__form__component').html(backgroundHtmlPatt);
+
                     console.log(result);
+                    // if data is received...
+                    if (result.orderData == null) {
+                        // объект кфг уведомления
+                        notifierCfg['heading'] = 'Whoops!';
+                        notifierCfg['text'] = '';
+
+                        for (var key in result.messages) {
+                            notifierCfg['text'] = result.messages[key];
+                        }
+
+                        $.toast(notifierCfg);
+                    } else {
+                        if (result.orderData.visualization == 0) // is short
+                            {
+                                $('.aw__visualization__variants>.aw__form__component>#visualCaseShort>input').prop('checked', true);
+                                $('.aw__visualization__variants>.aw__form__component>#visualCaseLong>input').prop('checked', false);
+                                $('.aw__visualization__variants>.aw__form__component>#visualCaseShort>input').prop('disabled', false);
+                            } else // is long
+                            {
+                                $('.aw__visualization__variants>.aw__form__component>#visualCaseLong>input').prop('checked', true);
+                                $('.aw__visualization__variants>.aw__form__component>#visualCaseShort>input').prop('checked', false);
+                                $('.aw__visualization__variants>.aw__form__component>#visualCaseLong>input').prop('disabled', false);
+                            }
+
+                        $('.aw__user__bg__variant>.aw__form__component>.order__data__background>img').attr('src', result.orderData.background);
+                    }
+                },
+                complete: function complete() {
+                    $('#visualizationLoader').hide();
+                    $('#backgroundLoader').hide();
+
+                    $('.aw__visualization__variants>.aw__form__component>#visualizationLoader').remove();
+                    $('.aw__user__bg__variant>.aw__form__component>#backgroundLoader').remove();
                 }
             });
         });

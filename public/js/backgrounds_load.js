@@ -10457,18 +10457,18 @@ try {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             beforeSend: function beforeSend() {
-                $('.user__bg__body>.user-bg-list-layer>ul').html('<img id="loader" src="//artworch.com/storage/img/light-loader.svg">');
+                $('.aw__user__bg__body>.user-bg-list-layer>ul').html('<img id="loader" src="//artworch.com/storage/img/light-loader.svg">');
                 $('#loader').show();
             },
             complete: function complete() {
                 $('#loader').hide();
-                $('.user__bg__body>.user-bg-list-layer>ul>#loader').remove();
+                $('.aw__user__bg__body>.user-bg-list-layer>ul>#loader').remove();
             }
         });
 
         // Popover Backgrounds List
         $(function () {
-            $('.user__bg__cont>.aw__form__component>button').popover({
+            $('.aw__user__bg__variant>.aw__form__component>button').popover({
                 'html': true,
                 'template': '<div class="popover currently-background" role="tooltip">  \
                             <div class="arrow"> \
@@ -10521,9 +10521,9 @@ try {
                         }
 
                         // удаление обработчиков на элементы фонов и очистка списка от HTML содержимого
-                        if ($('.user__bg__body>.user-bg-list-layer>ul>.userbg-item').length !== 0) {
-                            $('.user__bg__body>.user-bg-list-layer>ul>.userbg-item>button').off('click');
-                            $('.user__bg__body>.user-bg-list-layer>ul>').empty();
+                        if ($('.aw__user__bg__body>.user-bg-list-layer>ul>.userbg-item').length !== 0) {
+                            $('.aw__user__bg__body>.user-bg-list-layer>ul>.userbg-item>button').off('click');
+                            $('.aw__user__bg__body>.user-bg-list-layer>ul>').empty();
                         }
                     }
                     // если фоны не отсутствуют...
@@ -10531,14 +10531,14 @@ try {
                         noteCfg['heading'] = 'OK!';
                         noteCfg['text'] = 'Your inventory has been successfully refreshed';
 
-                        $('.user__bg__body>.user-bg-list-layer>ul').html(result.backgrounds);
+                        $('.aw__user__bg__body>.user-bg-list-layer>ul').html(result.backgrounds);
 
                         // установка обработчиков на элементы фонов
-                        if ($('.user__bg__body>.user-bg-list-layer>ul>.userbg-item').length !== 0) {
-                            $('.user__bg__body>.user-bg-list-layer>ul>.userbg-item>button').on('click', function (e) {
+                        if ($('.aw__user__bg__body>.user-bg-list-layer>ul>.userbg-item').length !== 0) {
+                            $('.aw__user__bg__body>.user-bg-list-layer>ul>.userbg-item>button').on('click', function (e) {
                                 var backgroundImageUrl = $(e.currentTarget).find('img').attr('src');
-                                $('.user__bg__cont>.aw__form__component>button').attr('data-content', "<img src='" + backgroundImageUrl + "' weight='96' height='96' />");
-                                $(".user__bg__cont>.aw__form__component>input[name='_background']").val(backgroundImageUrl);
+                                $('.aw__user__bg__variant>.aw__form__component>button').attr('data-content', "<img src='" + backgroundImageUrl + "' weight='96' height='96' />");
+                                $(".aw__user__bg__variant>.aw__form__component>input[name='_background']").val(backgroundImageUrl);
                                 $('#collapseUserBackgrounds').collapse('hide');
                             });
                         }

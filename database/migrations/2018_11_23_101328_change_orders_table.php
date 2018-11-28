@@ -16,6 +16,7 @@ class ChangeOrdersTable extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->unsignedInteger('customer_id')->first();
             $table->foreign('customer_id')->references('id')->on('users');
+            $table->foreign('project_ref')->references('project_token')->on('comp_requests');
         });
     }
 
@@ -28,6 +29,7 @@ class ChangeOrdersTable extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->dropForeign('orders_customer_id_foreign');
+            $table->dropForeign('orders_project_ref_foreign');
         });
     }
 }

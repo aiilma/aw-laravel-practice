@@ -102,13 +102,13 @@
                                     <div class="card card-body">
     
                                         <!-- Управление списком -->
-                                        <div class="user__bg__controller">
+                                        <div class="aw__user__bg__controller">
                                             <div class="user-bg-controls-group">
                                                 <button type="button" id="refreshUserBackgroundsList" class="btn btn-dark" data-link="{{substr(route('get-steam-backgrounds'), strlen(url('/')))}}">Refresh</button>
                                             </div>
                                         </div>
                                         <!-- Список фонов -->
-                                        <div class="user__bg__body">
+                                        <div class="aw__user__bg__body">
                                             <div class="user-bg-list-layer">
                                                 <ul></ul>
                                             </div>

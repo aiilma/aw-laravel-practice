@@ -34,9 +34,9 @@ class CompositionController extends Controller
         $compList = [];
         // записать в массив следующие R * K (где K - количество карточек на странице) композиций отфильтрованных по полю published_at по убыванию
         $compList = Composition::orderBy('published_at', 'desc')
-                    ->where('view_status', '=', '1')
-                    ->paginate(config('compositions.max_cards_per_page'), ['*'], 'list')
-                    ->onEachSide(1);
+                                ->where('view_status', '=', '1')
+                                ->paginate(config('compositions.max_cards_per_page'), ['*'], 'list')
+                                ->onEachSide(1);
         
         return view('systems.compositions.list', ['compositions' => $compList]);
     }
@@ -62,17 +62,22 @@ class CompositionController extends Controller
      */
     public function buyComposition(Request $request)
     {
+        $request->request->add(['_userBalance' => auth()->user()->balance]);
+        $request->request->add(['_ordersCount' => ($request->session()->get('orders_cart') !== null) ? count($request->session()->get('orders_cart')) : 0,]);
+        $request->request->add(['_orderHash' => str_random(255),]);
+
         $response = array(
             'messages' => [
                 'transaction' => [],
                 'steam' => [],
             ], // Для хранения информации для пользователя
+            'preparedOrderInfo' => [
+                'orderHash' => $request->_orderHash,
+                'compHash' => $request->_compHash,
+                'visualization' => $request->_visualization,
+                'background' => $request->_background,
+            ],
         );
-
-        $request->request->add(['_userBalance' => auth()->user()->balance]);
-        $request->request->add(['_ordersCount' => count($request->session()->get('orders_cart')),]);
-        $request->request->add(['_orderHash' => str_random(255),]);
-
 
         $buyCompResultData = Validator::make($request->all(), [ // Статусы доступа к данным пользователя
             '_compHash' => 'exists:comp_requests,project_token',
@@ -102,7 +107,7 @@ class CompositionController extends Controller
 
         $response['messages']['transaction'] = $buyCompResultData->messages();
         $response['messages']['steam'] = auth()->user()->validateSteamAccount();
-        
+
 
         if (count($response['messages']['transaction']) == 0 && count($response['messages']['steam']) == 0)
         {
@@ -111,9 +116,7 @@ class CompositionController extends Controller
                 $request->session()->put('orders_cart', []);
             }
 
-            $request->session()->push('orders_cart', $request->all());
-
-            // return response()->json(['link' => route('acc-orders-showlist'),]);
+            $request->session()->push('orders_cart', $response['preparedOrderInfo']);
         }
     
         return response()->json(['messages' => $response['messages'],]);

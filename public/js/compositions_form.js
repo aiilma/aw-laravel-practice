@@ -10474,15 +10474,12 @@ try {
                 data: buyCompositionData,
                 dataType: 'json',
                 success: function success(result) {
-
-                    var heading = 'Undefined',
-                        text = 'Whoops! We have no messages for you :(',
-                        bgColor = 'rgba(39, 45, 51, 1)';
+                    console.log(result);
 
                     // объект кфг уведомления
                     var noteCfg = {
-                        heading: heading,
-                        text: text,
+                        heading: 'Undefined',
+                        text: 'Whoops! We got an unregistered error :(',
                         showHideTransition: 'slide',
                         loaderBg: 'rgba(255,226,163, 1)',
                         loader: false,
@@ -10490,7 +10487,7 @@ try {
                         hideAfter: 6500,
                         textAlign: 'center',
                         position: 'bottom-right',
-                        bgColor: bgColor
+                        bgColor: 'rgba(39, 45, 51, 1)'
                     };
 
                     if (result.messages.steam.length !== 0 || result.messages.transaction.length !== 0) {

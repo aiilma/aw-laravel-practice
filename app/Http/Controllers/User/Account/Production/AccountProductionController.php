@@ -6,7 +6,7 @@ use Artworch\Http\Controllers\Controller;
 use Artworch\Modules\User\Account\CompRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Storage, File, Auth, Validator, Zipper;
+use Storage, Zipper;
 
 class AccountProductionController extends Controller
 {
@@ -30,131 +30,75 @@ class AccountProductionController extends Controller
      */
     public function sendCompRequest(\Artworch\Http\Requests\SendCompRequest $request)
     {
+        $response = array(
+            'messages' => [
+                'steam' => [],
+                'transaction' => [],
+            ],
+        );
+
         // Валидация на лимит по количеству продукции текущего пользователя
-        Validator::make([
-                'userProdCount' => Auth::user()->compRequests->count(),
-            ],
-            [
-                'userProdCount' => 'lte:4'
-            ],
-            [
-                'userProdCount.lte' => 'You can\'t send requests anymore. Max count of any production activity for your account (including your products on sale) is equals to 4',
-        ])->validate();
+        $response['messages']['transaction'] = auth()->user()->validateOnSendProductionRequest();
+        // Если есть сообщения, то отправить их пользователю
+        if (count($response['messages']['transaction']) !== 0)
+        {
+            return redirect()->back()->withErrors($response['messages']['transaction']);
+        }
 
-        $projectFile = $request->file('_project');
-        $receive = $request->_receive;
-        $project = [
-            'hash' => pathinfo($projectFile->hashName(), PATHINFO_FILENAME), // dkajsdjadw419fds,
-            'receive' => $receive,
-        ];
 
-        // Создать директорию X, где имя папки проекта - сгенерированный токен из имени файла
-        $project['dir']['relative'] = 'compositions/production/requests/' . $project['hash'];
-        $project['dir']['absolute'] = storage_path('app/') . $project['dir']['relative'];
-        $project['archive']['relative'] = $projectFile->store($project['dir']['relative']);
-        $project['archive']['absolute'] = storage_path('app/') . $project['archive']['relative'];
-        $project['config']['relative'] = $project['dir']['relative'] . '/aw-config.json';
-        $project['config']['absolute'] = storage_path('app/') . $project['config']['relative'];
+        $projectRequest = CompRequest::initializeData($request);
+
 
         // Распаковать архив в X директорию
-        Zipper::make($project['archive']['absolute'])->extractTo($project['dir']['absolute']);
+        Zipper::make($projectRequest['archive']['absolute'])->extractTo($projectRequest['dir']['absolute']);
         Zipper::close();
-        Storage::delete($project['archive']['relative']);
+        Storage::delete($projectRequest['archive']['relative']);
+
+
+        // Валидация на наличие конфиг файла проекта пользователя
+        $response['messages']['transaction'] = CompRequest::validateOnExistingConfigFile($projectRequest);
+        // Если есть сообщения, то отправить их пользователю
+        if (count($response['messages']['transaction']) !== 0)
+        {
+            Storage::deleteDirectory($projectRequest['dir']['relative']);   
+            return redirect()->back()->withErrors($response['messages']['transaction']);
+        }
+
 
         // Считать содержимое конфига...
-        $project['config']['json'] = file_get_contents($project['config']['absolute']);
+        $projectRequest['config']['json'] = file_get_contents($projectRequest['config']['absolute']);
         
+
         // Проверить файл на корректность json формата прежде чем декодить в массив
-        $validatorOfConfigFile = Validator::make($project['config'], [
-            'json' => 'required|json',
-            ],
-            [
-            'json.required' => 'Please, make sure the project\'s config file is exists and it\'s no empty string',
-            'json.json' => 'Your config file must have a valid json format',
-        ]);
-
-
-        if ($validatorOfConfigFile->fails())
+        $response['messages']['transaction'] = CompRequest::validateUserConfigOnJSON($projectRequest['config']);
+        // Если есть сообщения, то отправить их пользователю
+        if (count($response['messages']['transaction']) !== 0)
         {
-            Storage::deleteDirectory($project['dir']['relative']);            
-            return redirect()->back()->withErrors($validatorOfConfigFile);
+            Storage::deleteDirectory($projectRequest['dir']['relative']);
+            return redirect()->back()->withErrors($response['messages']['transaction']);
         }
         
 
         // Преобразовать json в массив
-        $project['config']['assoc'] = json_decode($project['config']['json'], true);
+        $projectRequest['config']['assoc'] = json_decode($projectRequest['config']['json'], true);
+
+
 
         // Валидация данных конфига по стандартизированным секциям и ключам...
-        $validatorOfConfigContent = Validator::make($project['config'], [
-                'assoc' => 'size:3',
-
-                'assoc.interface' => 'required|array|size:2',
-                'assoc.demo' => 'required|array|size:1',
-                'assoc.projectFolder' => 'required|string',
-
-                'assoc.interface.projectName' => 'required|string|between:3, 32',
-                'assoc.interface.visualizationType' => 'required|integer|between:0, 1',
-
-                'assoc.demo.picturePathes' => 'required|array|size:2',
-                'assoc.demo.picturePathes.freeze' => 'required|string',
-                'assoc.demo.picturePathes.preview' => 'required|string',
-
-                'assoc.projectFolder' => 'required|string',
-            ],
-            [
-                'assoc.size' => 'Your config file must contain only 3 sections',
-                // Sections...
-                'assoc.interface.required' => 'The interface section is required',
-                'assoc.interface.array' => 'The interface section must contain sub-sections in associations with JSON format',
-                'assoc.interface.size' => 'The interface section must contain only 2 sub-sections',
-                'assoc.demo.required' => 'The demo section is required',
-                'assoc.demo.array' => 'The demo section must contain a sub-section in associations with JSON format',
-                'assoc.demo.size' => 'The demo section must contain only 1 sub-section',
-                'assoc.projectFolder.required' => 'The projectFolder section is required',
-                'assoc.projectFolder.string' => 'The projectFolder section\'s value must be a string',
-
-                // Sub-sections of interface section...
-                'assoc.interface.projectName.required' => 'The projectName\'s value is required (interface)',
-                'assoc.interface.projectName.string' => 'The projectName\'s value must be a string (interface)',
-                'assoc.interface.projectName.between' => 'The projectName\'s value must be between 3 and 32 characters (interface)',
-                'assoc.interface.visualizationType.required' => 'The visualizationType\'s value is required (interface)',
-                'assoc.interface.visualizationType.integer' => 'The visualizationType\'s value must be an integer (interface)',
-                'assoc.interface.visualizationType.between' => 'The visualizationType\'s value must be 0 or 1 (interface)',
-                // Sub-sections of demo section...
-                'assoc.demo.picturePathes.required' => 'The picturePathes is required (demo)',
-                'assoc.demo.picturePathes.array' => 'The picturePathes must contain keys in associations with JSON format (demo)',
-                'assoc.demo.picturePathes.size' => 'The picturePathes must contain only 2 keys (demo)',
-                'assoc.demo.picturePathes.freeze.required' => 'The freeze\'s value is required (demo - picturePath)',
-                'assoc.demo.picturePathes.freeze.string' => 'The freeze\'s value must be a string (demo - picturePath)',
-                'assoc.demo.picturePathes.preview.required' => 'The preview\'s value is required (demo - picturePath)',
-                'assoc.demo.picturePathes.preview.string' => 'The preview\'s value must be a string (demo - picturePath)',
-                // Name of project folder
-                'assoc.projectFolder.required' => 'The projectFolder\'s value is required',
-                'assoc.projectFolder.string' => 'The projectFolder\'s value must be a string',
-
-
-        ]);
-        
-
-        if ($validatorOfConfigContent->fails()) {
-            Storage::deleteDirectory($project['dir']['relative']);
-            return redirect()->back()->withErrors($validatorOfConfigContent);
+        $response['messages']['transaction'] = CompRequest::validateUserConfigOnFormat($projectRequest['config']);
+        // Если есть сообщения, то отправить их пользователю
+        if (count($response['messages']['transaction']) !== 0)
+        {
+            Storage::deleteDirectory($projectRequest['dir']['relative']);
+            return redirect()->back()->withErrors($response['messages']['transaction']);
         }
 
-
         // Изменение имен файлов на hash.ext_file подобные
-        Storage::move($project['dir']['relative'] . '/' . $project['config']['assoc']['demo']['picturePathes']['freeze'], $project['dir']['relative'] . '/' . $project['hash'] . '.png');
-        Storage::move($project['dir']['relative'] . '/' . $project['config']['assoc']['demo']['picturePathes']['preview'], $project['dir']['relative'] . '/' . $project['hash'] . '.gif');
+        Storage::move($projectRequest['dir']['relative'] . '/' . $projectRequest['config']['assoc']['demo']['picturePathes']['freeze'], $projectRequest['dir']['relative'] . '/' . $projectRequest['hash'] . '.png');
+        Storage::move($projectRequest['dir']['relative'] . '/' . $projectRequest['config']['assoc']['demo']['picturePathes']['preview'], $projectRequest['dir']['relative'] . '/' . $projectRequest['hash'] . '.gif');
         
-
         // Создать запись в БД
-        $compRequest = new CompRequest;
-        $compRequest->title = $project['config']['assoc']['interface']['projectName'];
-        $compRequest->custom_price = $project['receive'];
-        $compRequest->visualization = $project['config']['assoc']['interface']['visualizationType'];
-        $compRequest->project_token = $project['hash'];
-        $compRequest->author_id = Auth::user()->id;
-        $compRequest->save();
+        CompRequest::addToDatabase($projectRequest);
 
         // Отправить пользователя на страницу списка заявок...
         return redirect()->route('acc-prod-showrequests');
@@ -165,7 +109,7 @@ class AccountProductionController extends Controller
      *
      * @return Response
      */
-    public function showRequests()
+    public function showRequests(Request $request)
     {
         dd(auth()->user()->compRequests);
         // return view('user.account.production.requests');

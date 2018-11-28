@@ -142,12 +142,12 @@
     margin: 0 auto;
     text-align: left;
 
-    .user__bg__body {
+    .aw__user__bg__body {
         margin: 0.5rem 0;
     }
 }
 
-.user__bg__body>.user-bg-list-layer {
+.aw__user__bg__body>.user-bg-list-layer {
     height: 234px;
     min-height: 64px;
     max-height: 234px;
@@ -202,19 +202,19 @@
 #collapseUserBackgrounds > div {
     padding-top: 0;
 
-    .user__bg__controller {
+    .aw__user__bg__controller {
         border-bottom: 1px solid rgba(128, 128, 128, 0.25);
     }
-    .user__bg__body {
+    .aw__user__bg__body {
         margin: 1rem 0;
     }
 }
 
-.user__bg__controller > .user-bg-controls-group {
+.aw__user__bg__controller > .user-bg-controls-group {
     padding: 1rem 0;
 }
 
-.user__bg__controller > .user-bg-controls-group > a {
+.aw__user__bg__controller > .user-bg-controls-group > a {
     padding: 1rem;
 }
 
