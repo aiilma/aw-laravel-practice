@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 43);
+/******/ 	return __webpack_require__(__webpack_require__.s = 44);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -10437,39 +10437,34 @@ return jQuery;
 
 /***/ }),
 
-/***/ 43:
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(44);
+module.exports = __webpack_require__(45);
 
 
 /***/ }),
 
-/***/ 44:
+/***/ 45:
 /***/ (function(module, exports, __webpack_require__) {
 
 try {
-    window.$ = window.jQuery = __webpack_require__(1);
-
-    $(document).ready(function () {
-
-        // $('.comp-link-req').on('click', (e) => {
-        //     e.preventDefault();
-
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: $('.comp-link-req').attr('href'),
-        //         error: function(result) {
-        //             // warning popup with messages                    
-        //             var errors = $.parseJSON(result.responseText);
-        //             $.each(errors, function(key, value) {
-        //                 console.log(value);
-        //             });
-        //         },
-        //     });
-        // });
-
-    });
+  window.$ = window.jQuery = __webpack_require__(1);
+  $(document).ready(function () {// $('.comp-link-req').on('click', (e) => {
+    //     e.preventDefault();
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: $('.comp-link-req').attr('href'),
+    //         error: function(result) {
+    //             // warning popup with messages                    
+    //             var errors = $.parseJSON(result.responseText);
+    //             $.each(errors, function(key, value) {
+    //                 console.log(value);
+    //             });
+    //         },
+    //     });
+    // });
+  });
 } catch (e) {}
 
 /***/ })

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 45);
+/******/ 	return __webpack_require__(__webpack_require__.s = 46);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -10437,77 +10437,74 @@ return jQuery;
 
 /***/ }),
 
-/***/ 45:
+/***/ 46:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(46);
+module.exports = __webpack_require__(47);
 
 
 /***/ }),
 
-/***/ 46:
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
 try {
-    window.$ = window.jQuery = __webpack_require__(1);
+  window.$ = window.jQuery = __webpack_require__(1);
+  $(document).ready(function () {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    }); // AJAX. 
 
-    $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    $('#buyCompositionBtn').on('click', function (e) {
+      // form data object
+      var buyCompositionData = {
+        _visualization: $('.aw__visual__case>input:checked').val(),
+        _background: $("#userBackgroundInput").val(),
+        _compHash: $("#compositionHash").val() // get from url on current page
+
+      }; // request
+
+      $.ajax({
+        url: e.target.attributes['data-link'].value,
+        type: "POST",
+        data: buyCompositionData,
+        dataType: 'json',
+        success: function success(result) {
+          console.log(result); // объект кфг уведомления
+
+          var noteCfg = {
+            heading: 'Undefined',
+            text: 'Whoops! We got an unregistered error :(',
+            showHideTransition: 'slide',
+            loaderBg: 'rgba(255,226,163, 1)',
+            loader: false,
+            stack: 1,
+            hideAfter: 6500,
+            textAlign: 'center',
+            position: 'bottom-right',
+            bgColor: 'rgba(39, 45, 51, 1)'
+          };
+
+          if (result.messages.steam.length !== 0 || result.messages.transaction.length !== 0) {
+            noteCfg['heading'] = 'Whoops!';
+            noteCfg['text'] = '';
+
+            for (var key in result.messages) {
+              for (var index in result.messages[key]) {
+                noteCfg['text'] = result.messages[key][index][0];
+              }
             }
-        });
 
-        // AJAX. 
-        $('#buyCompositionBtn').on('click', function (e) {
-            // form data object
-            var buyCompositionData = {
-                _visualization: $('.aw__visual__case>input:checked').val(),
-                _background: $("#userBackgroundInput").val(),
-                _compHash: $("#compositionHash").val() // get from url on current page
-            };
-
-            // request
-            $.ajax({
-                url: e.target.attributes['data-link'].value,
-                type: "POST",
-                data: buyCompositionData,
-                dataType: 'json',
-                success: function success(result) {
-                    console.log(result);
-
-                    // объект кфг уведомления
-                    var noteCfg = {
-                        heading: 'Undefined',
-                        text: 'Whoops! We got an unregistered error :(',
-                        showHideTransition: 'slide',
-                        loaderBg: 'rgba(255,226,163, 1)',
-                        loader: false,
-                        stack: 1,
-                        hideAfter: 6500,
-                        textAlign: 'center',
-                        position: 'bottom-right',
-                        bgColor: 'rgba(39, 45, 51, 1)'
-                    };
-
-                    if (result.messages.steam.length !== 0 || result.messages.transaction.length !== 0) {
-                        noteCfg['heading'] = 'Whoops!';
-                        noteCfg['text'] = '';
-
-                        for (var key in result.messages) {
-                            for (var index in result.messages[key]) {
-                                noteCfg['text'] = result.messages[key][index][0];
-                            }
-                        }
-
-                        $.toast(noteCfg);
-                    } else {
-                        window.location.href = 'https://artworch.com/account/orders/';
-                    }
-                }
-            });
-        });
+            $.toast(noteCfg);
+          } else {
+            window.location.href = 'https://artworch.com/account/orders/';
+          }
+        }
+      });
     });
+  });
 } catch (e) {}
 
 /***/ })

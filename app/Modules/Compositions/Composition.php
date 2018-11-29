@@ -14,17 +14,9 @@ class Composition extends Model
         'published_at', 'expire_at'
     ];
 
-    protected $casts = [
-        'published_at' => 'date:Y-m-d'
+    protected $dates = [
+        'published_at', 'expire_at',
     ];
-
-
-    public static function buy($formData)
-    {
-        return [
-            'qq' => $formData,
-        ];
-    }
 
     /**
      * Relation to composition request; one to one

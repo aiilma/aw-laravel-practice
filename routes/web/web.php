@@ -244,7 +244,19 @@ Route::prefix('/account')->group(function() {
 Route::prefix('/payments')->group(function() {
     // show variants...
     Route::get('/', 'Payments\PaymentController@showPayments')->name('payments-show');
-    Route::post('/', 'Payments\PaymentController@sendPaymentRequest')->name('payments-sendrequest');
+    // Route::post('/', 'Payments\PaymentController@sendPaymentRequest')->name('payments-sendrequest');
+
+    
+    // PAYPAL + CC post
+    Route::get('/paypal', 'Payments\PaymentPaypalController@paywithPaypal');
+    Route::get('/cc', 'Payments\PaymentPaypalController@paywithCreditCard');
+    Route::get('/success', 'Payments\PaymentPaypalController@isComplited');
+    Route::get('/fails', 'Payments\PaymentPaypalController@isFailed');
+
+
+    // QIWI post
+    Route::get('/qiwi', 'Payments\PaymentQiwiController@paywithQiwi');
+
 
     // // yandex money...
     // Route::get('/yamoney', 'Payments\PaymentController@showPaymentForm')->name('payments-postindex');

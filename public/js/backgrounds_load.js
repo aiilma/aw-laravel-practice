@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 41);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -10437,118 +10437,114 @@ return jQuery;
 
 /***/ }),
 
-/***/ 41:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(42);
+module.exports = __webpack_require__(43);
 
 
 /***/ }),
 
-/***/ 42:
+/***/ 43:
 /***/ (function(module, exports, __webpack_require__) {
 
 try {
-    window.$ = window.jQuery = __webpack_require__(1);
+  window.$ = window.jQuery = __webpack_require__(1);
+  $(document).ready(function () {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      beforeSend: function beforeSend() {
+        $('.aw__user__bg__body>.user-bg-list-layer>ul').html('<img id="loader" src="//artworch.com/storage/img/light-loader.svg">');
+        $('#loader').show();
+      },
+      complete: function complete() {
+        $('#loader').hide();
+        $('.aw__user__bg__body>.user-bg-list-layer>ul>#loader').remove();
+      }
+    }); // Popover Backgrounds List
 
-    $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            beforeSend: function beforeSend() {
-                $('.aw__user__bg__body>.user-bg-list-layer>ul').html('<img id="loader" src="//artworch.com/storage/img/light-loader.svg">');
-                $('#loader').show();
-            },
-            complete: function complete() {
-                $('#loader').hide();
-                $('.aw__user__bg__body>.user-bg-list-layer>ul>#loader').remove();
-            }
-        });
-
-        // Popover Backgrounds List
-        $(function () {
-            $('.aw__user__bg__variant>.aw__form__component>button').popover({
-                'html': true,
-                'template': '<div class="popover currently-background" role="tooltip">  \
+    $(function () {
+      $('.aw__user__bg__variant>.aw__form__component>button').popover({
+        'html': true,
+        'template': '<div class="popover currently-background" role="tooltip">  \
                             <div class="arrow"> \
                             </div>  \
                             <h3 class="popover-header"></h3>  \
                             <div class="popover-body text-center">  \
                             </div>  \
                             </div>',
-                'delay': { "show": 400, "hide": 100 }
-            });
+        'delay': {
+          "show": 400,
+          "hide": 100
+        }
+      });
+      $('#collapseUserBackgrounds').collapse({
+        toggle: false
+      });
+    }); // AJAX. On refresh backgrounds List + Chooser Background
 
-            $('#collapseUserBackgrounds').collapse({
-                toggle: false
-            });
-        });
+    $('#refreshUserBackgroundsList').on('click', function (e) {
+      $.ajax({
+        type: 'POST',
+        url: e.target.attributes['data-link'].value,
+        success: function success(result) {
+          var heading = 'Undefined',
+              text = 'We have no messages for you :(',
+              bgColor = 'rgba(39, 45, 51, 1)'; // объект кфг уведомления
 
-        // AJAX. On refresh backgrounds List + Chooser Background
-        $('#refreshUserBackgroundsList').on('click', function (e) {
-            $.ajax({
-                type: 'POST',
-                url: e.target.attributes['data-link'].value,
-                success: function success(result) {
+          var noteCfg = {
+            heading: heading,
+            text: text,
+            showHideTransition: 'slide',
+            loaderBg: 'rgba(255,226,163, 1)',
+            loader: false,
+            stack: 1,
+            hideAfter: 6500,
+            textAlign: 'center',
+            position: 'bottom-right',
+            bgColor: bgColor
+          };
 
-                    var heading = 'Undefined',
-                        text = 'We have no messages for you :(',
-                        bgColor = 'rgba(39, 45, 51, 1)';
+          if (result.messages.steam !== undefined) {
+            noteCfg['heading'] = 'Whoops!';
+            noteCfg['text'] = '';
 
-                    // объект кфг уведомления
-                    var noteCfg = {
-                        heading: heading,
-                        text: text,
-                        showHideTransition: 'slide',
-                        loaderBg: 'rgba(255,226,163, 1)',
-                        loader: false,
-                        stack: 1,
-                        hideAfter: 6500,
-                        textAlign: 'center',
-                        position: 'bottom-right',
-                        bgColor: bgColor
-                    };
+            for (var key in result.messages.steam) {
+              if (result.messages.steam.hasOwnProperty(key)) {
+                noteCfg['text'] = result.messages.steam[key];
+              }
+            } // удаление обработчиков на элементы фонов и очистка списка от HTML содержимого
 
-                    if (result.messages.steam !== undefined) {
-                        noteCfg['heading'] = 'Whoops!';
-                        noteCfg['text'] = '';
 
-                        for (var key in result.messages.steam) {
-                            if (result.messages.steam.hasOwnProperty(key)) {
-                                noteCfg['text'] = result.messages.steam[key];
-                            }
-                        }
+            if ($('.aw__user__bg__body>.user-bg-list-layer>ul>.userbg-item').length !== 0) {
+              $('.aw__user__bg__body>.user-bg-list-layer>ul>.userbg-item>button').off('click');
+              $('.aw__user__bg__body>.user-bg-list-layer>ul>').empty();
+            }
+          } // если фоны не отсутствуют...
 
-                        // удаление обработчиков на элементы фонов и очистка списка от HTML содержимого
-                        if ($('.aw__user__bg__body>.user-bg-list-layer>ul>.userbg-item').length !== 0) {
-                            $('.aw__user__bg__body>.user-bg-list-layer>ul>.userbg-item>button').off('click');
-                            $('.aw__user__bg__body>.user-bg-list-layer>ul>').empty();
-                        }
-                    }
-                    // если фоны не отсутствуют...
-                    if (result.backgrounds !== undefined) {
-                        noteCfg['heading'] = 'OK!';
-                        noteCfg['text'] = 'Your inventory has been successfully refreshed';
 
-                        $('.aw__user__bg__body>.user-bg-list-layer>ul').html(result.backgrounds);
+          if (result.backgrounds !== undefined) {
+            noteCfg['heading'] = 'OK!';
+            noteCfg['text'] = 'Your inventory has been successfully refreshed';
+            $('.aw__user__bg__body>.user-bg-list-layer>ul').html(result.backgrounds); // установка обработчиков на элементы фонов
 
-                        // установка обработчиков на элементы фонов
-                        if ($('.aw__user__bg__body>.user-bg-list-layer>ul>.userbg-item').length !== 0) {
-                            $('.aw__user__bg__body>.user-bg-list-layer>ul>.userbg-item>button').on('click', function (e) {
-                                var backgroundImageUrl = $(e.currentTarget).find('img').attr('src');
-                                $('.aw__user__bg__variant>.aw__form__component>button').attr('data-content', "<img src='" + backgroundImageUrl + "' weight='96' height='96' />");
-                                $(".aw__user__bg__variant>.aw__form__component>input[name='_background']").val(backgroundImageUrl);
-                                $('#collapseUserBackgrounds').collapse('hide');
-                            });
-                        }
-                    }
+            if ($('.aw__user__bg__body>.user-bg-list-layer>ul>.userbg-item').length !== 0) {
+              $('.aw__user__bg__body>.user-bg-list-layer>ul>.userbg-item>button').on('click', function (e) {
+                var backgroundImageUrl = $(e.currentTarget).find('img').attr('src');
+                $('.aw__user__bg__variant>.aw__form__component>button').attr('data-content', "<img src='" + backgroundImageUrl + "' weight='96' height='96' />");
+                $(".aw__user__bg__variant>.aw__form__component>input[name='_background']").val(backgroundImageUrl);
+                $('#collapseUserBackgrounds').collapse('hide');
+              });
+            }
+          }
 
-                    $.toast(noteCfg);
-                }
-            });
-        });
+          $.toast(noteCfg);
+        }
+      });
     });
+  });
 } catch (e) {}
 
 /***/ })

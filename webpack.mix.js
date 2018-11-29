@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+let mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,9 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/packets/user/backgrounds_load.js', 'public/js')
-    .js('resources/js/packets/compositions/compositions_listing.js', 'public/js')
-    .js('resources/js/packets/compositions/compositions_form.js', 'public/js')
-    .js('resources/js/packets/user/orders/order_controls.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.js('resources/assets/js/app.js', 'public/js')
+   .js('resources/assets/js/packets/user/backgrounds_load.js', 'public/js')
+   .js('resources/assets/js/packets/compositions/compositions_listing.js', 'public/js')
+   .js('resources/assets/js/packets/compositions/compositions_form.js', 'public/js')
+   .js('resources/assets/js/packets/user/orders/order_controls.js', 'public/js')
+   .sass('resources/assets/sass/app.scss', 'public/css');

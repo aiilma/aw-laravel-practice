@@ -45,7 +45,7 @@
 
             {{-- FORM --}}
             <form action="{{route('compositions-form-buy')}}" method="POST">
-                    @csrf
+                    {{ csrf_field() }}
                     <div class="form-group container aw-form-default-inputs">
                         <input id="compositionHash" type="hidden" name="_comphash" value="{{$compDataForm->compRequest->project_token}}">
 

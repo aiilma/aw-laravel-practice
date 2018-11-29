@@ -22,7 +22,7 @@ return [
     |
     | This value determines the "environment" your application is currently
     | running in. This may determine how you prefer to configure various
-    | services the application utilizes. Set this in your ".env" file.
+    | services your application utilizes. Set this in your ".env" file.
     |
     */
 
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://artworch.com'),
+    'url' => env('APP_URL', 'https://artworch.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -110,6 +110,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Logging Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the log settings for your application. Out of
+    | the box, Laravel uses the Monolog PHP logging library. This gives
+    | you a variety of powerful log handlers / formatters to utilize.
+    |
+    | Available Settings: "single", "daily", "syslog", "errorlog"
+    |
+    */
+
+    'log' => env('APP_LOG', 'single'),
+
+    'log_level' => env('APP_LOG_LEVEL', 'debug'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
@@ -154,7 +171,6 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Invisnik\LaravelSteamAuth\SteamServiceProvider::class,
 
-
         /*
          * Application Service Providers...
          */
@@ -162,7 +178,8 @@ return [
         Artworch\Providers\AuthServiceProvider::class,
         // Artworch\Providers\BroadcastServiceProvider::class,
         Artworch\Providers\EventServiceProvider::class,
-        Artworch\Providers\RouteServiceProvider::class
+        Artworch\Providers\RouteServiceProvider::class,
+
     ],
 
     /*

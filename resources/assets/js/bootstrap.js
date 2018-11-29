@@ -10,9 +10,9 @@ window.Popper = require('popper.js').default;
 
 try {
     window.$ = window.jQuery = require('jquery');
-    
-    require('bootstrap');
 
+    require('bootstrap');
+    
     // project ref libs
     require('./jquery.toast.js');
 } catch (e) {}
@@ -53,7 +53,7 @@ if (token) {
 
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+//     key: 'your-pusher-key',
+//     cluster: 'mt1',
 //     encrypted: true
 // });

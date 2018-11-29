@@ -35,8 +35,7 @@ class CompositionController extends Controller
         // записать в массив следующие R * K (где K - количество карточек на странице) композиций отфильтрованных по полю published_at по убыванию
         $compList = Composition::orderBy('published_at', 'desc')
                                 ->where('view_status', '=', '1')
-                                ->paginate(config('compositions.max_cards_per_page'), ['*'], 'list')
-                                ->onEachSide(1);
+                                ->paginate(config('compositions.max_cards_per_page'), ['*'], 'list');
         
         return view('systems.compositions.list', ['compositions' => $compList]);
     }
