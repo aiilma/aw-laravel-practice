@@ -11,8 +11,23 @@ class PaymentQiwiController extends Controller
     /*
     * Process payment with express checkout
     */
-    public function paywithQiwi()
+    public function paywithQiwi(Request $request)
     {
+        // получить данные с формы ($request): номер телефона, сумма для перевода
+        // валидировать данные
+
+        // если есть ошибки, то
+        //     вернуть пользователю в качестве ответа сообщение об ошибке
+
+        // перевести
+        // если транзакция успешно совершена, то
+        //     редирект
+        // иначе
+        //     вернуть пользователю в качестве ответа сообщение об ошибке
+        
+
+
+
         $phone  = '+79652420913';
         $token = config('qiwi_payment.account.api_token');
         $api = new QiwiApi($phone, $token);

@@ -15,7 +15,9 @@ class CreateTransactionsTable extends Migration
     {
         if (!Schema::hasTable('transactions')) {
             Schema::create('transactions', function (Blueprint $table) {
+                $table->increments('id');
                 $table->decimal('amount', 8, 2)->unsigned();
+                $table->timestamp('deleted_at');
                 $table->timestamps();
                 $table->char('type', 1); // i / o
                 $table->char('status', 1)->nullable(); // 0 / 1 / null

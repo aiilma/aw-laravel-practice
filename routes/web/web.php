@@ -238,6 +238,40 @@ Route::prefix('/account')->group(function() {
 
 
 
+Route::prefix('/pay')->group(function() {
+
+    Route::get('/{comp?}', [
+        'name' => 'PayPal Express Checkout',
+        'as' => 'app.home',
+        'uses' => 'Payments\PayPalController@form',
+    ]);
+
+    Route::post('/checkout/payment/{comp}/paypal', [
+        'name' => 'PayPal Express Checkout',
+        'as' => 'checkout.payment.paypal',
+        'uses' => 'Payments\PayPalController@checkout',
+    ]);
+
+    Route::get('/paypal/checkout/{comp}/completed', [
+        'name' => 'PayPal Express Checkout',
+        'as' => 'paypal.checkout.completed',
+        'uses' => 'Payments\PayPalController@completed',
+    ]);
+
+    Route::get('/paypal/checkout/{comp}/cancelled', [
+        'name' => 'PayPal Express Checkout',
+        'as' => 'paypal.checkout.cancelled',
+        'uses' => 'Payments\PayPalController@cancelled',
+    ]);
+
+    Route::post('/webhook/paypal/{comp?}/{env?}', [
+        'name' => 'PayPal Express IPN',
+        'as' => 'webhook.paypal.ipn',
+        'uses' => 'Payments\PayPalController@webhook',
+    ]);
+
+});
+
 /**
  * PAYMENTS
  */
