@@ -36,7 +36,7 @@
                                     {{ Auth::user()->username }} <span class="caret"></span>
                                 </a>
 
-                                <div id="awAccountDropdown" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <div id="awAccountDropdownDefault" class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('acc-home') }}">
                                         {{ __('My Account') }}
                                     </a>

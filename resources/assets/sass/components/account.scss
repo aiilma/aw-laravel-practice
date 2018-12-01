@@ -4,6 +4,58 @@
     max-width: 160px;
 }
 
+.dropdown-menu {
+    font-size: 1rem;
+    color: rgb(128, 128, 128);
+    // background-color: #808080;
+    background-color: #16191f;
+    border: 2px solid rgb(128, 128, 128);
+    border-top-color: #16191f;
+    border-radius: 0;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    min-width: 5rem;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-item {
+    color: rgb(128, 128, 128);
+}
+
+// #awAccountDropdownBalance a:last-child {
+//     border-bottom-left-radius: 30px;
+//     border-bottom-right-radius: 30px;
+// }
+
+// #awAccountDropdownDefault a:last-child {
+//     border-bottom-left-radius: 30px;
+//     border-bottom-right-radius: 30px;
+// }
+
+.dropdown-item:hover, .dropdown-item:focus {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.dropdown-item:focus {
+    background-color: transparent;
+}
+
+.dropdown-item:hover {
+    background-color: #323232;
+}
+
+.dropdown-item:active {
+    opacity: 0.82;
+}
+
+#awAccountDropdownDefault {
+    a:last-child {
+        color: red;
+    }
+}
+
 
 /* INSIDE */
 .aw_sidebar .table th,

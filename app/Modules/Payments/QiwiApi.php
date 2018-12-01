@@ -1,6 +1,9 @@
 <?php
 
-namespace Artworch\Lib;
+namespace Artworch\Modules\Payments;
+
+// use Omnipay\Omnipay;
+use Validator;
 
 class QiwiApi {
     private $_phone;
@@ -12,6 +15,7 @@ class QiwiApi {
         $this->_token = $token;
         $this->_url   = 'https://edge.qiwi.com/';
     }
+
     private function sendRequest($method, array $content = [], $post = false) {
         $ch = curl_init();
         if ($post) {
@@ -31,24 +35,31 @@ class QiwiApi {
         curl_close($ch);
         return json_decode($result, 1);
     }
+
     public function getAccount(Array $params = []) {
         return $this->sendRequest('person-profile/v1/profile/current', $params);
     }
+
     public function getPaymentsHistory(Array $params = []) {
         return $this->sendRequest('payment-history/v2/persons/' . $this->_phone . '/payments', $params);
     }
+
     public function getPaymentsStats(Array $params = []) {
         return $this->sendRequest('payment-history/v2/persons/' . $this->_phone . '/payments/total', $params);
     }
+
     public function getBalance() {
         return $this->sendRequest('funding-sources/v1/accounts/current')['accounts'];
     }
+
     public function getTax($providerId) {
         return $this->sendRequest('sinap/providers/'. $providerId .'/form');
-    }  
+    }
+
     public function sendMoneyToQiwi(Array $params = []) {
         return $this->sendRequest('sinap/api/v2/terms/99/payments', $params, 1);
     }
+    
     public function sendMoneyToProvider($providerId, Array $params = []) {
         return $this->sendRequest('sinap/api/v2/terms/'. $providerId .'/payments', $params, 1);
     }

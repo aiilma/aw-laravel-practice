@@ -2,105 +2,194 @@
 
 namespace Artworch\Http\Controllers\Payments;
 
-use Artworch\Modules\User\Account\CompRequest;
-use Artworch\Modules\Payments\PayPal;
 use Illuminate\Http\Request;
 use Artworch\Http\Controllers\Controller;
+use Artworch\Modules\Payments\PaymentTransaction;
+use Artworch\Modules\Payments\PayPal;
+use DB;
 
 class PayPalController extends Controller
 {
     /**
      * @param Request $request
      */
-    public function form(Request $request, $comp_id = null)
+    public function indexIn(Request $request)
     {
-        $comp_id = $comp_id ?: encrypt(1);
-
-        $comp = CompRequest::findOrFail(decrypt($comp_id));
-        return view('form', compact('comp'));
+        return view('systems.payments.paypal.in');
     }
 
+
     /**
-     * @param $comp_id
-     * @param Request $request
+     * Выполнение транзакции пополнения баланса пользователя
+     *
+     * @return string
      */
-    public function checkout(Request $request, $comp_id)
+    public function checkIn(Request $request)
     {
-        $comp = CompRequest::findOrFail(decrypt($comp_id));
+        $request->request->add(['_pgmethod' => 'paypal']);
+        
+        // валидировать входные данные объекта $request
+        $pmFormatResult = PayPal::validateInputsOnFormat($request->all());
+
 
         $paypal = new PayPal;
 
-
         $response = $paypal->purchase([
-            'amount' => $paypal->formatAmount($comp->custom_price),
-            'transactionId' => 5,
+            'amount' => $paypal->formatAmount($request->_amount),
+            'transactionId' => DB::table('payment_transactions')->latest('transaction_id')->first()->transaction_id + 1,
             'currency' => 'USD',
-            'cancelUrl' => $paypal->getCancelUrl($comp),
-            'returnUrl' => $paypal->getReturnUrl($comp)
+            'cancelUrl' => $paypal->getCancelUrl(encrypt($request->_amount), encrypt($request->_pgmethod)),
+            'returnUrl' => $paypal->getReturnUrl(encrypt($request->_amount), encrypt($request->_pgmethod))
         ]);
-        
-        
+
         if ($response->isRedirect()) {
             $response->redirect();
         }
-        // dd($response->getMessage());
-
+        
         return redirect()->back()->with([
             'message' => $response->getMessage(),
         ]);
     }
 
-    /**
-     * @param $comp_id
-     * @param Request $request
-     * @return mixed
-     */
-    public function completed(Request $request, $comp_id)
-    {
-        $comp = CompRequest::findOrFail($comp_id);
 
+    /**
+     * Признак успешной денежной транзакции
+     *
+     * @return string
+     */
+    public function completedIn(Request $request, $encryptAmount, $encryptMethod)
+    {
+        $decryptAmount = decrypt($encryptAmount);
+        $decryptMethod = decrypt($encryptMethod);
+        
         $paypal = new PayPal;
 
         $response = $paypal->complete([
-            'amount' => $paypal->formatAmount($comp->custom_price),
-            'transactionId' => 5,
+            'amount' => $paypal->formatAmount($decryptAmount),
+            'transactionId' => DB::table('payment_transactions')->latest('transaction_id')->first()->transaction_id + 1,
             'currency' => 'USD',
-            'cancelUrl' => $paypal->getCancelUrl($comp),
-            'returnUrl' => $paypal->getReturnUrl($comp),
-            'notifyUrl' => $paypal->getNotifyUrl($comp),
+            'cancelUrl' => $paypal->getCancelUrl($encryptAmount, $encryptMethod),
+            'returnUrl' => $paypal->getReturnUrl($encryptAmount, $encryptMethod),
+            'notifyUrl' => $paypal->getNotifyUrl(),
         ]);
 
-        if ($response->isSuccessful()) {
-            $comp->update(['transaction_id' => $response->getTransactionReference()]);
+        $transaction = new PaymentTransaction;
+        $transaction->user_id = auth()->user()->id;
+        $transaction->amount = $decryptAmount;
+        $transaction->method = $decryptMethod;
+        $transaction->type = 'i';
+        $transaction->confirm_status = 0;
 
-            return redirect()->route('app.home', encrypt($comp_id))->with([
+        // SUCCESS
+        if ($response->isSuccessful()) {
+
+            // пополнить баланс пользовател в БД
+            auth()->user()->balance += $decryptAmount;
+            auth()->user()->save();
+
+            $transaction->transaction_code = $response->getTransactionReference();
+            $transaction->confirm_status = 1;
+            $transaction->save();
+
+            // вернуть сообщение об успешной транзакции
+            return redirect()->route('payments-in-paypal-index')->with([
                 'message' => 'You recent payment is sucessful with reference code ' . $response->getTransactionReference(),
             ]);
         }
 
+        $transaction->message = $response->getMessage();
+        $transaction->save();
+
         return redirect()->back()->with([
             'message' => $response->getMessage(),
         ]);
     }
 
     /**
-     * @param $comp_id
+     * Признак ошибки выполнения транзакции
+     *
+     * @return string
      */
-    public function cancelled($comp_id)
+    public function canceledIn(Request $request, $encryptAmount, $encryptMethod)
     {
-        $comp = CompRequest::findOrFail($comp_id);
+        $message = 'You have cancelled your recent PayPal payment!';
 
-        return redirect()->route('app.home', encrypt($comp_id))->with([
-            'message' => 'You have cancelled your recent PayPal payment !',
+        $decryptAmount = decrypt($encryptAmount);
+        $decryptMethod = decrypt($encryptMethod);
+
+        $transaction = new PaymentTransaction;
+        $transaction->user_id = auth()->user()->id;
+        $transaction->amount = $decryptAmount;
+        $transaction->method = $decryptMethod;
+        $transaction->type = 'i';
+        $transaction->confirm_status = 0;
+        $transaction->message = $message;
+        $transaction->save();
+
+        return redirect()->route('payments-in-paypal-index')->with([
+            'message' => $message,
         ]);
     }
 
     /**
-     * @param $comp_id
-     * @param $env
+     * Undocumented function
+     *
+     * @param [type] $env
+     * @return void
      */
-    public function webhook($comp_id, $env)
+    public function webhook($env)
     {
         // to do with next blog post
     }
+
+// -------------------------
+
+    /**
+     * @param Request $request
+     */
+    public function indexOut(Request $request)
+    {
+        return view('systems.payments.paypal.out');
+    }
+
+    /**
+     * Выполнение запроса на вывод денежных средств из текущего баланса пользователя
+     *
+     * @return string
+     */
+    public function checkOut()
+    {
+        // After Step 1
+        $apiContext = new \PayPal\Rest\ApiContext(
+            new \PayPal\Auth\OAuthTokenCredential(
+                config('paypal_payment.credentials.client_id'),     // ClientID
+                config('paypal_payment.credentials.secret')         // ClientSecret
+            )
+        );
+
+        $payouts = new \PayPal\Api\Payout();
+        $senderBatchHeader = new \PayPal\Api\PayoutSenderBatchHeader();
+        $senderBatchHeader->setSenderBatchId(uniqid())->setEmailSubject("You have a Payout!");
+        $senderItem = new \PayPal\Api\PayoutItem();
+        $senderItem->setRecipientType('Email')->setNote('Thanks for your patronage!')->setReceiver('awbuyer@mail.ru')->setSenderItemId(uniqid())->setAmount(new \PayPal\Api\Currency('{
+                                "value":"700.00",
+                                "currency":"USD"
+                            }'));
+        $payouts->setSenderBatchHeader($senderBatchHeader)->addItem($senderItem);
+        $request = clone $payouts;
+        try {
+            $output = $payouts->create(array('sync_mode' => 'false'), $apiContext);
+            // $output = $payouts->createSynchronous($apiContext);
+        } catch (\Exception $ex) {
+            echo "PayPal Payout GetData:<br>". $ex->getData() . "<br><br>";
+            exit(1);
+        }
+
+        return $output;
+
+
+
+    }
+
+    
 }

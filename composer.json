@@ -13,6 +13,7 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
         "omnipay/paypal": "~2.0",
+        "paypal/rest-api-sdk-php": "*",
         "symfony/event-dispatcher": "^2.8"
     },
     "require-dev": {

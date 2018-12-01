@@ -4,12 +4,12 @@ namespace Artworch\Modules\Payments;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class PaymentTransaction extends Model
 {
     /**
      * @var string
      */
-    protected $table = 'transactions';
+    protected $table = 'payment_transactions';
 
     /**
      * @var array
@@ -19,5 +19,5 @@ class Transaction extends Model
     /**
      * @var array
      */
-    protected $fillable = ['transaction_id', 'user_id', 'amount', 'type', 'status'];
+    protected $fillable = ['user_id', 'transaction_id', 'transaction_code', 'amount', 'method', 'type', 'confirm_status'];
 }

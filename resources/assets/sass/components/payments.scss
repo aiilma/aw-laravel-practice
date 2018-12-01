@@ -1,0 +1,28 @@
+// payment form checkbox reset padding
+.aw-gateway-form .form-check {
+    padding: 0;
+}
+
+// таблица истории платежей...
+// заголовки
+.aw-payment-story-table-titles {
+
+    > div {
+        background: linear-gradient(to right top, rgb(63, 81, 181) 0%, rgb(3, 155, 229) 40%);
+    }
+
+    .aw-payment-story-table-titlecell {
+        padding: 1rem;
+        border: 2px solid rgba(247, 255, 154, 0.15);
+    }
+}
+
+// содержимое
+.aw-payment-story-table-content-row {
+    background-color: rgba(28, 31, 36, 1);
+
+    > .aw-payment-story-table-content-rowcell {
+        padding: 1rem;
+        border: 1px solid rgba(247, 255, 154, 0.15);
+    }
+}

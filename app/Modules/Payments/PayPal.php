@@ -3,6 +3,7 @@
 namespace Artworch\Modules\Payments;
 
 use Omnipay\Omnipay;
+use Validator;
 
 /**
  * Class PayPal
@@ -44,8 +45,8 @@ class PayPal
     public function complete(array $parameters)
     {
         $response = $this->gateway()
-            ->completePurchase($parameters)
-            ->send();
+                        ->completePurchase($parameters)
+                        ->send();
 
         return $response;
     }
@@ -61,26 +62,60 @@ class PayPal
     /**
      * @param $comp
      */
-    public function getCancelUrl($comp)
+    public function getCancelUrl($encryptAmount, $encryptMethod)
     {
-        return route('paypal.checkout.cancelled', $comp->id);
+        return route('payments-in-paypal-canceled', [$encryptAmount, $encryptMethod]);
     }
 
     /**
      * @param $comp
      */
-    public function getReturnUrl($comp)
+    public function getReturnUrl($encryptAmount, $encryptMethod)
     {
-        return route('paypal.checkout.completed', $comp->id);
+        return route('payments-in-paypal-completed', [$encryptAmount, $encryptMethod]);
     }
 
     /**
      * @param $comp
      */
-    public function getNotifyUrl($comp)
+    public function getNotifyUrl()
     {
         $env = config('paypal.credentials.sandbox') ? "sandbox" : "live";
 
-        return route('webhook.paypal.ipn', [$comp->id, $env]);
+        return route('payments-in-paypal-webhook', [$env]);
+    }
+
+    /**
+     * Валидация входных данных при пополнении баланса пользователя на сайте
+     *
+     * @param [type] $data
+     * @return object
+     */
+    public static function validateInputsOnFormat($data)
+    {
+        $validateResult = Validator::make($data,
+        [
+            '_pgmethod' => 'required|string|in:paypal,qiwi',
+            '_amount' => 'required|numeric|lte:4',
+            '_amount' => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    if ($value <= 0) {
+                        $fail('An amount of money must not be less or equal to zero');
+                    }
+                },
+            ],
+        ],[
+            '_pgmethod.required' => 'Please, choose one of availables payment method',
+            '_pgmethod.string' => 'Bad format of data',
+            '_pgmethod.in' => 'The specified payment method does not exists',
+
+            '_amount.required' => 'Please, type an amount of money',
+            '_amount.numeric' => 'Bad format of data'
+        ]);
+
+        return $validateResult->messages();
+
     }
 }

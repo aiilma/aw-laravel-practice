@@ -8,22 +8,22 @@ use Artworch\Http\Controllers\Controller;
 class PaymentController extends Controller
 {
     /**
-     * Возвращает HTML список доступных платежных систем
+     * Возвращает главную страницу выбора платежных систем
      *
      * @return string
      */
-    public function showPayments(Request $request)
+    public function indexIn(Request $request)
     {
-        return view('systems.payments.list');
+        return view('systems.payments.index-in');
     }
 
     /**
-     * Выполнение транзакции пополнения баланса пользователя
+     * Возвращает главную страницу выбора платежных систем
      *
      * @return string
      */
-    public function sendPaymentRequest(Request $request)
+    public function indexOut(Request $request)
     {
-        
+        return view('systems.payments.index-out');
     }
 }

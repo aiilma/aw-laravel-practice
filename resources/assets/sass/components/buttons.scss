@@ -42,12 +42,13 @@
 }
 
 %aw-btn-smart {
-    background: linear-gradient( to top right,rgba(117,117,117 ,1) 0%, rgba(33,33,33 ,1) 90%);
+    background: linear-gradient( to top right,#323438 0%, rgba(33,33,33 ,1) 90%);
     box-shadow: 1px 1px 30px rgba(33,33,33 ,1);
     font-weight: 500;
     color: #ddd;
     min-width: 6rem;
     width: 10rem;
+    border-radius: 0;
 
     &:active {
         box-shadow: 0 1px 0 #000;
@@ -56,6 +57,12 @@
     &:not(:disabled):not(.disabled).active,
     &:not(:disabled):not(.disabled):active {
         background-image: none;
+    }
+
+    &.disabled:hover {
+        background: linear-gradient( to top right,#522129 0%, rgba(33,33,33 ,1) 90%);
+        box-shadow: 0 1px 0 #522129;
+        transition: all 0.25s ease;
     }
 }
 
@@ -91,7 +98,6 @@
     box-shadow: 0 0 0 0rem rgba(0,123,255,.25);
 }
 
-
 // aw buttons...
 .aw-btn-smart-v2 {
     @extend %aw-btn-smart;
@@ -110,6 +116,50 @@
         box-shadow: rgb(255, 163, 93) 1px 1px 22px;
     }
 }
+
+
+// Radio buttons
+input[type=radio].aw-radiobtn {
+    position: absolute;
+    z-index: -1000;
+    left: -1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+
+input[type=radio].aw-radiobtn+label.aw-radiobtn-label {
+    padding-left: 24px;
+    height: 16px;
+    display: inline-block;
+    line-height: 16px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    font-size: 16px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+input[type=radio].aw-radiobtn:checked+label.aw-radiobtn-label {
+    background-position: 0 -16px;
+}
+
+label.aw-radiobtn-label {
+    background-image:url('//artworch.com/storage/img/aw_checkbox.png');
+    background-size: 16px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
 
 // modal buttons
 .modal-header .close {

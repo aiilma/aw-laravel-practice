@@ -238,64 +238,54 @@ Route::prefix('/account')->group(function() {
 
 
 
-Route::prefix('/pay')->group(function() {
-
-    Route::get('/{comp?}', [
-        'name' => 'PayPal Express Checkout',
-        'as' => 'app.home',
-        'uses' => 'Payments\PayPalController@form',
-    ]);
-
-    Route::post('/checkout/payment/{comp}/paypal', [
-        'name' => 'PayPal Express Checkout',
-        'as' => 'checkout.payment.paypal',
-        'uses' => 'Payments\PayPalController@checkout',
-    ]);
-
-    Route::get('/paypal/checkout/{comp}/completed', [
-        'name' => 'PayPal Express Checkout',
-        'as' => 'paypal.checkout.completed',
-        'uses' => 'Payments\PayPalController@completed',
-    ]);
-
-    Route::get('/paypal/checkout/{comp}/cancelled', [
-        'name' => 'PayPal Express Checkout',
-        'as' => 'paypal.checkout.cancelled',
-        'uses' => 'Payments\PayPalController@cancelled',
-    ]);
-
-    Route::post('/webhook/paypal/{comp?}/{env?}', [
-        'name' => 'PayPal Express IPN',
-        'as' => 'webhook.paypal.ipn',
-        'uses' => 'Payments\PayPalController@webhook',
-    ]);
-
-});
-
 /**
  * PAYMENTS
  */
 Route::prefix('/payments')->group(function() {
-    // show variants...
-    Route::get('/', 'Payments\PaymentController@showPayments')->name('payments-show');
-    // Route::post('/', 'Payments\PaymentController@sendPaymentRequest')->name('payments-sendrequest');
 
-    
-    // PAYPAL + CC post
-    Route::get('/paypal', 'Payments\PaymentPaypalController@paywithPaypal');
-    Route::get('/cc', 'Payments\PaymentPaypalController@paywithCreditCard');
-    Route::get('/success', 'Payments\PaymentPaypalController@isComplited');
-    Route::get('/fails', 'Payments\PaymentPaypalController@isFailed');
+    // IN
+    Route::prefix('/in')->group(function() {
+        // show variants...
+        Route::get('/', 'Payments\PaymentController@indexIn')->name('payments-in-index');
 
+        // PAYPAL
+        Route::prefix('/paypal')->group(function() {
+            Route::get('/', 'Payments\PayPalController@indexIn')->name('payments-in-paypal-index');
+            Route::post('/', 'Payments\PayPalController@checkIn')->name('payments-in-paypal');
 
-    // QIWI post
-    Route::get('/qiwi', 'Payments\PaymentQiwiController@paywithQiwi');
+            Route::get('/completed/{encryptAmount}/{method}', 'Payments\PayPalController@completedIn')->name('payments-in-paypal-completed');
+            Route::get('/canceled/{encryptAmount}/{method}', 'Payments\PayPalController@canceledIn')->name('payments-in-paypal-canceled');
 
+            Route::post('/webhook/{env?}', 'Payments\PayPalController@webhook')->name('payments-in-paypal-webhook');
+        });
 
-    // // yandex money...
-    // Route::get('/yamoney', 'Payments\PaymentController@showPaymentForm')->name('payments-postindex');
-    // Route::post('/yamoney', 'Payments\PaymentController@sendPaymentRequest')->name('payments-postindex');
+        // // QIWI
+        // Route::prefix('/qiwi')->group(function() {
+        //     Route::get('/', 'Payments\QiwiController@indexIn')->name('payments-in-qiwi-index');
+        //     Route::post('/', 'Payments\QiwiController@checkIn')->name('payments-in-qiwi');
+
+        //     Route::get('/completed/{encryptAmount}/{method}', 'Payments\QiwiController@completedIn')->name('payments-in-qiwi-completed');
+        //     Route::get('/canceled/{encryptAmount}/{method}', 'Payments\QiwiController@canceledIn')->name('payments-in-qiwi-canceled');
+
+        //     Route::post('/webhook/{env?}', 'Payments\QiwiController@webhook')->name('payments-in-qiwi-webhook');
+        // });
+
+    });
+
+    // OUT
+    Route::prefix('/out')->group(function() {
+        // show variants...
+        Route::get('/', 'Payments\PaymentController@indexOut')->name('payments-out-index');
+
+        // PAYPAL
+        Route::prefix('/paypal')->group(function() {
+            Route::get('/', 'Payments\PayPalController@indexOut')->name('payments-out-paypal-index');
+            Route::post('/', 'Payments\PayPalController@checkOut')->name('payments-out-paypal');
+        });
+    });
 });
+
+
 
 
 

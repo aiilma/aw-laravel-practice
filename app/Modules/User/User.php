@@ -48,7 +48,14 @@ class User extends Authenticatable
     public function getBalanceHtml()
     {
         return '
-                <a href="'.route('payments-show').'" class="ui aw-nav-link" title="$ '.number_format($this->balance, 2).'">$ '.number_format($this->balance, 2).'<span class="caret"></span></a>
+                <a id="navbarDropdown" class="ui aw-nav-link aw-dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="$ '.number_format($this->balance, 2).'">
+                    $ '.number_format($this->balance, 2).'
+                </a>
+
+                <div id="awAccountDropdownBalance" class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="'.route('payments-in-index').'">'.__('Check-In').'</a>
+                    <a class="dropdown-item" href="'.route('payments-out-index').'">'.__('Check-Out').'</a>
+                </div>
                 ';
     }
 

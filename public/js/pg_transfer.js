@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 47);
+/******/ 	return __webpack_require__(__webpack_require__.s = 53);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -10437,31 +10437,23 @@ return jQuery;
 
 /***/ }),
 
-/***/ 47:
+/***/ 53:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(48);
+module.exports = __webpack_require__(54);
 
 
 /***/ }),
 
-/***/ 48:
+/***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {// $('.comp-link-req').on('click', (e) => {
-  //     e.preventDefault();
-  //     $.ajax({
-  //         type: 'GET',
-  //         url: $('.comp-link-req').attr('href'),
-  //         error: function(result) {
-  //             // warning popup with messages                    
-  //             var errors = $.parseJSON(result.responseText);
-  //             $.each(errors, function(key, value) {
-  //                 console.log(value);
-  //             });
-  //         },
-  //     });
-  // });
+/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 

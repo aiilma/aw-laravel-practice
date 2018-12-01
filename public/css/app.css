@@ -10649,15 +10649,6 @@ a.text-dark:focus {
   }
 }
 
-/* COMMON */
-
-body {
-  font-family: "Didact Gothic";
-  font-weight: 350;
-  color: #d8d8d8;
-  background-color: #1c2029;
-}
-
 .aw_sidebar a,
 .aw_sidebar span,
 .aw_sidebar h1,
@@ -10685,6 +10676,15 @@ body {
   max-width: 100%;
 }
 
+/* COMMON */
+
+body {
+  font-family: "Didact Gothic";
+  font-weight: 350;
+  color: #d8d8d8;
+  background-color: #1c2029;
+}
+
 .aw_sidebar,
 .aw_section {
   padding: 5px;
@@ -10697,6 +10697,51 @@ body {
   border-radius: 5px;
   min-height: 380px;
   background-color: rgba(52, 58, 64, 0.23);
+}
+
+.aw__sidebar__group {
+  margin: 1rem 0;
+}
+
+.aw-common-text-input {
+  outline: none;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  background-color: silver;
+  padding: 5px;
+  font-weight: 500;
+  -webkit-transition: all .125s ease;
+  transition: all .125s ease;
+  color: black;
+  position: relative;
+  width: 100%;
+  -webkit-appearance: none;
+}
+
+.aw-common-text-input:focus {
+  color: black;
+  -webkit-box-shadow: white 0px 0px 15px 0px;
+          box-shadow: white 0px 0px 15px 0px;
+  background-color: #e0e0e0;
+  border-color: #e0e0e0;
+  outline: none;
+  -webkit-transition: all .125s ease;
+  transition: all .125s ease;
+}
+
+.aw-common-text-input::-webkit-input-placeholder {
+  color: #444;
+  -webkit-transition: ease-in 0.3s;
+  transition: ease-in 0.3s;
+  -webkit-transform-origin: 0 50%;
+          transform-origin: 0 50%;
+  font-weight: 500;
+}
+
+.aw-common-text-input:focus::-webkit-input-placeholder {
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  opacity: 0;
 }
 
 .aw-alert {
@@ -10841,59 +10886,6 @@ body {
   display: none;
 }
 
-.optional-input,
-.aw__common__textinput {
-  outline: none;
-  border: 2px solid transparent;
-  border-radius: 5px;
-  background-color: silver;
-  padding: 5px;
-  font-weight: 500;
-  -webkit-transition: all .125s ease;
-  transition: all .125s ease;
-  color: black;
-  position: relative;
-  width: 40%;
-  -webkit-appearance: none;
-}
-
-.optional-input:focus,
-.aw__common__textinput:focus {
-  color: black;
-  -webkit-box-shadow: white 0px 0px 15px 0px;
-          box-shadow: white 0px 0px 15px 0px;
-  background-color: #e0e0e0;
-  border-color: #e0e0e0;
-  outline: none;
-  -webkit-transition: all .125s ease;
-  transition: all .125s ease;
-}
-
-.optional-input::-webkit-input-placeholder,
-.aw__common__textinput::-webkit-input-placeholder {
-  color: #444;
-  -webkit-transition: ease-in 0.3s;
-  transition: ease-in 0.3s;
-  -webkit-transform-origin: 0 50%;
-          transform-origin: 0 50%;
-  font-weight: 500;
-}
-
-.optional-input:focus::-webkit-input-placeholder,
-.aw__common__textinput:focus::-webkit-input-placeholder {
-  -webkit-transform: scale(0);
-  transform: scale(0);
-  opacity: 0;
-}
-
-.optional-inputs-group > div .form-label {
-  margin-bottom: .25rem;
-}
-
-.optional-inputs-group > .form-group {
-  position: relative;
-}
-
 /* FOOTER */
 
 footer {
@@ -10904,6 +10896,46 @@ footer {
 
 .ui.aw-nav-link {
   max-width: 160px;
+}
+
+.dropdown-menu {
+  font-size: 1rem;
+  color: gray;
+  background-color: #16191f;
+  border: 2px solid gray;
+  border-top-color: #16191f;
+  border-radius: 0;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  min-width: 5rem;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-item {
+  color: gray;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.dropdown-item:focus {
+  background-color: transparent;
+}
+
+.dropdown-item:hover {
+  background-color: #323232;
+}
+
+.dropdown-item:active {
+  opacity: 0.82;
+}
+
+#awAccountDropdownDefault a:last-child {
+  color: red;
 }
 
 /* INSIDE */
@@ -11150,14 +11182,15 @@ footer {
 
 .aw-btn-smart-v2,
 .aw-btn-smart-v3 {
-  background: -webkit-gradient(linear, left bottom, right top, from(#757575), color-stop(90%, #212121));
-  background: linear-gradient(to top right, #757575 0%, #212121 90%);
+  background: -webkit-gradient(linear, left bottom, right top, from(#323438), color-stop(90%, #212121));
+  background: linear-gradient(to top right, #323438 0%, #212121 90%);
   -webkit-box-shadow: 1px 1px 30px #212121;
           box-shadow: 1px 1px 30px #212121;
   font-weight: 500;
   color: #ddd;
   min-width: 6rem;
   width: 10rem;
+  border-radius: 0;
 }
 
 .aw-btn-smart-v2:active,
@@ -11171,6 +11204,16 @@ footer {
 .aw-btn-smart-v2:not(:disabled):not(.disabled):active,
 .aw-btn-smart-v3:not(:disabled):not(.disabled):active {
   background-image: none;
+}
+
+.disabled.aw-btn-smart-v2:hover,
+.disabled.aw-btn-smart-v3:hover {
+  background: -webkit-gradient(linear, left bottom, right top, from(#522129), color-stop(90%, #212121));
+  background: linear-gradient(to top right, #522129 0%, #212121 90%);
+  -webkit-box-shadow: 0 1px 0 #522129;
+          box-shadow: 0 1px 0 #522129;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 
 /*------------------------------*/
@@ -11214,6 +11257,45 @@ footer {
   background: linear-gradient(to right top, #c79048 0%, #ff9a17 100%);
   -webkit-box-shadow: #ffa35d 1px 1px 22px;
           box-shadow: #ffa35d 1px 1px 22px;
+}
+
+input[type=radio].aw-radiobtn {
+  position: absolute;
+  z-index: -1000;
+  left: -1000px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+input[type=radio].aw-radiobtn + label.aw-radiobtn-label {
+  padding-left: 24px;
+  height: 16px;
+  display: inline-block;
+  line-height: 16px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  font-size: 16px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+input[type=radio].aw-radiobtn:checked + label.aw-radiobtn-label {
+  background-position: 0 -16px;
+}
+
+label.aw-radiobtn-label {
+  background-image: url("//artworch.com/storage/img/aw_checkbox.png");
+  background-size: 16px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .modal-header .close {
@@ -11553,5 +11635,28 @@ footer > .container > ul:first-child a {
 
 .compcard__form__cont .aw-form-controls > button {
   margin-right: 5rem;
+}
+
+.aw-gateway-form .form-check {
+  padding: 0;
+}
+
+.aw-payment-story-table-titles > div {
+  background: -webkit-gradient(linear, left bottom, right top, from(#3f51b5), color-stop(40%, #039be5));
+  background: linear-gradient(to right top, #3f51b5 0%, #039be5 40%);
+}
+
+.aw-payment-story-table-titles .aw-payment-story-table-titlecell {
+  padding: 1rem;
+  border: 2px solid rgba(247, 255, 154, 0.15);
+}
+
+.aw-payment-story-table-content-row {
+  background-color: #1c1f24;
+}
+
+.aw-payment-story-table-content-row > .aw-payment-story-table-content-rowcell {
+  padding: 1rem;
+  border: 1px solid rgba(247, 255, 154, 0.15);
 }
 
