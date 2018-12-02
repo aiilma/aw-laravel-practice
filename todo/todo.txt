@@ -1,10 +1,7 @@
 Paypal:
 
-. Пофиксить пользовательский интерфейс в хедере (см. hV1.blade.php, User.php, account.scss)
+http://sachinchoolur.github.io/lightslider/examples.html
 
-
-
-. пофиксить даты в моделях в соответствии с версией 5.5 laravel
 --------
 --------
     commit

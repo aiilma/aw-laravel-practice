@@ -19,5 +19,8 @@
         "popper.js": "^1.12",
         "vue": "^2.5.7",
         "vuex": "^3.0.1"
+    },
+    "dependencies": {
+        "lightslider": "^1.1.6"
     }
 }

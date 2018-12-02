@@ -14,7 +14,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="aw-ui-navbar navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -40,16 +40,11 @@
                                     <a class="dropdown-item" href="{{ route('acc-home') }}">
                                         {{ __('My Account') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('acc-logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('acc-logout') }}">
                                         {{ __('Logout') }}
                                     </a>
-
-                                    <form id="logout-form" action="{{ route('acc-logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
                                 </div>
+
                             </li>
                         @endguest
                     </ul>

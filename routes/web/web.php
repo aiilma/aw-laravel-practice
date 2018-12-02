@@ -243,6 +243,9 @@ Route::prefix('/account')->group(function() {
  */
 Route::prefix('/payments')->group(function() {
 
+    // history....
+    Route::get('/history', 'Payments\PaymentController@history')->name('payments-history');
+
     // IN
     Route::prefix('/in')->group(function() {
         // show variants...

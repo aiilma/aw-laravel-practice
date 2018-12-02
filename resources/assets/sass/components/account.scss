@@ -1,58 +1,72 @@
 /* HEADER UI */
+
+.aw-ui-navbar > li {
+    width: 120px;
+
+    > #awAccountDropdownBalance,
+    #awAccountDropdownDefault {
+        width: 100%;
+    }
+
+    a {
+        max-width: 100%;
+    }
+}
+
 .ui.aw-nav-link {
     @extend %truncation;
-    max-width: 160px;
+    text-align: center;
+
+    &:focus {
+        background-color: #323232;
+    }
 }
 
 .dropdown-menu {
     font-size: 1rem;
     color: rgb(128, 128, 128);
-    // background-color: #808080;
     background-color: #16191f;
     border: 2px solid rgb(128, 128, 128);
-    border-top-color: #16191f;
+    border-top-color: #323232;
     border-radius: 0;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
     min-width: 5rem;
     padding: 0;
     margin: 0;
+
+    .dropdown-item {
+        @extend %truncation;
+        padding: 0.25rem 0.1rem;
+    }
 }
 
-.dropdown-item {
+
+#awAccountDropdownDefault > a,
+#awAccountDropdownBalance > a {
     color: rgb(128, 128, 128);
-}
+    border-radius: 0px;
 
-// #awAccountDropdownBalance a:last-child {
-//     border-bottom-left-radius: 30px;
-//     border-bottom-right-radius: 30px;
-// }
+    &:hover, &:focus {
+        color: #ffffff;
+        text-decoration: none;
+    }
 
-// #awAccountDropdownDefault a:last-child {
-//     border-bottom-left-radius: 30px;
-//     border-bottom-right-radius: 30px;
-// }
+    &:hover {
+        background-color: #323232;
+    }
 
-.dropdown-item:hover, .dropdown-item:focus {
-    color: #ffffff;
-    text-decoration: none;
-}
+    &:active {
+        opacity: 0.82;
+    }
 
-.dropdown-item:focus {
-    background-color: transparent;
-}
+    &:focus {
+        background-color: transparent;
+    }
 
-.dropdown-item:hover {
-    background-color: #323232;
-}
-
-.dropdown-item:active {
-    opacity: 0.82;
-}
-
-#awAccountDropdownDefault {
-    a:last-child {
-        color: red;
+    &:last-child {
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
     }
 }
 

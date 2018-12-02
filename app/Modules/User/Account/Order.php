@@ -19,6 +19,13 @@ class Order extends Model
         'downloaded_at',
     ];
 
+    /**
+     * Dates
+     */
+    protected $dates = [
+        'created_at', 'updated_at', 'downloaded_at',
+    ];
+
     // * id_customer (int, foreign)
     // * order_token (string255, primary)
     // * status (null default, char[1-4])

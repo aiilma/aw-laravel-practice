@@ -1,22 +1,53 @@
 @extends('layouts.sidebar-section')
 
 @section('sidebar')
-
-<div class="aw__sidebar__group cash__io__controls">
-    {{-- <button id="CashInputBtn" class="btn aw-btn-smart-v2 disabled w-100" type="button">
-        
-    </button> --}}
-    {{-- <button id="CashOutputBtn" class="btn aw-btn-smart-v2 w-100" type="button">
-        
-    </button> --}}
-</div>
-
+    @include('systems.payments.sidebar')
 @endsection
 
 @section('section')
-    variants out
+
+cashout
+<div>
+    <div>
+        <h4 class="aw-payment-slider-count">
+            <span id="current">1</span> of <span id="total"></span>
+        </h4>
+    </div>
+    <ul id="awPaymentSlider">
+        <li>
+            <h3>Paypal</h3>
+        </li>
+        <li>
+            <h3>Qiwi</h3>
+        </li>
+        <li>
+            <h3>Yandex.Money</h3>
+        </li>
+        <li>
+            <h3>Skrill</h3>
+        </li>
+        <li>
+            <h3>WebMoney</h3>
+        </li>
+        <li>
+            <h3>Alipay</h3>
+        </li>
+        <li>
+            <h3>Robokassa</h3>
+        </li>
+        <li>
+            <h3>Steam</h3>
+        </li>
+    </ul>
+    <button>Apply</button>
+</div>
+
+<div>
+    form
+</div>
 @endsection
 
 
 @push('scripts')
+    <script src="{{asset('js/payments.js')}}"></script>
 @endpush

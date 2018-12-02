@@ -1,13 +1,14 @@
+// Another
+@import '~bootstrap/scss/bootstrap'; // Bootstrap
+@import '~lightslider/src/css/lightslider'; // LightSlider
+@import './css/jquery.toast.css';
+
 // Fonts Packages
 @import './components/fonts';
-
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
 
 // Variables
 @import './components/variables';
 
-@import './css/jquery.toast.css';
 
 
 // Main

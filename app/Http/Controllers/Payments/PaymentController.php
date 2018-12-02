@@ -26,4 +26,15 @@ class PaymentController extends Controller
     {
         return view('systems.payments.index-out');
     }
+
+    /**
+     * Возвращает историю платежей
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function history(Request $request)
+    {
+        // 
+    }
 }

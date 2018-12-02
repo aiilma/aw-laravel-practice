@@ -13,7 +13,7 @@ let mix = require('laravel-mix');
 
 
 mix.autoload({
-   'jquery': ['jQuery', '$'],
+   'jquery': ['jQuery', '$']
 });
 
 mix.js('resources/assets/js/app.js', 'public/js')
@@ -21,5 +21,5 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .js('resources/assets/js/packets/compositions/compositions_listing.js', 'public/js')
    .js('resources/assets/js/packets/compositions/compositions_form.js', 'public/js')
    .js('resources/assets/js/packets/user/orders/order_controls.js', 'public/js')
-   .js('resources/assets/js/packets/payments/pg_transfer.js', 'public/js')
+   .js('resources/assets/js/packets/payments/payments.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');

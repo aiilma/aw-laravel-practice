@@ -28,6 +28,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * Dates
+     */
+    protected $dates = [
+        'created_at', 'updated_at'
+    ];
+
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
@@ -53,8 +61,8 @@ class User extends Authenticatable
                 </a>
 
                 <div id="awAccountDropdownBalance" class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="'.route('payments-in-index').'">'.__('Check-In').'</a>
-                    <a class="dropdown-item" href="'.route('payments-out-index').'">'.__('Check-Out').'</a>
+                    <a class="dropdown-item" href="'.route('payments-in-index').'">'.__('Pay In').'</a>
+                    <a class="dropdown-item" href="'.route('payments-out-index').'">'.__('Pay Out').'</a>
                 </div>
                 ';
     }
@@ -311,8 +319,14 @@ class User extends Authenticatable
                     'userProdCount' => auth()->user()->compRequests->count(),
                 ], [
                     'userProdCount' => 'lte:'.(integer)config('production.max_requests_per_time'),
-                ], [
-                    'userProdCount.lte' => 'You can\'t send requests anymore. Max count of any production activity for your account (including your products on sale) is equals to 5',
+                    'userProdCount' => [
+                        function ($attribute, $value, $fail) {
+                            if ($value >= config('production.max_requests_per_time'))
+                            {
+                                $fail('You can\'t send requests anymore. Max count of any production activity for your account (including your products on sale) is equals to '.config('production.max_requests_per_time'));
+                            }
+                        },
+                    ]
                 ])->messages();
     }
 
